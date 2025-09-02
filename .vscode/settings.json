@@ -14,5 +14,5 @@
   "eslint.useFlatConfig": false,
   // Ensure enough terminal history is preserved when running tests.
   "terminal.integrated.scrollback": 10000,
-  "cSpell.words": []
+  "cSpell.words": ["heroui"]
 }
