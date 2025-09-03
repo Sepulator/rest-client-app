@@ -6,12 +6,7 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   // Linting using ESLint.
-  "eslint.validate": [
-    "javascript",
-    "javascriptreact",
-    "typescript",
-    "typescriptreact"
-  ],
+  "eslint.validate": ["javascript", "javascriptreact", "typescript", "typescriptreact"],
   // Tell VS Code to always open .css files in Tailwind CSS mode:
   "files.associations": {
     "*.css": "tailwindcss"
@@ -23,7 +18,5 @@
   "eslint.useFlatConfig": false,
   // Ensure enough terminal history is preserved when running tests.
   "terminal.integrated.scrollback": 10000,
-  "cSpell.words": [
-    "heroui"
-  ]
+  "cSpell.words": ["heroui"]
 }
