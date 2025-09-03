@@ -1,7 +1,7 @@
 {
   "LocaleLayout": {
-    "title": "REST Client",
-    "description": "A light-weight version of Postman"
+    "title": "Rest client",
+    "description": "A light-weight rest client application"
   },
   "HomePage": {
     "title": "Welcome back"
