@@ -1,6 +1,12 @@
 {
   "name": "rest-client-app",
   "version": "0.1.0",
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "type": "module",
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
@@ -9,6 +15,7 @@
     "lint": "eslint src --ext .ts,.tsx",
     "lint:fix": "eslint src --fix --ext .ts,.tsx",
     "format:fix": "prettier --write .",
+    "format:check": "prettier --check .",
     "test": "vitest",
     "test:coverage": "vitest run --coverage",
     "prepare": "husky"
@@ -26,6 +33,8 @@
     ]
   },
   "dependencies": {
+    "@heroui/react": "^2.8.3",
+    "framer-motion": "^12.23.12",
     "next": "15.5.2",
     "next-intl": "^4.3.5",
     "react": "19.1.0",
