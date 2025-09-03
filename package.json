@@ -14,6 +14,7 @@
     "lint:css": "stylelint src/**/*.css",
     "test": "vitest",
     "test:coverage": "vitest run --coverage",
+    "type-check": "tsc -b --noEmit",
     "prepare": "husky"
   },
   "lint-staged": {
@@ -38,6 +39,7 @@
     "@commitlint/cli": "^19.8.1",
     "@commitlint/config-conventional": "^19.8.1",
     "@eslint/eslintrc": "^3",
+    "@stylistic/eslint-plugin": "^5.3.1",
     "@tailwindcss/postcss": "^4",
     "@testing-library/dom": "^10.4.1",
     "@testing-library/react": "^16.3.0",
@@ -49,6 +51,13 @@
     "eslint": "^9",
     "eslint-config-next": "15.5.2",
     "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-import-x": "^4.16.1",
+    "eslint-plugin-jsx-a11y": "^6.10.2",
+    "eslint-plugin-perfectionist": "^4.15.0",
+    "eslint-plugin-react-compiler": "^19.1.0-rc.2",
+    "eslint-plugin-react-dom": "^1.52.9",
+    "eslint-plugin-react-refresh": "^0.4.20",
+    "eslint-plugin-unicorn": "^60.0.0",
     "husky": "^9.1.7",
     "jsdom": "^26.1.0",
     "lint-staged": "^16.1.6",
@@ -61,6 +70,7 @@
     "stylelint-config-tailwindcss": "^1.0.0",
     "tailwindcss": "^4",
     "typescript": "^5",
+    "typescript-eslint": "^8.42.0",
     "vitest": "^3.2.4"
   }
 }
