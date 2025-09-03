@@ -1,3 +1,4 @@
+import { Button } from '@heroui/button';
 import Image from 'next/image';
 
 export default function Home() {
@@ -64,6 +65,7 @@ export default function Home() {
           <Image aria-hidden src="/globe.svg" alt="Globe icon" width={16} height={16} />
           Go to nextjs.org →
         </a>
+        <Button>Click me</Button>
       </footer>
     </div>
   );

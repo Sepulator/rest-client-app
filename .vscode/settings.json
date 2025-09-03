@@ -11,8 +11,12 @@
   "files.associations": {
     "*.css": "tailwindcss"
   },
-  "eslint.useFlatConfig": false,
+  //Fix eslint auto-fixable problems on save a file
+  "editor.codeActionsOnSave": {
+    "source.fixAll": "explicit"
+  },
+  "eslint.useFlatConfig": true,
   // Ensure enough terminal history is preserved when running tests.
   "terminal.integrated.scrollback": 10000,
-  "cSpell.words": []
+  "cSpell.words": ["heroui"]
 }
