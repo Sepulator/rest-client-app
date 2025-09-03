@@ -9,7 +9,7 @@
     "start": "next start",
     "lint": "eslint src --ext .ts,.tsx",
     "lint:fix": "eslint src --fix --ext .ts,.tsx",
-    "format:fix": "prettier --write .",
+    "format": "prettier --write .",
     "test": "vitest",
     "test:coverage": "vitest run --coverage",
     "prepare": "husky"
