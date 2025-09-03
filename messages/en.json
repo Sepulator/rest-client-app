@@ -1,0 +1,10 @@
+{
+  "LocaleLayout": {
+    "title": "REST Client",
+    "description": "A light-weight version of Postman"
+  },
+  "HomePage": {
+    "title": "Welcome back"
+  },
+  "WelcomePage": { "title": "Welcome, please login" }
+}
