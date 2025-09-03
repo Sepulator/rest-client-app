@@ -18,6 +18,5 @@
 
 - [ ] No console errors (except API requests)
 - [ ] 80%+ test coverage
-- [ ] Reviewers have been requested
 - [ ] Documentation updated (if relevant)
 - [ ] Package.json scripts updated (if relevant)
