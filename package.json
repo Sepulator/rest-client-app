@@ -1,6 +1,11 @@
 {
   "name": "rest-client-app",
   "version": "0.1.0",
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
   "type": "module",
   "private": true,
   "scripts": {
@@ -28,6 +33,8 @@
     ]
   },
   "dependencies": {
+    "@heroui/react": "^2.8.3",
+    "framer-motion": "^12.23.12",
     "next": "15.5.2",
     "react": "19.1.0",
     "react-dom": "19.1.0"
