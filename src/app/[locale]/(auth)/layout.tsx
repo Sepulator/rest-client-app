@@ -1,4 +1,4 @@
-import { AuthNav } from '@/components/auth-nav/auth-nav';
+import { AuthNav } from '@/components/auth-nav';
 import React from 'react';
 
 export default function AuthLayout({ children }: LayoutProps<'/[locale]'>) {

@@ -1,4 +1,4 @@
-import { SideNavBar } from './_components/side-nav-bar/side-nav-bar';
+import { SideNavBar } from '@/components/side-nav-bar';
 import React from 'react';
 
 export default function DashboardLayout({ children, welcome }: LayoutProps<'/[locale]'>) {

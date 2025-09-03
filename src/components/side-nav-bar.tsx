@@ -1,10 +1,11 @@
+import { ROUTES } from '@/config/routes';
 import { Link } from '@/i18n/navigation';
 import React from 'react';
 
 const navBarLink = [
-  { href: '/client', title: 'REST Client' },
-  { href: '/history', title: 'History' },
-  { href: '/variables', title: 'Variables' },
+  { href: ROUTES.CLIENT, title: 'REST Client' },
+  { href: ROUTES.HISTORY, title: 'History' },
+  { href: ROUTES.VARIABLES, title: 'Variables' },
 ];
 
 export function SideNavBar() {

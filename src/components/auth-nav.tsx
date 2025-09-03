@@ -1,11 +1,12 @@
+import { ROUTES } from '@/config/routes';
 import { Link } from '@/i18n/navigation';
 import React from 'react';
 
 export function AuthNav() {
   return (
     <div className="flex gap-5">
-      <Link href="/login">Sign In</Link>
-      <Link href="/sign-up">Sign Up</Link>
+      <Link href={ROUTES.LOGIN}>Sign In</Link>
+      <Link href={ROUTES.SIGN_UP}>Sign Up</Link>
     </div>
   );
 }

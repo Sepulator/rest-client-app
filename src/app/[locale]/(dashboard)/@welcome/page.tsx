@@ -1,4 +1,4 @@
-import { AuthNav } from '@/components/auth-nav/auth-nav';
+import { AuthNav } from '@/components/auth-nav';
 import { getTranslations } from 'next-intl/server';
 import React from 'react';
 
