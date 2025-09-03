@@ -6,5 +6,6 @@
   "HomePage": {
     "title": "Welcome back"
   },
+  "NotFound": { "title": "Page not found" },
   "WelcomePage": { "title": "Welcome, please login" }
 }
