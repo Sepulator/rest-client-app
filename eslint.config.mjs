@@ -200,6 +200,18 @@ export default tseslint.config(
       'jsx-a11y/click-events-have-key-events': 'off',
       'jsx-a11y/no-noninteractive-element-interactions': 'off',
     },
+    'no-restricted-imports': [
+      'error',
+      {
+        name: 'next/link',
+        message: 'Please import from `@/i18n/navigation` instead.',
+      },
+      {
+        name: 'next/navigation',
+        importNames: ['redirect', 'permanentRedirect', 'useRouter', 'usePathname'],
+        message: 'Please import from `@/i18n/navigation` instead.',
+      },
+    ],
   },
   {
     files: ['src/app/layout.tsx'],
