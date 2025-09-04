@@ -91,7 +91,7 @@ This command starts the dev server locally `http://localhost:3000/`.
 
 ---
 
-#### Unite test coverage
+#### Unit test coverage
 
 ```bash copy
   npm run test:coverage
