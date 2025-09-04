@@ -10,7 +10,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
-    "build": "next build --turbopack",
+    "build": "next build",
     "start": "next start",
     "lint": "eslint src --ext .ts,.tsx",
     "lint:fix": "eslint src --fix --ext .ts,.tsx",
