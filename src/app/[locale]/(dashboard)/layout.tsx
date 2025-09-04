@@ -1,12 +1,18 @@
+'use client';
+import { useState } from 'react';
+
 import { SideNavBar } from '@/components/side-nav-bar';
-import React from 'react';
 
 export default function DashboardLayout({ children, welcome }: LayoutProps<'/[locale]'>) {
-  const isTempLogin = false;
+  const [isTemporaryLogin, setIsTemporaryLogin] = useState(true);
 
-  return isTempLogin ? (
+  const tempLogout = () => {
+    setIsTemporaryLogin(false);
+  };
+
+  return isTemporaryLogin ? (
     <section className="flex h-100 min-h-full flex-row items-center gap-4 divide-x-1">
-      <SideNavBar />
+      <SideNavBar tempLogout={tempLogout} />
       <div className="flex flex-1 justify-center">{children}</div>
     </section>
   ) : (

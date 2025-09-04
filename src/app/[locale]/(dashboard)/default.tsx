@@ -1,3 +1,3 @@
-export default async function HomeDefault() {
+export default function HomeDefault() {
   return null;
 }

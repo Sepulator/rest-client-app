@@ -1,6 +1,6 @@
-import { AuthNav } from '@/components/auth-nav';
 import { getTranslations } from 'next-intl/server';
-import React from 'react';
+
+import { AuthNav } from '@/components/auth-nav';
 
 export default async function WelcomePage() {
   const t = await getTranslations('WelcomePage');

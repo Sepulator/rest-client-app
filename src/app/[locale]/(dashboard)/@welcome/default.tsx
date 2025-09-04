@@ -1,3 +1,1 @@
-import WelcomePage from './page';
-
-export default WelcomePage;
+export { default } from './page';

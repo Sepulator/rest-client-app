@@ -5,6 +5,6 @@ export const routing = defineRouting({
   defaultLocale: 'en',
   localeCookie: {
     name: 'LOCALE',
-    maxAge: 2 * 24 * 60 * 60,
+    maxAge: 172800,
   },
 });

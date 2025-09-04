@@ -31,6 +31,8 @@ export default tseslint.config(
       'dist',
       '.next',
       'next-env.d.ts',
+      'src/i18n/*',
+      'global.ts',
     ],
   },
   {
@@ -200,21 +202,9 @@ export default tseslint.config(
       'jsx-a11y/click-events-have-key-events': 'off',
       'jsx-a11y/no-noninteractive-element-interactions': 'off',
     },
-    'no-restricted-imports': [
-      'error',
-      {
-        name: 'next/link',
-        message: 'Please import from `@/i18n/navigation` instead.',
-      },
-      {
-        name: 'next/navigation',
-        importNames: ['redirect', 'permanentRedirect', 'useRouter', 'usePathname'],
-        message: 'Please import from `@/i18n/navigation` instead.',
-      },
-    ],
   },
   {
-    files: ['src/app/layout.tsx'],
+    files: ['src/app/**/layout.tsx'],
     rules: {
       'react-refresh/only-export-components': 'off',
     },

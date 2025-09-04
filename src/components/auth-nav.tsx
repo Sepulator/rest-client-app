@@ -1,6 +1,5 @@
 import { ROUTES } from '@/config/routes';
 import { Link } from '@/i18n/navigation';
-import React from 'react';
 
 export function AuthNav() {
   return (

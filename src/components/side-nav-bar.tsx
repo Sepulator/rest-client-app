@@ -1,6 +1,7 @@
+import { Button } from '@heroui/react';
+
 import { ROUTES } from '@/config/routes';
 import { Link } from '@/i18n/navigation';
-import React from 'react';
 
 const navBarLink = [
   { href: ROUTES.CLIENT, title: 'REST Client' },
@@ -8,7 +9,11 @@ const navBarLink = [
   { href: ROUTES.VARIABLES, title: 'Variables' },
 ];
 
-export function SideNavBar() {
+type SideNavBarProps = {
+  tempLogout: () => void;
+};
+
+export function SideNavBar({ tempLogout }: SideNavBarProps) {
   return (
     <div className="flex h-full w-70 flex-col justify-center gap-5 p-10">
       {navBarLink.map((link) => (
@@ -16,6 +21,7 @@ export function SideNavBar() {
           {link.title}
         </Link>
       ))}
+      <Button onPress={tempLogout}>Temp Logout</Button>
     </div>
   );
 }
