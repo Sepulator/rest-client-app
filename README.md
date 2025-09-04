@@ -3,7 +3,7 @@
 Welcome to our `REST Client` application! This lightweight alternative to Postman combines essential features in one app.
 Supports authorization and authentication capabilities. Access to the tool is restricted to authorized users only.
 The history section provides quick access to previously executed requests 🚀.
-Full task description [rest client](https://github.com/rolling-scopes-school/tasks/blob/master/react/modules/tasks/final.md)
+Full task description [here](https://github.com/rolling-scopes-school/tasks/blob/master/react/modules/tasks/final.md)
 
 ## Features
 
@@ -91,7 +91,7 @@ This command starts the dev server locally `http://localhost:3000/`.
 
 ---
 
-#### Unite test coverage
+#### Unit test coverage
 
 ```bash copy
   npm run test:coverage
