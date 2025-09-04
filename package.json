@@ -21,7 +21,8 @@
     "test": "vitest",
     "test:coverage": "vitest run --coverage",
     "type-check": "tsc -b --noEmit",
-    "prepare": "husky"
+    "prepare": "husky",
+    "type": "next typegen"
   },
   "lint-staged": {
     "*.css": [
