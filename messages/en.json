@@ -1,0 +1,11 @@
+{
+  "LocaleLayout": {
+    "title": "Rest client",
+    "description": "A light-weight rest client application"
+  },
+  "HomePage": {
+    "title": "Welcome back"
+  },
+  "NotFound": { "title": "Page not found" },
+  "WelcomePage": { "title": "Welcome, please login" }
+}

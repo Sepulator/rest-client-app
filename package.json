@@ -10,7 +10,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
-    "build": "next build",
+    "build": "next build --turbopack",
     "start": "next start",
     "lint": "eslint src --ext .ts,.tsx",
     "lint:fix": "eslint src --fix --ext .ts,.tsx",
@@ -21,7 +21,8 @@
     "test": "vitest",
     "test:coverage": "vitest run --coverage",
     "type-check": "tsc -b --noEmit",
-    "prepare": "husky"
+    "prepare": "husky",
+    "type": "next typegen"
   },
   "lint-staged": {
     "*.css": [
@@ -38,8 +39,10 @@
   },
   "dependencies": {
     "@heroui/react": "^2.8.3",
+    "clsx": "^2.1.1",
     "framer-motion": "^12.23.12",
     "next": "15.5.2",
+    "next-intl": "^4.3.5",
     "react": "19.1.0",
     "react-dom": "19.1.0"
   },

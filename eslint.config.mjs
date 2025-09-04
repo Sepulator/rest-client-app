@@ -31,6 +31,8 @@ export default tseslint.config(
       'dist',
       '.next',
       'next-env.d.ts',
+      'src/i18n/*',
+      'global.ts',
     ],
   },
   {
@@ -202,7 +204,7 @@ export default tseslint.config(
     },
   },
   {
-    files: ['src/app/layout.tsx'],
+    files: ['src/app/**/layout.tsx'],
     rules: {
       'react-refresh/only-export-components': 'off',
     },

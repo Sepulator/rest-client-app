@@ -24,6 +24,9 @@ jobs:
       - name: Run formatter
         run: npm run format:check
 
+      - name: Run typegen
+        run: npm run type
+
       - name: Run linter
         run: npm run lint
 
