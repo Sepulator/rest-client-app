@@ -1,7 +1,21 @@
 'use client';
 
-import { HeroUIProvider } from '@heroui/react';
+import type { ReactNode } from 'react';
 
-export function Providers({ children }: { children: React.ReactNode }) {
-  return <HeroUIProvider>{children}</HeroUIProvider>;
+import { HeroUIProvider } from '@heroui/react';
+import { NextIntlClientProvider } from 'next-intl';
+
+import type { routing } from '@/i18n/routing';
+
+type ProvidersProps = {
+  children: ReactNode;
+  locale: (typeof routing.locales)[number];
+};
+
+export function Providers({ children, locale }: ProvidersProps) {
+  return (
+    <NextIntlClientProvider locale={locale}>
+      <HeroUIProvider>{children}</HeroUIProvider>
+    </NextIntlClientProvider>
+  );
 }

@@ -1,18 +1,22 @@
-import { hasLocale, Locale, NextIntlClientProvider } from 'next-intl';
-import { routing } from '@/i18n/routing';
-import { notFound } from 'next/navigation';
-import { getTranslations, setRequestLocale } from 'next-intl/server';
-import { Providers } from './providers';
-import { geistMono, geistSans } from './fonts';
-import { AppLayout } from './_components/app-layout';
+import type { Locale } from 'next-intl';
+
 import { clsx } from 'clsx';
+import { hasLocale } from 'next-intl';
+import { getTranslations, setRequestLocale } from 'next-intl/server';
+import { notFound } from 'next/navigation';
+
+import { routing } from '@/i18n/routing';
+
+import { AppLayout } from './_components/app-layout';
+import { geistMono, geistSans } from './fonts';
+import { Providers } from './providers';
 import './globals.css';
 
-export async function generateMetadata(props: Omit<LayoutProps<'/[locale]'>, 'children'>) {
-  const { locale } = await props.params;
+export async function generateMetadata({ params }: { params: Promise<{ locale: Locale }> }) {
+  const { locale } = await params;
 
   const t = await getTranslations({
-    locale: locale as Locale,
+    locale: locale,
     namespace: 'LocaleLayout',
   });
 
@@ -38,11 +42,9 @@ export default async function LocaleLayout({ children, params }: LayoutProps<'/[
   return (
     <html lang={locale}>
       <body className={clsx(geistSans.variable, geistMono.variable, 'dark antialiased')}>
-        <NextIntlClientProvider>
-          <Providers>
-            <AppLayout>{children}</AppLayout>
-          </Providers>
-        </NextIntlClientProvider>
+        <Providers locale={locale}>
+          <AppLayout>{children}</AppLayout>
+        </Providers>
       </body>
     </html>
   );
