@@ -15,7 +15,7 @@
   "editor.codeActionsOnSave": {
     "source.fixAll": "explicit"
   },
-  "eslint.useFlatConfig": false,
+  "eslint.useFlatConfig": true,
   // Ensure enough terminal history is preserved when running tests.
   "terminal.integrated.scrollback": 10000,
   "cSpell.words": ["heroui"]
