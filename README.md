@@ -1,36 +1,116 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# REST Client 🌐
+
+Welcome to our `REST Client` application! This lightweight alternative to Postman combines essential features in one app.
+Supports authorization and authentication capabilities. Access to the tool is restricted to authorized users only.
+The history section provides quick access to previously executed requests 🚀.
+Full task description [rest client](https://github.com/rolling-scopes-school/tasks/blob/master/react/modules/tasks/final.md)
+
+## Features
+
+Key pages in the application include:
+
+- Login and Registration pages 👤
+- Main page 🏠
+- RESTful client 🖥️, which includes:
+  - method selector
+  - text input for the endpoint URL
+  - request editor
+  - headers editor
+  - response section
+  - generated code section
+- Variables 🔎
+- History 📋
+
+The application is developed in teams of three 👩‍💻👩‍💻👨‍💻 [Yuri S.](https://github.com/Sepulator), [Maria Ilina](https://github.com/IlinJoy), [Anastasiia Nikonova](https://github.com/anastanei).
+
+## Tech-stack
+
+- ⚡ [Next.js](https://nextjs.org/): The React Framework for the Web.
+- 💪 [Strongly typed](https://www.typescriptlang.org/): Uses TypeScript.
+- 🔥 [HeroUI](https://www.heroui.com/): Beautiful, fast and modern React UI library.
+- 🤖 [Valibot](https://valibot.dev/): The modular and type safe schema library.
+- 🎊 [Tailwind](https://tailwindcss.com/): Rapidly build modern websites without ever leaving your HTML.
+- ⌨️ [Testing framework](https://vitest.dev/): Vitest to test the code base. It's fast!
+- 🛍️ [Supabase](https://supabase.com/): The Postgres development platform.
 
 ## Getting Started
 
-First, run the development server:
+### Steps
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+#### 1. Clone [repository](https://github.com/Sepulator/rest-client-app)
+
+```bash copy
+  git clone https://github.com/Sepulator/rest-client-app.git
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+#### 2. Open project directory and install dependencies
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash copy
+  npm install
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+#### 3. Start the development server
 
-## Learn More
+```bash copy
+  npm run dev
+```
 
-To learn more about Next.js, take a look at the following resources:
+This command starts the dev server locally `http://localhost:3000/`.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Available scripts
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+#### Build for production
 
-## Deploy on Vercel
+```bash copy
+  npm run build
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+#### Start Vite dev server in the current directory
+
+```bash copy
+  npm run dev
+```
+
+---
+
+#### Run ESLint to fix errors
+
+```bash copy
+  npm run lint
+```
+
+---
+
+#### Run unit test
+
+```bash copy
+  npm run test
+```
+
+---
+
+#### Unite test coverage
+
+```bash copy
+  npm run test:coverage
+```
+
+---
+
+#### Run code format with Prettier
+
+```bash copy
+  npm run format
+```
+
+---
+
+#### Run husky to prepare git hooks
+
+```bash copy
+  npm run prepare
+```
+
+---
