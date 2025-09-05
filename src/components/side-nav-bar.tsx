@@ -21,7 +21,7 @@ export function SideNavBar({ tempLogout }: SideNavBarProps) {
           {link.title}
         </Link>
       ))}
-      <Button onPress={tempLogout}>Temp Logout</Button>
+      <Button onPress={tempLogout}>Temp Logout remove later</Button>
     </div>
   );
 }
