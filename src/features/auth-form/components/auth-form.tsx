@@ -1,26 +1,22 @@
 'use client';
 
-import { Form, Input, Button } from '@heroui/react';
+import { Form, Input, Button, Card, CardHeader, CardBody, CardFooter, Divider, Link } from '@heroui/react';
 import { valibotResolver } from '@hookform/resolvers/valibot';
 import { useState, type FormEvent, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import * as v from 'valibot';
 
-import { EyeFilledIcon } from '@/components/icons/eye-filled-icon';
-import { EyeSlashFilledIcon } from '@/components/icons/eye-slash-filled-icon';
 import { MailIcon } from '@/components/icons/mail-icon';
+import { type AuthFormType } from '@/features/auth-form/types/types';
 
 import { MIN_PASSWORD_LENGTH } from '../constants/constants';
 import { PASSWORD_STRENGTH_MAX } from '../constants/constants';
-import { PasswordStrength } from './password-strength';
+import { PasswordField } from './password-field';
 
 const TEXTS = {
   EMAIL_LABEL: 'Email',
   SUBMIT: 'Submit',
-  PASSWORD_LABEL: 'Password',
   EMAIL_PLACEHOLDER: 'Enter your email',
-  PASSWORD_PLACEHOLDER: 'Enter your password',
-  PASSWORD_TOGGLE_VISIBILITY: 'toggle password visibility',
 };
 
 const VALIDATION_MESSAGES = {
@@ -54,28 +50,27 @@ const authSchema = v.object({
   [PASSWORD_NAME]: passwordSchema,
 });
 
-type AuthForm = v.InferInput<typeof authSchema>;
-
-export const AuthForm = () => {
-  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+export const AuthForm = ({
+  heading,
+  secondaryAction,
+}: {
+  heading: string;
+  secondaryAction: { intro: string; link: string; linkText: string };
+}) => {
   const [passwordStrength, setPasswordStrength] = useState<number>(0);
   const {
     register,
     watch,
     handleSubmit,
     formState: { errors },
-  } = useForm<AuthForm>({
+  } = useForm<AuthFormType>({
     mode: 'onChange',
     reValidateMode: 'onChange',
     criteriaMode: 'all',
     resolver: valibotResolver(authSchema),
   });
 
-  const toggleVisibility = () => {
-    setIsPasswordVisible(!isPasswordVisible);
-  };
-
-  function onSubmit(event: FormEvent<HTMLFormElement>) {
+  const onSubmit = (event: FormEvent<HTMLFormElement>) => {
     const target = event.currentTarget;
 
     void handleSubmit((data) => {
@@ -85,7 +80,7 @@ export const AuthForm = () => {
 
       target.submit();
     })(event);
-  }
+  };
 
   const passwordValue = watch(PASSWORD_NAME);
 
@@ -98,55 +93,47 @@ export const AuthForm = () => {
   }, [passwordValue]);
 
   return (
-    <Form
-      className="flex w-full max-w-xs flex-col gap-4"
-      onSubmit={(event) => {
-        onSubmit(event);
-      }}
-    >
-      <Input
-        endContent={<MailIcon className="text-default-400 pointer-events-none shrink-0 text-2xl" />}
-        className="w-full"
-        autoComplete="email"
-        label={TEXTS.EMAIL_LABEL}
-        labelPlacement="outside"
-        placeholder="you@example.com"
-        {...register(EMAIL_NAME)}
-        errorMessage={errors.email?.message}
-        isInvalid={!!errors.email}
-        type="email"
-      />
-
-      <Input
-        autoComplete="current-password"
-        {...register(PASSWORD_NAME)}
-        endContent={
-          <button
-            aria-label={TEXTS.PASSWORD_TOGGLE_VISIBILITY}
-            className="cursor-pointer outline-transparent focus:outline-solid"
-            type="button"
-            onClick={toggleVisibility}
-          >
-            {isPasswordVisible ? (
-              <EyeSlashFilledIcon className="text-default-400 pointer-events-none text-2xl" />
-            ) : (
-              <EyeFilledIcon className="text-default-400 pointer-events-none text-2xl" />
-            )}
-          </button>
-        }
-        labelPlacement="outside"
-        label={TEXTS.PASSWORD_LABEL}
-        placeholder={TEXTS.PASSWORD_PLACEHOLDER}
-        errorMessage={errors.password?.message}
-        isInvalid={!!errors.password}
-        type={isPasswordVisible ? 'text' : 'password'}
-      />
-      <PasswordStrength passwordStrength={passwordStrength} />
-      <div className="flex gap-2">
-        <Button color="primary" type="submit">
-          {TEXTS.SUBMIT}
-        </Button>
-      </div>
-    </Form>
+    <Card className="w-full max-w-sm p-2">
+      <CardHeader>
+        <h2 className="text-large">{heading}</h2>
+      </CardHeader>
+      <Divider />
+      <CardBody>
+        <Form
+          className="flex w-full flex-col items-stretch gap-4"
+          onSubmit={(event) => {
+            onSubmit(event);
+          }}
+        >
+          <Input
+            endContent={<MailIcon className="text-default-400 pointer-events-none shrink-0 text-2xl" />}
+            className="w-full"
+            autoComplete="email"
+            label={TEXTS.EMAIL_LABEL}
+            labelPlacement="outside"
+            placeholder="you@example.com"
+            {...register(EMAIL_NAME)}
+            errorMessage={errors.email?.message}
+            isInvalid={!!errors.email}
+            type="email"
+          />
+          <PasswordField
+            register={register}
+            error={errors.password?.message ?? ''}
+            passwordStrength={passwordStrength}
+            name={PASSWORD_NAME}
+          />
+          <Button color="primary" type="submit" className="w-full">
+            {TEXTS.SUBMIT}
+          </Button>
+        </Form>
+      </CardBody>
+      <CardFooter className="flex-col gap-2">
+        <Divider />
+        <div className="text-small">
+          <span>{secondaryAction.intro}</span> <Link href={secondaryAction.link}>{secondaryAction.linkText}</Link>
+        </div>
+      </CardFooter>
+    </Card>
   );
 };

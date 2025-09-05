@@ -1,14 +1,17 @@
 import { AuthForm } from '@/features/auth-form/components/auth-form';
 
 const TEXTS = {
-  INTRO: 'Welcome back! Please, login',
+  HEADING: 'Sign in',
+  SECONDARY_ACTION: "Don't have an account? ",
+  SECONDARY_ACTION_LINK: 'Sign up.',
 };
 
 export default function LoginPage() {
-  return (
-    <>
-      <h1>{TEXTS.INTRO}</h1>
-      <AuthForm />
-    </>
-  );
+  const secondaryAction = {
+    intro: TEXTS.SECONDARY_ACTION,
+    link: '/sign-up',
+    linkText: TEXTS.SECONDARY_ACTION_LINK,
+  };
+
+  return <AuthForm heading={TEXTS.HEADING} secondaryAction={secondaryAction} />;
 }
