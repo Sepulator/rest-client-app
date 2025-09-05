@@ -17,7 +17,7 @@ export default function SignUpPage() {
 
   return (
     <>
-      <AuthForm heading={TEXTS.HEADING} secondaryAction={secondaryAction} />;
+      <AuthForm heading={TEXTS.HEADING} secondaryAction={secondaryAction} />
     </>
   );
 }

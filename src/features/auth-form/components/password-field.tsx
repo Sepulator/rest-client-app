@@ -34,7 +34,7 @@ export const PasswordField = ({
     setIsPasswordVisible(!isPasswordVisible);
   };
 
-  const [strengthColor, strengthLabel] = useStrength({ passwordStrength });
+  const { label: strengthLabel, color: strengthColor } = useStrength({ passwordStrength });
 
   return (
     <div className="flex flex-col gap-1">
@@ -55,6 +55,7 @@ export const PasswordField = ({
             )}
           </button>
         }
+        validationBehavior="aria"
         labelPlacement="outside"
         label={TEXTS.PASSWORD_LABEL}
         placeholder={TEXTS.PASSWORD_PLACEHOLDER}
@@ -68,10 +69,10 @@ export const PasswordField = ({
           track: 'drop-shadow-md border border-default',
           label: 'lowercase ml-auto text-tiny',
         }}
-        color={strengthLabel}
+        label={strengthLabel}
+        color={strengthColor}
         aria-label={TEXTS.PASSWORD_STRENGTH}
         size="sm"
-        label={strengthColor}
         maxValue={PASSWORD_STRENGTH_MAX}
         aria-valuemin={0}
         aria-valuemax={PASSWORD_STRENGTH_MAX}

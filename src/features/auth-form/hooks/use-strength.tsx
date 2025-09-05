@@ -1,5 +1,5 @@
 const TEXTS = {
-  PASSWORD_STRENGTH_LABEL_0: 'Too weak',
+  PASSWORD_STRENGTH_LABEL_0: 'Empty',
   PASSWORD_STRENGTH_LABEL_1: 'Weak',
   PASSWORD_STRENGTH_LABEL_2: 'Medium',
   PASSWORD_STRENGTH_LABEL_3: 'Strong',
@@ -30,5 +30,7 @@ export const useStrength = ({ passwordStrength }: { passwordStrength: number }) 
     },
   };
 
-  return [STRENGTH_CONFIG[passwordStrength].label, STRENGTH_CONFIG[passwordStrength].color] as const;
+  const { label, color } = STRENGTH_CONFIG[passwordStrength];
+
+  return { label, color } as const;
 };
