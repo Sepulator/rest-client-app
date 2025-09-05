@@ -94,6 +94,18 @@ export default tseslint.config(
       'prefer-arrow-callback': 'error',
       'no-confusing-arrow': ['error', { allowParens: true }],
       curly: 'error',
+      'no-restricted-imports': [
+        'error',
+        {
+          name: 'next/link',
+          message: 'Please import from `@/i18n/navigation` instead.',
+        },
+        {
+          name: 'next/navigation',
+          importNames: ['redirect', 'permanentRedirect', 'useRouter', 'usePathname'],
+          message: 'Please import from `@/i18n/navigation` instead.',
+        },
+      ],
       '@typescript-eslint/prefer-readonly': 'error',
       '@typescript-eslint/no-explicit-any': 'error',
       '@typescript-eslint/no-magic-numbers': [
