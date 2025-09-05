@@ -1,8 +1,9 @@
 'use client';
 
 import { Form, Input, Button } from '@heroui/react';
+import { Progress } from '@heroui/react';
 import { valibotResolver } from '@hookform/resolvers/valibot';
-import { useState, type FormEvent } from 'react';
+import { useState, type FormEvent, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import * as v from 'valibot';
 
@@ -18,6 +19,7 @@ const TEXTS = {
   EMAIL_PLACEHOLDER: 'Enter your email',
   PASSWORD_PLACEHOLDER: 'Enter your password',
   PASSWORD_TOGGLE_VISIBILITY: 'toggle password visibility',
+  PASSWORD_STRENGTH: 'Password strength',
 };
 
 const VALIDATION_MESSAGES = {
@@ -29,7 +31,32 @@ const VALIDATION_MESSAGES = {
   EMAIL_INVALID: 'Email is invalid',
 };
 
+const PASSWORD_STRENGTH_CONFIG: Record<number, { label: string; color: 'danger' | 'warning' | 'success' }> = {
+  0: {
+    label: 'Too weak',
+    color: 'danger',
+  },
+  1: {
+    label: 'Weak',
+    color: 'danger',
+  },
+  2: {
+    label: 'Medium',
+    color: 'warning',
+  },
+  3: {
+    label: 'Strong',
+    color: 'warning',
+  },
+  4: {
+    label: 'Excellent',
+    color: 'success',
+  },
+};
+
 const MIN_PASSWORD_LENGTH = 8;
+
+const PASSWORD_STRENGTH_MAX = 4;
 
 const EMAIL_NAME = 'email';
 const PASSWORD_NAME = 'password';
@@ -57,15 +84,15 @@ type LoginForm = v.InferInput<typeof loginSchema>;
 
 export const LoginForm = () => {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
-
+  const [passwordStrength, setPasswordStrength] = useState<number>(0);
   const {
     register,
+    watch,
     handleSubmit,
     formState: { errors },
   } = useForm<LoginForm>({
     mode: 'onChange',
     reValidateMode: 'onChange',
-
     criteriaMode: 'all',
     resolver: valibotResolver(loginSchema),
   });
@@ -85,6 +112,16 @@ export const LoginForm = () => {
       target.submit();
     })(event);
   }
+
+  const passwordValue = watch(PASSWORD_NAME);
+
+  useEffect(() => {
+    const parsed = v.safeParse(passwordSchema, passwordValue);
+    const issues = parsed.issues ?? [];
+    const value = PASSWORD_STRENGTH_MAX - issues.length;
+
+    setPasswordStrength(value);
+  }, [passwordValue]);
 
   return (
     <Form
@@ -129,6 +166,17 @@ export const LoginForm = () => {
         errorMessage={errors.password?.message}
         isInvalid={!!errors.password}
         type={isPasswordVisible ? 'text' : 'password'}
+      />
+      <Progress
+        color={PASSWORD_STRENGTH_CONFIG[passwordStrength].color}
+        aria-label={TEXTS.PASSWORD_STRENGTH}
+        size="sm"
+        label={PASSWORD_STRENGTH_CONFIG[passwordStrength].label}
+        maxValue={PASSWORD_STRENGTH_MAX}
+        aria-valuemin={0}
+        aria-valuemax={PASSWORD_STRENGTH_MAX}
+        aria-valuenow={passwordStrength}
+        value={passwordStrength}
       />
       <div className="flex gap-2">
         <Button color="primary" type="submit">
