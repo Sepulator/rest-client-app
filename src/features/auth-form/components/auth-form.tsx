@@ -1,16 +1,18 @@
 'use client';
 
 import { Form, Input, Button } from '@heroui/react';
-import { Progress } from '@heroui/react';
 import { valibotResolver } from '@hookform/resolvers/valibot';
 import { useState, type FormEvent, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import * as v from 'valibot';
 
+import { EyeFilledIcon } from '@/components/icons/eye-filled-icon';
+import { EyeSlashFilledIcon } from '@/components/icons/eye-slash-filled-icon';
 import { MailIcon } from '@/components/icons/mail-icon';
 
-import { EyeFilledIcon } from './icons/eye-filled-icon';
-import { EyeSlashFilledIcon } from './icons/eye-slash-filled-icon';
+import { MIN_PASSWORD_LENGTH } from '../constants/constants';
+import { PASSWORD_STRENGTH_MAX } from '../constants/constants';
+import { PasswordStrength } from './password-strength';
 
 const TEXTS = {
   EMAIL_LABEL: 'Email',
@@ -19,7 +21,6 @@ const TEXTS = {
   EMAIL_PLACEHOLDER: 'Enter your email',
   PASSWORD_PLACEHOLDER: 'Enter your password',
   PASSWORD_TOGGLE_VISIBILITY: 'toggle password visibility',
-  PASSWORD_STRENGTH: 'Password strength',
 };
 
 const VALIDATION_MESSAGES = {
@@ -30,33 +31,6 @@ const VALIDATION_MESSAGES = {
   EMAIL_REQUIRED: 'Email is required',
   EMAIL_INVALID: 'Email is invalid',
 };
-
-const PASSWORD_STRENGTH_CONFIG: Record<number, { label: string; color: 'danger' | 'warning' | 'success' }> = {
-  0: {
-    label: 'Too weak',
-    color: 'danger',
-  },
-  1: {
-    label: 'Weak',
-    color: 'danger',
-  },
-  2: {
-    label: 'Medium',
-    color: 'warning',
-  },
-  3: {
-    label: 'Strong',
-    color: 'warning',
-  },
-  4: {
-    label: 'Excellent',
-    color: 'success',
-  },
-};
-
-const MIN_PASSWORD_LENGTH = 8;
-
-const PASSWORD_STRENGTH_MAX = 4;
 
 const EMAIL_NAME = 'email';
 const PASSWORD_NAME = 'password';
@@ -75,14 +49,14 @@ const emailSchema = v.pipe(
   v.email(VALIDATION_MESSAGES.EMAIL_INVALID)
 );
 
-const loginSchema = v.object({
+const authSchema = v.object({
   [EMAIL_NAME]: emailSchema,
   [PASSWORD_NAME]: passwordSchema,
 });
 
-type LoginForm = v.InferInput<typeof loginSchema>;
+type AuthForm = v.InferInput<typeof authSchema>;
 
-export const LoginForm = () => {
+export const AuthForm = () => {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [passwordStrength, setPasswordStrength] = useState<number>(0);
   const {
@@ -90,11 +64,11 @@ export const LoginForm = () => {
     watch,
     handleSubmit,
     formState: { errors },
-  } = useForm<LoginForm>({
+  } = useForm<AuthForm>({
     mode: 'onChange',
     reValidateMode: 'onChange',
     criteriaMode: 'all',
-    resolver: valibotResolver(loginSchema),
+    resolver: valibotResolver(authSchema),
   });
 
   const toggleVisibility = () => {
@@ -167,17 +141,7 @@ export const LoginForm = () => {
         isInvalid={!!errors.password}
         type={isPasswordVisible ? 'text' : 'password'}
       />
-      <Progress
-        color={PASSWORD_STRENGTH_CONFIG[passwordStrength].color}
-        aria-label={TEXTS.PASSWORD_STRENGTH}
-        size="sm"
-        label={PASSWORD_STRENGTH_CONFIG[passwordStrength].label}
-        maxValue={PASSWORD_STRENGTH_MAX}
-        aria-valuemin={0}
-        aria-valuemax={PASSWORD_STRENGTH_MAX}
-        aria-valuenow={passwordStrength}
-        value={passwordStrength}
-      />
+      <PasswordStrength passwordStrength={passwordStrength} />
       <div className="flex gap-2">
         <Button color="primary" type="submit">
           {TEXTS.SUBMIT}
