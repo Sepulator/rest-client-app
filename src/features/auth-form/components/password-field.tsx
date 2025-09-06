@@ -74,7 +74,7 @@ export const PasswordField = ({
         placeholder={TEXTS.PASSWORD_PLACEHOLDER}
         isInvalid={error.length > 0}
         errorMessage={ErrorMessageList(error)}
-        classNames={{ input: cn(!isPasswordVisible && '[-webkit-text-security:disc]') }}
+        classNames={{ input: cn(!isPasswordVisible && 'hidden-password') }}
       />
       <Progress
         classNames={{

@@ -30,7 +30,7 @@ describe('PasswordField', () => {
     expect(visibilityButton).toBeInTheDocument();
   });
 
-  it('should set password type to text when toggle password visibility button is clicked', async () => {
+  it('should make password input visible when toggle password visibility button is clicked', async () => {
     const user = userEvent.setup();
 
     render(<PasswordField register={mockRegister} error={[]} passwordValue={''} name={name} />);
@@ -40,9 +40,9 @@ describe('PasswordField', () => {
 
     await user.click(visibilityButton);
 
-    expect(input).toHaveAttribute('type', 'text');
+    expect(input).not.toHaveClass('hidden-password');
   });
-  it('should set password type to password when toggle password visibility button is clicked twice', async () => {
+  it('should make password input hidden when toggle password visibility button is clicked twice', async () => {
     const user = userEvent.setup();
 
     render(<PasswordField register={mockRegister} error={[]} passwordValue={''} name={name} />);
@@ -53,7 +53,7 @@ describe('PasswordField', () => {
     await user.click(visibilityButton);
     await user.click(visibilityButton);
 
-    expect(input).toHaveAttribute('type', 'password');
+    expect(input).toHaveClass('hidden-password');
   });
   it('should not have aria-invalid attribute when there is no error', () => {
     render(<PasswordField register={mockRegister} error={[]} passwordValue={''} name={name} />);
