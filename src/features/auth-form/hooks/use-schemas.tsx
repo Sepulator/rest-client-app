@@ -4,8 +4,8 @@ import { MIN_PASSWORD_LENGTH } from '../constants/constants';
 
 const VALIDATION_MESSAGES = {
   MIN_LENGTH: 'Password must be at least 8 characters',
-  NUMBER: 'Password must contain at least one number',
   LETTER: 'Password must contain at least one letter',
+  NUMBER: 'Password must contain at least one number',
   SPECIAL_CHARACTER: 'Password must contain at least one special character',
   EMAIL_REQUIRED: 'Email is required',
   EMAIL_INVALID: 'Email is invalid',

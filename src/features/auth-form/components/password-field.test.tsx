@@ -7,10 +7,10 @@ import type { AuthFormType } from '../types/types';
 
 import { PasswordField } from './password-field';
 
-const name = 'password';
+const name = 'password' as const;
 
-const mockRegister: UseFormRegister<AuthFormType> = () => ({
-  name: name,
+const mockRegister: UseFormRegister<AuthFormType> = (fieldName) => ({
+  name: fieldName,
   onChange: vi.fn(),
   onBlur: vi.fn(),
   ref: vi.fn(),
@@ -70,6 +70,7 @@ describe('PasswordField', () => {
 
     expect(input).toHaveAttribute('aria-invalid', 'true');
   });
+
   it('should have render error message when there is an error', () => {
     const MESSAGE = 'error';
 

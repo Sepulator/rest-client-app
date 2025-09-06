@@ -7,6 +7,7 @@ import { useForm } from 'react-hook-form';
 
 import { MailIcon } from '@/components/icons/mail-icon';
 import { type AuthFormType } from '@/features/auth-form/types/types';
+import { useRouter } from '@/i18n/navigation';
 
 import { useSchemas } from '../hooks/use-schemas';
 import { PasswordField } from './password-field';
@@ -28,6 +29,7 @@ export const AuthForm = ({
   secondaryAction: { intro: string; link: string; linkText: string };
 }) => {
   const { authSchema } = useSchemas();
+  const router = useRouter();
   const {
     register,
     watch,
@@ -41,14 +43,12 @@ export const AuthForm = ({
   });
 
   const onSubmit = (event: FormEvent<HTMLFormElement>) => {
-    const target = event.currentTarget;
-
     void handleSubmit((data) => {
       event.preventDefault();
 
       console.log('data:', data);
 
-      target.submit();
+      router.push('/');
     })(event);
   };
 
