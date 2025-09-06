@@ -7,6 +7,7 @@ import * as v from 'valibot';
 import { ErrorMessageList } from '@/components/error-message-list';
 import { EyeFilledIcon } from '@/components/icons/eye-filled-icon';
 import { EyeSlashFilledIcon } from '@/components/icons/eye-slash-filled-icon';
+import { cn } from '@/utils/cn';
 
 import { PASSWORD_STRENGTH_MAX } from '../constants/constants';
 import { useSchemas } from '../hooks/use-schemas';
@@ -73,7 +74,7 @@ export const PasswordField = ({
         placeholder={TEXTS.PASSWORD_PLACEHOLDER}
         isInvalid={error.length > 0}
         errorMessage={ErrorMessageList(error)}
-        type={isPasswordVisible ? 'text' : 'password'}
+        classNames={{ input: cn(!isPasswordVisible && '[-webkit-text-security:disc]') }}
       />
       <Progress
         classNames={{
