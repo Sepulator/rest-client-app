@@ -19,6 +19,16 @@ const TEXTS = {
   PASSWORD_LABEL: 'Password',
 };
 
+const ErrorMessageList = (errors: string[]) => {
+  return (
+    <ul>
+      {errors.map((error, i) => (
+        <li key={i}>{error}</li>
+      ))}
+    </ul>
+  );
+};
+
 export const PasswordField = ({
   register,
   error,
@@ -26,7 +36,7 @@ export const PasswordField = ({
   passwordValue,
 }: {
   register: UseFormRegister<AuthFormType>;
-  error: string;
+  error: string[];
   name: keyof AuthFormType;
   passwordValue: string;
 }) => {
@@ -70,8 +80,8 @@ export const PasswordField = ({
         labelPlacement="outside"
         label={TEXTS.PASSWORD_LABEL}
         placeholder={TEXTS.PASSWORD_PLACEHOLDER}
-        isInvalid={!!error}
-        errorMessage={error}
+        isInvalid={error.length > 0}
+        errorMessage={ErrorMessageList(error)}
         type={isPasswordVisible ? 'text' : 'password'}
       />
       <Progress

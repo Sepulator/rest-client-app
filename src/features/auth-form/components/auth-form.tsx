@@ -1,5 +1,7 @@
 'use client';
 
+import type { FieldErrors } from 'react-hook-form';
+
 import { Form, Input, Button, Card, CardHeader, CardBody, CardFooter, Divider, Link } from '@heroui/react';
 import { valibotResolver } from '@hookform/resolvers/valibot';
 import { type FormEvent } from 'react';
@@ -20,6 +22,11 @@ const TEXTS = {
 
 const EMAIL_NAME = 'email';
 const PASSWORD_NAME = 'password';
+
+const createErrorsArray = (errors: FieldErrors) =>
+  Object.values(errors.password?.types ?? {})
+    .flat()
+    .filter((value) => typeof value === 'string');
 
 export const AuthForm = ({
   heading,
@@ -43,16 +50,16 @@ export const AuthForm = ({
   });
 
   const onSubmit = (event: FormEvent<HTMLFormElement>) => {
-    void handleSubmit((data) => {
+    void handleSubmit(() => {
       event.preventDefault();
-
-      console.log('data:', data);
 
       router.push('/');
     })(event);
   };
 
   const passwordValue = watch(PASSWORD_NAME);
+
+  const passwordErrorsArray = createErrorsArray(errors);
 
   return (
     <Card className="w-full max-w-sm p-2">
@@ -81,7 +88,7 @@ export const AuthForm = ({
           />
           <PasswordField
             register={register}
-            error={errors.password?.message ?? ''}
+            error={passwordErrorsArray}
             name={PASSWORD_NAME}
             passwordValue={passwordValue}
           />
