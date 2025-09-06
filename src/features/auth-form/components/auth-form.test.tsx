@@ -234,4 +234,24 @@ describe('AuthForm', () => {
 
     expect(mockPush).not.toHaveBeenCalled();
   });
+
+  it('should redirect to the main page on submit when password has unicode characters', async () => {
+    render(<AuthForm heading="heading" secondaryAction={secondaryActionMock} />);
+    const user = userEvent.setup();
+    const unicodePassword = 'юникод8🚰';
+
+    const emailInput = screen.getByRole('textbox', { name: 'Email' });
+    const passwordInput = screen.getByLabelText(PASSWORD_LABEL);
+    const submitButton = screen.getByRole('button', { name: /submit/i });
+
+    await user.click(emailInput);
+    await user.type(emailInput, VALID_EMAIL);
+
+    await user.click(passwordInput);
+    await user.type(passwordInput, unicodePassword);
+
+    await user.click(submitButton);
+
+    expect(mockPush).toHaveBeenCalledWith('/');
+  });
 });
