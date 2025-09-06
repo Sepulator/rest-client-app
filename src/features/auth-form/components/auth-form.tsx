@@ -2,14 +2,12 @@
 
 import { Form, Input, Button, Card, CardHeader, CardBody, CardFooter, Divider, Link } from '@heroui/react';
 import { valibotResolver } from '@hookform/resolvers/valibot';
-import { useState, type FormEvent, useEffect } from 'react';
+import { type FormEvent } from 'react';
 import { useForm } from 'react-hook-form';
-import * as v from 'valibot';
 
 import { MailIcon } from '@/components/icons/mail-icon';
 import { type AuthFormType } from '@/features/auth-form/types/types';
 
-import { PASSWORD_STRENGTH_MAX } from '../constants/constants';
 import { useSchemas } from '../hooks/use-schemas';
 import { PasswordField } from './password-field';
 
@@ -29,8 +27,7 @@ export const AuthForm = ({
   heading: string;
   secondaryAction: { intro: string; link: string; linkText: string };
 }) => {
-  const [passwordStrength, setPasswordStrength] = useState<number>(0);
-  const { authSchema, passwordSchema } = useSchemas();
+  const { authSchema } = useSchemas();
   const {
     register,
     watch,
@@ -56,14 +53,6 @@ export const AuthForm = ({
   };
 
   const passwordValue = watch(PASSWORD_NAME);
-
-  useEffect(() => {
-    const parsed = v.safeParse(passwordSchema, passwordValue);
-    const issues = parsed.issues ?? [];
-    const value = PASSWORD_STRENGTH_MAX - issues.length;
-
-    setPasswordStrength(value);
-  }, [passwordValue, passwordSchema]);
 
   return (
     <Card className="w-full max-w-sm p-2">
@@ -93,8 +82,8 @@ export const AuthForm = ({
           <PasswordField
             register={register}
             error={errors.password?.message ?? ''}
-            passwordStrength={passwordStrength}
             name={PASSWORD_NAME}
+            passwordValue={passwordValue}
           />
           <Button color="primary" type="submit" className="w-full">
             {TEXTS.SUBMIT}

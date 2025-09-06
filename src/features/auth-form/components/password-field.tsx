@@ -1,12 +1,14 @@
 import { Progress } from '@heroui/react';
 import { Input } from '@heroui/react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { type UseFormRegister } from 'react-hook-form';
+import * as v from 'valibot';
 
 import { EyeFilledIcon } from '@/components/icons/eye-filled-icon';
 import { EyeSlashFilledIcon } from '@/components/icons/eye-slash-filled-icon';
 
 import { PASSWORD_STRENGTH_MAX } from '../constants/constants';
+import { useSchemas } from '../hooks/use-schemas';
 import { useStrength } from '../hooks/use-strength';
 import { type AuthFormType } from '../types/types';
 
@@ -20,21 +22,31 @@ const TEXTS = {
 export const PasswordField = ({
   register,
   error,
-  passwordStrength,
   name,
+  passwordValue,
 }: {
   register: UseFormRegister<AuthFormType>;
   error: string;
-  passwordStrength: number;
   name: keyof AuthFormType;
+  passwordValue: string;
 }) => {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+  const [passwordStrength, setPasswordStrength] = useState<number>(0);
+  const { passwordSchema } = useSchemas();
 
   const toggleVisibility = () => {
     setIsPasswordVisible(!isPasswordVisible);
   };
 
   const { label: strengthLabel, color: strengthColor } = useStrength({ passwordStrength });
+
+  useEffect(() => {
+    const parsed = v.safeParse(passwordSchema, passwordValue);
+    const issues = parsed.issues ?? [];
+    const value = PASSWORD_STRENGTH_MAX - issues.length;
+
+    setPasswordStrength(value);
+  }, [passwordValue, passwordSchema]);
 
   return (
     <div className="flex flex-col gap-1">
