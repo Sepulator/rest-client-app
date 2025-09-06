@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { type UseFormRegister } from 'react-hook-form';
 import * as v from 'valibot';
 
+import { ErrorMessageList } from '@/components/error-message-list';
 import { EyeFilledIcon } from '@/components/icons/eye-filled-icon';
 import { EyeSlashFilledIcon } from '@/components/icons/eye-slash-filled-icon';
 
@@ -17,16 +18,6 @@ const TEXTS = {
   PASSWORD_PLACEHOLDER: 'Enter your password',
   PASSWORD_TOGGLE_VISIBILITY: 'toggle password visibility',
   PASSWORD_LABEL: 'Password',
-};
-
-const ErrorMessageList = (errors: string[]) => {
-  return (
-    <ul>
-      {errors.map((error, i) => (
-        <li key={i}>{error}</li>
-      ))}
-    </ul>
-  );
 };
 
 export const PasswordField = ({

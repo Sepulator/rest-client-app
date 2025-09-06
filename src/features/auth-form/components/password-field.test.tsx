@@ -18,7 +18,7 @@ const mockRegister: UseFormRegister<AuthFormType> = (fieldName) => ({
 
 describe('PasswordField', () => {
   it('should render password input and password strength progress and toggle password visibility button', () => {
-    render(<PasswordField register={mockRegister} error="" passwordValue={''} name={name} />);
+    render(<PasswordField register={mockRegister} error={[]} passwordValue={''} name={name} />);
 
     const input = screen.getByLabelText('Password');
     const progress = screen.getByLabelText('Password strength');
@@ -33,7 +33,7 @@ describe('PasswordField', () => {
   it('should set password type to text when toggle password visibility button is clicked', async () => {
     const user = userEvent.setup();
 
-    render(<PasswordField register={mockRegister} error="" passwordValue={''} name={name} />);
+    render(<PasswordField register={mockRegister} error={[]} passwordValue={''} name={name} />);
 
     const visibilityButton = screen.getByLabelText('toggle password visibility');
     const input = screen.getByLabelText('Password');
@@ -45,7 +45,7 @@ describe('PasswordField', () => {
   it('should set password type to password when toggle password visibility button is clicked twice', async () => {
     const user = userEvent.setup();
 
-    render(<PasswordField register={mockRegister} error="" passwordValue={''} name={name} />);
+    render(<PasswordField register={mockRegister} error={[]} passwordValue={''} name={name} />);
 
     const visibilityButton = screen.getByLabelText('toggle password visibility');
     const input = screen.getByLabelText('Password');
@@ -56,7 +56,7 @@ describe('PasswordField', () => {
     expect(input).toHaveAttribute('type', 'password');
   });
   it('should not have aria-invalid attribute when there is no error', () => {
-    render(<PasswordField register={mockRegister} error="" passwordValue={''} name={name} />);
+    render(<PasswordField register={mockRegister} error={[]} passwordValue={''} name={name} />);
 
     const input = screen.getByLabelText('Password');
 
@@ -64,7 +64,7 @@ describe('PasswordField', () => {
   });
 
   it('should have aria-invalid attribute when there is an error', () => {
-    render(<PasswordField register={mockRegister} error="error" passwordValue={''} name={name} />);
+    render(<PasswordField register={mockRegister} error={['error']} passwordValue={''} name={name} />);
 
     const input = screen.getByLabelText('Password');
 
@@ -74,7 +74,7 @@ describe('PasswordField', () => {
   it('should have render error message when there is an error', () => {
     const MESSAGE = 'error';
 
-    render(<PasswordField register={mockRegister} error={MESSAGE} passwordValue={''} name={name} />);
+    render(<PasswordField register={mockRegister} error={[MESSAGE]} passwordValue={''} name={name} />);
 
     const errorMessage = screen.getByText(MESSAGE);
 
