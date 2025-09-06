@@ -7,8 +7,10 @@ import type { AuthFormType } from '../types/types';
 
 import { PasswordField } from './password-field';
 
+const name = 'password' as const;
+
 const mockRegister: UseFormRegister<AuthFormType> = () => ({
-  name: 'password',
+  name: name,
   onChange: vi.fn(),
   onBlur: vi.fn(),
   ref: vi.fn(),
@@ -16,7 +18,7 @@ const mockRegister: UseFormRegister<AuthFormType> = () => ({
 
 describe('PasswordField', () => {
   it('should render password input and password strength progress and toggle password visibility button', () => {
-    render(<PasswordField register={mockRegister} error="" passwordStrength={0} name="password" />);
+    render(<PasswordField register={mockRegister} error="" passwordStrength={0} name={name} />);
 
     const input = screen.getByLabelText('Password');
     const progress = screen.getByLabelText('Password strength');
@@ -31,7 +33,7 @@ describe('PasswordField', () => {
   it('should set password type to text when toggle password visibility button is clicked', async () => {
     const user = userEvent.setup();
 
-    render(<PasswordField register={mockRegister} error="" passwordStrength={0} name="password" />);
+    render(<PasswordField register={mockRegister} error="" passwordStrength={0} name={name} />);
 
     const visibilityButton = screen.getByLabelText('toggle password visibility');
     const input = screen.getByLabelText('Password');
@@ -43,7 +45,7 @@ describe('PasswordField', () => {
   it('should set password type to password when toggle password visibility button is clicked twice', async () => {
     const user = userEvent.setup();
 
-    render(<PasswordField register={mockRegister} error="" passwordStrength={0} name="password" />);
+    render(<PasswordField register={mockRegister} error="" passwordStrength={0} name={name} />);
 
     const visibilityButton = screen.getByLabelText('toggle password visibility');
     const input = screen.getByLabelText('Password');
@@ -54,17 +56,27 @@ describe('PasswordField', () => {
     expect(input).toHaveAttribute('type', 'password');
   });
   it('should not have aria-invalid attribute when there is no error', () => {
-    render(<PasswordField register={mockRegister} error="" passwordStrength={0} name="password" />);
+    render(<PasswordField register={mockRegister} error="" passwordStrength={0} name={name} />);
 
     const input = screen.getByLabelText('Password');
 
     expect(input).not.toHaveAttribute('aria-invalid');
   });
+
   it('should have aria-invalid attribute when there is an error', () => {
-    render(<PasswordField register={mockRegister} error="error" passwordStrength={0} name="password" />);
+    render(<PasswordField register={mockRegister} error="error" passwordStrength={0} name={name} />);
 
     const input = screen.getByLabelText('Password');
 
     expect(input).toHaveAttribute('aria-invalid', 'true');
+  });
+  it('should have render error message when there is an error', () => {
+    const MESSAGE = 'error';
+
+    render(<PasswordField register={mockRegister} error={MESSAGE} passwordStrength={0} name={name} />);
+
+    const errorMessage = screen.getByText(MESSAGE);
+
+    expect(errorMessage).toBeInTheDocument();
   });
 });

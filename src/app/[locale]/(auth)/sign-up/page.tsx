@@ -11,7 +11,7 @@ const TEXTS = {
 export default function SignUpPage() {
   const secondaryAction = {
     intro: TEXTS.SECONDARY_ACTION,
-    link: '/sign-up',
+    link: '/login',
     linkText: TEXTS.SECONDARY_ACTION_LINK,
   };
 

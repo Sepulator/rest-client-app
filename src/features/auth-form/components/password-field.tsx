@@ -55,7 +55,6 @@ export const PasswordField = ({
             )}
           </button>
         }
-        validationBehavior="aria"
         labelPlacement="outside"
         label={TEXTS.PASSWORD_LABEL}
         placeholder={TEXTS.PASSWORD_PLACEHOLDER}
