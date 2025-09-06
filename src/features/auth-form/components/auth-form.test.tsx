@@ -51,6 +51,7 @@ describe('AuthForm', () => {
 
     expect(errorMessage).toBeInTheDocument();
   });
+
   it('should render email input with aria-invalid attribute when email is invalid', async () => {
     render(<AuthForm heading="heading" secondaryAction={secondaryActionMock} />);
     const user = userEvent.setup();
@@ -62,6 +63,7 @@ describe('AuthForm', () => {
 
     expect(emailInput).toHaveAttribute('aria-invalid', 'true');
   });
+
   it('should render email input without aria-invalid attribute when email is valid', async () => {
     render(<AuthForm heading="heading" secondaryAction={secondaryActionMock} />);
     const user = userEvent.setup();
