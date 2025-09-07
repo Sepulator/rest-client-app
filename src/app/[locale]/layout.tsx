@@ -1,16 +1,16 @@
 import type { Locale } from 'next-intl';
 
 import { clsx } from 'clsx';
-import { hasLocale } from 'next-intl';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 
 import { routing } from '@/i18n/routing';
+import { isLocale } from '@/utils/type-guards';
 
 import { AppLayout } from './_components/app-layout';
 import { geistMono, geistSans } from './fonts';
-import { Providers } from './providers';
 import './globals.css';
+import { Providers } from './providers';
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: Locale }> }) {
   const { locale } = await params;
@@ -33,7 +33,7 @@ export function generateStaticParams() {
 export default async function LocaleLayout({ children, params }: LayoutProps<'/[locale]'>) {
   const { locale } = await params;
 
-  if (!hasLocale(routing.locales, locale)) {
+  if (!isLocale(locale)) {
     notFound();
   }
 

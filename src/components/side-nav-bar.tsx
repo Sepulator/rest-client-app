@@ -15,7 +15,7 @@ type SideNavBarProps = {
 
 export function SideNavBar({ tempLogout }: SideNavBarProps) {
   return (
-    <div className="flex h-full w-70 flex-col justify-center gap-5 p-10">
+    <div className="sticky top-0 flex max-h-screen w-70 flex-col justify-center gap-5 p-10">
       {navBarLink.map((link) => (
         <Link href={link.href} key={link.title}>
           {link.title}

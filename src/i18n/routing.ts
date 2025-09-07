@@ -8,3 +8,5 @@ export const routing = defineRouting({
     maxAge: 172800,
   },
 });
+
+export type Locale = (typeof routing.locales)[number];
