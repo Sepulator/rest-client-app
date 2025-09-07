@@ -11,7 +11,7 @@ import { Link, usePathname } from '@/i18n/navigation';
 
 const linkClasses = [
   'transition-all duration-300 ease-in-out',
-  'opacity-50',
+  'opacity-70',
   'data-[active=true]:pointer-events-none',
   'data-[active=true]:opacity-100',
   'hover:opacity-100',
