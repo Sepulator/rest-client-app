@@ -39,11 +39,12 @@ export default function Header() {
       onMenuOpenChange={setIsMenuOpen}
       isBordered={decorate}
       maxWidth="full"
+      className={cn(decorate && 'bg-gray-900/40')}
       classNames={{
         item: [...linkClasses, 'hidden sm:flex', 'data-[active=true]:font-normal'],
         menuItem: [...linkClasses, 'w-full p-5 text-center text-xl'],
         content: ['gap-8'],
-        wrapper: ['transition-all duration-300 ease-in-out h-20', cn(decorate && 'h-15')],
+        wrapper: ['transition-all duration-200 ease-in-out max-w-screen-2xl'],
       }}
     >
       <NavbarContent>

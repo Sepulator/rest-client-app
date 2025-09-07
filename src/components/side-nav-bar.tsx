@@ -23,7 +23,7 @@ export function SideNavBar({ tempLogout }: SideNavBarProps) {
   const pathname = usePathname();
 
   return (
-    <div className="sticky top-20 flex max-h-screen w-80 flex-col justify-center gap-3 p-10">
+    <div className="sticky top-20 flex max-h-[80vh] w-70 flex-col justify-center gap-3 overflow-y-auto p-10 lg:w-80">
       <Button isIconOnly variant="light" className="absolute top-1 right-5">
         <ChevronIcon className="text-xl" />
       </Button>
