@@ -3,17 +3,19 @@
 import { cn, Navbar, NavbarContent, NavbarItem } from '@heroui/react';
 import React, { useEffect, useState } from 'react';
 
+import { HeaderLink } from '@/components/header/header-link';
 import { HeaderNav } from '@/components/header/header-nav';
 import { Logo } from '@/components/header/logo';
 import { ROUTES } from '@/config/routes';
 import { useChangeOnScroll } from '@/hooks/use-change-on-scroll';
-import { Link, usePathname } from '@/i18n/navigation';
+import { usePathname } from '@/i18n/navigation';
 
 const linkClasses = [
   'transition-all duration-300 ease-in-out',
   'opacity-70',
   'data-[active=true]:pointer-events-none',
   'data-[active=true]:opacity-100',
+  'data-[active=true]:text-primary ',
   'hover:opacity-100',
 ];
 
@@ -39,7 +41,7 @@ export default function Header() {
       onMenuOpenChange={setIsMenuOpen}
       isBordered={decorate}
       maxWidth="full"
-      className={cn(decorate && 'bg-gray-900/40')}
+      className={cn(decorate && 'bg-default-100/50')}
       classNames={{
         item: [...linkClasses, 'hidden sm:flex', 'data-[active=true]:font-normal'],
         menuItem: [...linkClasses, 'w-full p-5 text-center text-xl'],
@@ -50,7 +52,7 @@ export default function Header() {
       <NavbarContent>
         <Logo />
         <NavbarItem isActive={checkIsActive(ROUTES.HOME)}>
-          <Link href={ROUTES.HOME}>Home</Link>
+          <HeaderLink href={ROUTES.HOME} title="Home" />
         </NavbarItem>
       </NavbarContent>
 

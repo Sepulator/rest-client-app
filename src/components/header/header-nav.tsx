@@ -2,9 +2,9 @@ import { NavbarContent, NavbarItem, NavbarMenu, NavbarMenuItem, NavbarMenuToggle
 import { Button, cn } from '@heroui/react';
 import React, { useState } from 'react';
 
+import { HeaderLink } from '@/components/header/header-link';
 import { LangToggle } from '@/components/header/lang-toggle';
 import { ROUTES } from '@/config/routes';
-import { Link } from '@/i18n/navigation';
 
 const navLinks = {
   base: [{ href: ROUTES.HOME, title: 'Home' }],
@@ -37,9 +37,7 @@ export function HeaderNav({ isMenuOpen, checkIsActive }: HeaderNavProps) {
 
           return (
             <Wrapper key={isMobile ? `${title}-${index.toString()}` : title} isActive={checkIsActive(href)}>
-              <Link href={href} className={cn(isMobile && 'block w-full gap-4 text-2xl')}>
-                {title}
-              </Link>
+              <HeaderLink title={title} href={href} isMobile={isMobile} />
             </Wrapper>
           );
         })}

@@ -22,9 +22,9 @@ export function Sidebar({ tempLogout }: SideNavBarProps) {
       data-closed={!isOpen}
       role="navigation"
       className={cn(
-        'group sticky top-16 z-20 mb-5 flex max-h-[75vh] w-full flex-col justify-center px-6 pt-15',
-        'dark:bg-background/90 backdrop-blur-lg',
-        'md:w-80 md:data-[closed=true]:w-22',
+        'group sticky top-16 z-20 mb-5 flex max-h-[75vh] w-full flex-col justify-center px-6',
+        'dark:bg-background/80 border-divider border-b-1 backdrop-blur-lg',
+        'md:top-20 md:w-80 md:border-b-0 md:bg-transparent md:data-[closed=true]:w-22',
         'duration-400 ease-in-out'
       )}
     >

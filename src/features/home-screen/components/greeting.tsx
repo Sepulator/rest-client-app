@@ -1,26 +1,35 @@
 import { AuthNav } from '@/components/auth-nav';
+import { CalendarIcon } from '@/components/icons/calendar';
 
 type GreetingProps = {
-  userName?: string;
+  user?: { name: string; email: string };
   dayOfWeek?: string;
 };
 
 const TEXTS = {
-  WELCOME: (userName?: string) => `Welcome ${userName ? 'back' : ''}`,
+  WELCOME: (userName?: string) => `Welcome${userName ? ' back' : ''}`,
   GREETING_FALLBACK: 'please login',
 };
 
-export function Greeting({ dayOfWeek, userName }: GreetingProps) {
-  const title = TEXTS.WELCOME(userName);
-  const greeting = userName ?? TEXTS.GREETING_FALLBACK;
+export function Greeting({ dayOfWeek, user }: GreetingProps) {
+  const title = TEXTS.WELCOME(user?.name);
+  const greeting = user?.name ?? TEXTS.GREETING_FALLBACK;
 
   return (
-    <div className="mb-16">
-      <h1 className="mb-4 text-2xl font-bold">
-        {title}, <span className="text-primary-500">{greeting}</span>
-      </h1>
-      {dayOfWeek && <p>Happy {dayOfWeek}</p>}
-      {!userName && <AuthNav />}
+    <div className="mb-30 flex w-full flex-col-reverse justify-between md:flex-row">
+      <div>
+        <h1 className="mb-2 text-2xl font-bold">
+          {title}, <span className="text-primary">{greeting}👋</span>
+        </h1>
+        {user ? <p className="text-medium text-secondary-800 dark:text-secondary">{user.email}</p> : <AuthNav />}
+      </div>
+
+      {dayOfWeek && (
+        <div className="mb-4 flex h-fit items-center gap-2">
+          <CalendarIcon className="text-primary" />
+          {dayOfWeek}
+        </div>
+      )}
     </div>
   );
 }
