@@ -1,6 +1,6 @@
 import type { Locale } from 'next-intl';
 
-import { clsx } from 'clsx';
+import { cn } from '@heroui/react';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 
@@ -8,8 +8,8 @@ import { routing } from '@/i18n/routing';
 import { isLocale } from '@/utils/type-guards';
 
 import { AppLayout } from './_components/app-layout';
-import { geistMono, geistSans } from './fonts';
 import './globals.css';
+import { geistMono, geistSans } from './fonts';
 import { Providers } from './providers';
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: Locale }> }) {
@@ -41,7 +41,7 @@ export default async function LocaleLayout({ children, params }: LayoutProps<'/[
 
   return (
     <html lang={locale}>
-      <body className={clsx(geistSans.variable, geistMono.variable, 'dark antialiased')}>
+      <body className={cn(geistSans.variable, geistMono.variable, 'dark text-foreground bg-background antialiased')}>
         <Providers locale={locale}>
           <AppLayout>{children}</AppLayout>
         </Providers>
