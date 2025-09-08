@@ -2,66 +2,43 @@
 
 import type { ChangeEvent, FormEvent } from 'react';
 
-import { Button, Input, Select, SelectItem } from '@heroui/react';
-import { useState } from 'react';
+import { Button, Input } from '@heroui/react';
 
-import { SubmitIcon } from '@/components/icons/submit-icon';
+import { useHeaders } from '@/hooks/use-headers';
+import { useHttpRequest } from '@/hooks/use-http-request';
 
-const HTTP_METHODS = ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'HEAD', 'OPTIONS'];
-const DURATION = 1500;
+import { HeadersSection } from './headers-section';
+import { MethodSelector } from './method-selector';
 
 export const HttpRequestForm = () => {
-  const [selectedMethod, setSelectedMethod] = useState(HTTP_METHODS[0]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [url, setUrl] = useState('https://jsonplaceholder.typicode.com/posts/1');
+  const { method, setMethod, url, setUrl, executeRequest, HTTP_METHODS } = useHttpRequest();
+  const { headers, addHeader, updateHeader, removeHeader } = useHeaders();
 
   const handleSelectionChange = (event: ChangeEvent<HTMLSelectElement>) => {
-    setSelectedMethod(event.target.value);
+    setMethod(event.target.value);
   };
 
-  const handleSubmit = (event: FormEvent) => {
+  const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
-    if (!url) return;
-    setIsLoading(true);
-
-    setTimeout(() => {
-      setIsLoading(false);
-    }, DURATION);
+    await executeRequest(headers);
   };
 
   return (
-    <form onSubmit={handleSubmit} className="flex w-xl flex-row">
-      <Select
-        selectedKeys={[selectedMethod]}
-        onChange={handleSelectionChange}
-        aria-label="Select HTTP method"
-        className="w-40"
-        radius="none"
-        placeholder="Method"
-      >
-        {HTTP_METHODS.map((method) => (
-          <SelectItem key={method} textValue={method}>
-            <div className="flex items-center gap-2">
-              <span className="font-medium">{method}</span>
-            </div>
-          </SelectItem>
-        ))}
-      </Select>
-
-      <Input
-        placeholder="https://api.example.com/endpoint"
-        value={url}
-        onValueChange={setUrl}
-        radius="none"
-        className="border-l-0"
-      />
-
-      <div>
-        <Button type="submit" color="primary" isLoading={isLoading} radius="none">
-          {!isLoading && <SubmitIcon />}
+    <>
+      <form onSubmit={(event) => void handleSubmit(event)} className="flex w-xl flex-row">
+        <MethodSelector method={method} methods={HTTP_METHODS} onChange={handleSelectionChange} />
+        <Input value={url} onValueChange={setUrl} radius="none" className="border-1 border-l-0 border-gray-600" />
+        <Button type="submit" color="primary" radius="none" className="h-auto">
           Send
         </Button>
-      </div>
-    </form>
+      </form>
+
+      <HeadersSection
+        headers={headers}
+        onAddHeader={addHeader}
+        onUpdateHeader={updateHeader}
+        onRemoveHeader={removeHeader}
+      />
+    </>
   );
 };

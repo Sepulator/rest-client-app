@@ -13,7 +13,7 @@ export default function DashboardLayout({ children, welcome }: LayoutProps<'/[lo
   return isTemporaryLogin ? (
     <section className="flex h-100 min-h-full flex-row items-center gap-4 divide-x-1">
       <SideNavBar tempLogout={tempLogout} />
-      <div className="flex flex-1 justify-center">{children}</div>
+      <div className="mt-4 flex flex-1 flex-col self-start">{children}</div>
     </section>
   ) : (
     welcome

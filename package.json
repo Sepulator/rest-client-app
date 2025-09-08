@@ -44,7 +44,8 @@
     "next": "15.5.2",
     "next-intl": "^4.3.5",
     "react": "19.1.0",
-    "react-dom": "19.1.0"
+    "react-dom": "19.1.0",
+    "valibot": "^1.1.0"
   },
   "devDependencies": {
     "@commitlint/cli": "^19.8.1",
