@@ -1,10 +1,10 @@
 'use client';
 
 import type { FieldErrors } from 'react-hook-form';
+import type { SubmitHandler } from 'react-hook-form';
 
 import { Form, Input, Button, Card, CardHeader, CardBody, CardFooter, Divider, Link as HeroLink } from '@heroui/react';
 import { valibotResolver } from '@hookform/resolvers/valibot';
-import { type FormEvent } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { MailIcon } from '@/components/icons/mail-icon';
@@ -50,12 +50,8 @@ export const AuthForm = ({ heading, secondaryAction }: Props) => {
     resolver: valibotResolver(authSchema),
   });
 
-  const onSubmit = (event: FormEvent<HTMLFormElement>) => {
-    void handleSubmit(() => {
-      event.preventDefault();
-
-      router.push('/');
-    })(event);
+  const onSubmit: SubmitHandler<AuthFormType> = (_) => {
+    router.push('/');
   };
 
   const passwordValue = watch(PASSWORD_NAME);
@@ -71,9 +67,7 @@ export const AuthForm = ({ heading, secondaryAction }: Props) => {
       <CardBody>
         <Form
           className="flex w-full flex-col items-stretch gap-4"
-          onSubmit={(event) => {
-            onSubmit(event);
-          }}
+          onSubmit={(event) => void handleSubmit(onSubmit)(event)}
         >
           <Input
             endContent={<MailIcon className="text-default-400 pointer-events-none shrink-0 text-2xl" />}

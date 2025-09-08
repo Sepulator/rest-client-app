@@ -1,19 +1,30 @@
+import type { ReactNode } from 'react';
+
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, it, expect, vi, afterEach } from 'vitest';
 
 import { AuthForm } from './auth-form';
 
-const mockPush = vi.fn();
+export const createRouterMock = () => ({
+  push: mockPush,
+  replace: vi.fn(),
+  back: vi.fn(),
+  forward: vi.fn(),
+  prefetch: vi.fn(),
+});
+
+export const mockPush = vi.fn();
+
+vi.mock('next/navigation', () => ({ useRouter: createRouterMock }));
 
 vi.mock('@/i18n/navigation', () => ({
-  useRouter: () => ({
-    push: mockPush,
-    replace: vi.fn(),
-    back: vi.fn(),
-    forward: vi.fn(),
-    prefetch: vi.fn(),
-  }),
+  useRouter: () => createRouterMock(),
+  Link: ({ children, href, ...props }: { [key: string]: unknown; children: ReactNode; href: string }) => (
+    <a href={href} {...props}>
+      {children}
+    </a>
+  ),
 }));
 
 describe('AuthForm', () => {
