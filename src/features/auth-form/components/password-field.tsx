@@ -32,11 +32,6 @@ export const PasswordField = ({ register, error, name, passwordValue }: Props) =
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [passwordStrength, setPasswordStrength] = useState<number>(0);
   const { passwordSchema } = useSchemas();
-
-  const toggleVisibility = () => {
-    setIsPasswordVisible(!isPasswordVisible);
-  };
-
   const { label: strengthLabel, color: strengthColor } = useStrength({ passwordStrength });
 
   useEffect(() => {
@@ -46,6 +41,10 @@ export const PasswordField = ({ register, error, name, passwordValue }: Props) =
 
     setPasswordStrength(value);
   }, [passwordValue, passwordSchema]);
+
+  const toggleVisibility = () => {
+    setIsPasswordVisible(!isPasswordVisible);
+  };
 
   return (
     <div className="flex flex-col gap-1">
@@ -70,7 +69,7 @@ export const PasswordField = ({ register, error, name, passwordValue }: Props) =
         label={TEXTS.PASSWORD_LABEL}
         placeholder={TEXTS.PASSWORD_PLACEHOLDER}
         isInvalid={error.length > 0}
-        errorMessage={ErrorMessageList(error)}
+        errorMessage={ErrorMessageList({ errors: error })}
         classNames={{ input: cn(!isPasswordVisible && 'hidden-password') }}
       />
       <Progress
