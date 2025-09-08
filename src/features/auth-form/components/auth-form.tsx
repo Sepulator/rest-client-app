@@ -19,11 +19,11 @@ import { PasswordField } from './password-field';
 const TEXTS = {
   EMAIL_LABEL: 'Email',
   SUBMIT: 'Submit',
-  EMAIL_PLACEHOLDER: 'Enter your email',
 };
 
 const EMAIL_NAME = 'email';
 const PASSWORD_NAME = 'password';
+const EMAIL_PLACEHOLDER = 'email@example.com';
 
 const createErrorsArray = (errors: FieldErrors) =>
   Object.values(errors.password?.types ?? {})
@@ -75,7 +75,7 @@ export const AuthForm = ({ heading, secondaryAction }: Props) => {
             autoComplete="email"
             label={TEXTS.EMAIL_LABEL}
             labelPlacement="outside"
-            placeholder="you@example.com"
+            placeholder={EMAIL_PLACEHOLDER}
             {...register(EMAIL_NAME)}
             errorMessage={errors.email?.message}
             isInvalid={!!errors.email}
