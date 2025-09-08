@@ -6,7 +6,11 @@ const TEXTS = {
   PASSWORD_STRENGTH_LABEL_4: 'Excellent',
 };
 
-export const useStrength = ({ passwordStrength }: { passwordStrength: number }) => {
+type Props = {
+  passwordStrength: number;
+};
+
+export const useStrength = ({ passwordStrength }: Props) => {
   const STRENGTH_CONFIG: Record<number, { label: string; color: 'danger' | 'warning' | 'success' }> = {
     0: {
       label: TEXTS.PASSWORD_STRENGTH_LABEL_0,

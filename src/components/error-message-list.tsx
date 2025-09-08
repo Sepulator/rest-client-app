@@ -1,4 +1,8 @@
-export const ErrorMessageList = (errors: string[]) => {
+type Props = {
+  errors: string[];
+};
+
+export const ErrorMessageList = ({ errors }: Props) => {
   return (
     <ul>
       {errors.map((error, i) => (

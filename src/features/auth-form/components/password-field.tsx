@@ -21,17 +21,14 @@ const TEXTS = {
   PASSWORD_LABEL: 'Password',
 };
 
-export const PasswordField = ({
-  register,
-  error,
-  name,
-  passwordValue,
-}: {
+type Props = {
   register: UseFormRegister<AuthFormType>;
   error: string[];
   name: keyof AuthFormType;
   passwordValue: string;
-}) => {
+};
+
+export const PasswordField = ({ register, error, name, passwordValue }: Props) => {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [passwordStrength, setPasswordStrength] = useState<number>(0);
   const { passwordSchema } = useSchemas();

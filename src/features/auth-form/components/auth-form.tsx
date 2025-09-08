@@ -10,6 +10,7 @@ import { useForm } from 'react-hook-form';
 import { MailIcon } from '@/components/icons/mail-icon';
 import { type AuthFormType } from '@/features/auth-form/types/types';
 import { useRouter } from '@/i18n/navigation';
+import { type SecondaryAction } from '@/types/types';
 
 import { useSchemas } from '../hooks/use-schemas';
 import { PasswordField } from './password-field';
@@ -28,13 +29,12 @@ const createErrorsArray = (errors: FieldErrors) =>
     .flat()
     .filter((value) => typeof value === 'string');
 
-export const AuthForm = ({
-  heading,
-  secondaryAction,
-}: {
+type Props = {
   heading: string;
-  secondaryAction: { intro: string; link: string; linkText: string };
-}) => {
+  secondaryAction: SecondaryAction;
+};
+
+export const AuthForm = ({ heading, secondaryAction }: Props) => {
   const { authSchema } = useSchemas();
   const router = useRouter();
   const {

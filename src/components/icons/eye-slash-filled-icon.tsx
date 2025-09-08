@@ -1,6 +1,8 @@
 import type { SVGProps } from 'react';
 
-export const EyeSlashFilledIcon = (props: SVGProps<SVGSVGElement>) => {
+type Props = SVGProps<SVGSVGElement>;
+
+export const EyeSlashFilledIcon = (props: Props) => {
   return (
     <svg
       aria-hidden="true"
