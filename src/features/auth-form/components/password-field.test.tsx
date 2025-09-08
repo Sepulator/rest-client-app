@@ -42,6 +42,7 @@ describe('PasswordField', () => {
 
     expect(input).not.toHaveClass('hidden-password');
   });
+
   it('should make password input hidden when toggle password visibility button is clicked twice', async () => {
     const user = userEvent.setup();
 
@@ -55,6 +56,7 @@ describe('PasswordField', () => {
 
     expect(input).toHaveClass('hidden-password');
   });
+
   it('should not have aria-invalid attribute when there is no error', () => {
     render(<PasswordField register={mockRegister} error={[]} passwordValue={''} name={name} />);
 
