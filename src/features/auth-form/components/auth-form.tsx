@@ -2,7 +2,7 @@
 
 import type { FieldErrors } from 'react-hook-form';
 
-import { Form, Input, Button, Card, CardHeader, CardBody, CardFooter, Divider, Link } from '@heroui/react';
+import { Form, Input, Button, Card, CardHeader, CardBody, CardFooter, Divider, Link as HeroLink } from '@heroui/react';
 import { valibotResolver } from '@hookform/resolvers/valibot';
 import { type FormEvent } from 'react';
 import { useForm } from 'react-hook-form';
@@ -10,6 +10,7 @@ import { useForm } from 'react-hook-form';
 import { MailIcon } from '@/components/icons/mail-icon';
 import { type AuthFormType } from '@/features/auth-form/types/types';
 import { useRouter } from '@/i18n/navigation';
+import { Link as IntlLink } from '@/i18n/navigation';
 import { type SecondaryAction } from '@/types/types';
 
 import { useSchemas } from '../hooks/use-schemas';
@@ -100,7 +101,10 @@ export const AuthForm = ({ heading, secondaryAction }: Props) => {
       <CardFooter className="flex-col gap-2">
         <Divider />
         <div className="text-small">
-          <span>{secondaryAction.intro}</span> <Link href={secondaryAction.link}>{secondaryAction.linkText}</Link>
+          <span>{secondaryAction.intro}</span>{' '}
+          <HeroLink as={IntlLink} href={secondaryAction.link}>
+            {secondaryAction.linkText}
+          </HeroLink>
         </div>
       </CardFooter>
     </Card>
