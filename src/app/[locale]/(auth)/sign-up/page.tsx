@@ -15,9 +15,5 @@ export default function SignUpPage() {
     linkText: TEXTS.SECONDARY_ACTION_LINK,
   };
 
-  return (
-    <>
-      <AuthForm heading={TEXTS.HEADING} secondaryAction={secondaryAction} />
-    </>
-  );
+  return <AuthForm heading={TEXTS.HEADING} secondaryAction={secondaryAction} />;
 }
