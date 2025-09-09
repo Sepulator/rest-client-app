@@ -2,16 +2,17 @@
 
 import { useEffect, useState } from 'react';
 
-import { isClient } from '@/utils/contants';
-import { throttle } from '@/utils/trottle';
+import { throttle } from '@/utils/throttle';
 
 export function useChangeOnScroll(offset: number, delay?: number) {
-  const [isScrolled, setIsScrolled] = useState(() => isClient && window.scrollY > offset);
+  const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
     const handleScroll = throttle(() => {
       setIsScrolled(window.scrollY > offset);
     }, delay);
+
+    handleScroll();
 
     window.addEventListener('scroll', handleScroll);
 

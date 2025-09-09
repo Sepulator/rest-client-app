@@ -18,8 +18,8 @@ export function Greeting({ dayOfWeek, user }: GreetingProps) {
   return (
     <div className="mb-30 flex w-full flex-col-reverse justify-between md:flex-row">
       <div>
-        <h1 className="mb-2 text-2xl font-bold">
-          {title}, <span className="text-primary">{greeting}👋</span>
+        <h1 className="mb-2 font-bold">
+          {title}, <span className="text-primary whitespace-nowrap">{greeting}👋</span>
         </h1>
         {user ? <p className="text-medium text-secondary-800 dark:text-secondary">{user.email}</p> : <AuthNav />}
       </div>
