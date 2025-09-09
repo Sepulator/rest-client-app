@@ -1,6 +1,6 @@
 import type { SVGProps } from 'react';
 
-import { DEFAULT_ICON_PROPS } from '@/config/default-icon-props';
+import { DEFAULT_ICON_PROPS } from '@/components/icons/constants/constants';
 
 export const HomeIcon = (props: SVGProps<SVGSVGElement>) => {
   return (
