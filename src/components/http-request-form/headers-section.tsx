@@ -12,7 +12,7 @@ type HeadersSectionProps = {
 };
 
 export const HeadersSection = ({ headers, onAddHeader, onUpdateHeader, onRemoveHeader }: HeadersSectionProps) => (
-  <div className="mt-6 w-xl">
+  <>
     <div className="mb-4 flex items-center justify-between">
       <h3>HTTP Headers</h3>
       <Button size="sm" variant="flat" radius="none" onPress={onAddHeader}>
@@ -32,5 +32,5 @@ export const HeadersSection = ({ headers, onAddHeader, onUpdateHeader, onRemoveH
         }}
       />
     ))}
-  </div>
+  </>
 );
