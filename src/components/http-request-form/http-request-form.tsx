@@ -1,7 +1,7 @@
 'use client';
 
 import { Button, Input } from '@heroui/react';
-import { useCallback, type ChangeEvent, type FormEvent } from 'react';
+import { useCallback, useState, type ChangeEvent, type FormEvent } from 'react';
 
 import { RequestBodyEditor } from '@/components/request-body-editor/request-body-editor';
 import { useHeaders } from '@/hooks/use-headers';
@@ -11,8 +11,12 @@ import { HeadersSection } from './headers-section';
 import { MethodSelector } from './method-selector';
 
 export const HttpRequestForm = () => {
-  const { method, setMethod, url, setUrl, executeRequest, HTTP_METHODS, body, setBody } = useHttpRequest();
+  const { method, setMethod, url, setUrl, executeRequest, HTTP_METHODS } = useHttpRequest();
   const { headers, addHeader, updateHeader, removeHeader } = useHeaders();
+
+  const [isJsonMode, setIsJsonMode] = useState(true);
+  const [jsonBody, setJsonBody] = useState('');
+  const [textBody, setTextBody] = useState('');
 
   const handleSelectionChange = useCallback(
     (event: ChangeEvent<HTMLSelectElement>) => {
@@ -23,27 +27,58 @@ export const HttpRequestForm = () => {
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
-    await executeRequest(headers);
+    const body = isJsonMode ? jsonBody : textBody;
+
+    await executeRequest(headers, body);
   };
 
   return (
-    <section className="w-xl">
-      <form onSubmit={(event) => void handleSubmit(event)} className="mb-6 flex flex-row">
-        <MethodSelector method={method} methods={HTTP_METHODS} onChange={handleSelectionChange} />
-        <Input value={url} onValueChange={setUrl} radius="none" className="border-1 border-l-0 border-gray-600" />
-        <Button type="submit" color="primary" radius="none" className="h-auto">
-          Send
-        </Button>
-      </form>
+    <div className="grid max-w-6xl grid-cols-2 gap-6">
+      <section>
+        <form onSubmit={(event) => void handleSubmit(event)} className="mb-6 flex flex-row">
+          <MethodSelector method={method} methods={HTTP_METHODS} onChange={handleSelectionChange} />
+          <Input value={url} onValueChange={setUrl} radius="none" className="border-1 border-l-0 border-gray-600" />
+          <Button type="submit" color="primary" radius="none" className="h-auto">
+            Send
+          </Button>
+        </form>
 
-      <HeadersSection
-        headers={headers}
-        onAddHeader={addHeader}
-        onUpdateHeader={updateHeader}
-        onRemoveHeader={removeHeader}
-      />
+        <HeadersSection
+          headers={headers}
+          onAddHeader={addHeader}
+          onUpdateHeader={updateHeader}
+          onRemoveHeader={removeHeader}
+        />
 
-      <RequestBodyEditor body={body} mode="json" onChange={setBody} />
-    </section>
+        <div className="mt-6">
+          <div className="mb-4 flex gap-1">
+            <Button
+              size="sm"
+              variant={isJsonMode ? 'bordered' : 'solid'}
+              onPress={() => {
+                setIsJsonMode(false);
+              }}
+            >
+              Text
+            </Button>
+            <Button
+              size="sm"
+              variant={isJsonMode ? 'solid' : 'bordered'}
+              onPress={() => {
+                setIsJsonMode(true);
+              }}
+            >
+              JSON
+            </Button>
+          </div>
+          {isJsonMode ? (
+            <RequestBodyEditor body={jsonBody} mode="json" onChange={setJsonBody} />
+          ) : (
+            <RequestBodyEditor body={textBody} mode="text" onChange={setTextBody} title="Text Content" />
+          )}
+        </div>
+      </section>
+      <section>Response section</section>
+    </div>
   );
 };

@@ -1,4 +1,5 @@
 import { json } from '@codemirror/lang-json';
+import { EditorView } from '@codemirror/view';
 import { Button } from '@heroui/react';
 import CodeMirror from '@uiw/react-codemirror';
 import { useMemo } from 'react';
@@ -18,7 +19,7 @@ export const RequestBodyEditor = ({
   onChange,
   readOnly = false,
   mode = 'json',
-  title = 'Request Body',
+  title = 'JSON Content',
 }: Props) => {
   const jsonError = useMemo(() => {
     if (mode !== 'json' || !body.trim()) return null;
@@ -42,7 +43,7 @@ export const RequestBodyEditor = ({
 
   return (
     <>
-      <div className="mt-6 mb-2 flex justify-between">
+      <div className="mb-2 flex h-8 items-center justify-between">
         <span>{title}</span>
         {mode === 'json' && !readOnly && onChange && (
           <Button size="sm" variant="flat" radius="none" onPress={prettifyJSON}>
@@ -54,7 +55,7 @@ export const RequestBodyEditor = ({
         value={body}
         onChange={onChange}
         editable={!readOnly}
-        extensions={mode === 'json' ? [json()] : []}
+        extensions={mode === 'json' ? [json(), EditorView.lineWrapping] : [EditorView.lineWrapping]}
         height="400px"
         theme="dark"
         style={{
