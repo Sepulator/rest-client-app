@@ -29,7 +29,7 @@ export function Greeting({ dayOfWeek, user }: GreetingProps) {
           <p className="text-medium text-secondary-800 dark:text-secondary">{user.email}</p>
         </div>
       ) : (
-        <div>
+        <div className="flex flex-col gap-5">
           <h1>{renderRichText('guest')}</h1>
           <AuthNav />
         </div>

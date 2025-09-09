@@ -20,6 +20,7 @@ export function SidebarLink({ title, href, Icon }: SidebarLinkProps) {
       className={cn(
         'border-default-700 hover:bg-default-300 flex rounded-lg border-l-4',
         'group-data-[closed=true]:pointer-events-none group-data-[closed=true]:border-l-0',
+        'md:group-data-[closed=true]:pointer-events-auto',
         'duration-50',
         isActive ? 'border-primary pointer-events-none opacity-100' : 'opacity-70'
       )}
