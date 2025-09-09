@@ -3,7 +3,7 @@ import userEvent from '@testing-library/user-event';
 import { type UseFormRegister } from 'react-hook-form';
 import { describe, it, expect, vi } from 'vitest';
 
-import { renderWithProviders as render } from '@/testing/test-utilities';
+import { renderWithProviders as render } from '@/testing/utils/render-with-providers';
 
 import type { AuthFormType } from '../types/types';
 

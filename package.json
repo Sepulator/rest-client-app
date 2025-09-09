@@ -12,7 +12,7 @@
     "dev": "next dev --turbopack",
     "build": "next build --turbopack",
     "start": "next start",
-    "lint": "eslint src --ext .ts,.tsx",
+    "lint": "eslint src --ext .ts,.tsx --max-warnings=0",
     "lint:fix": "eslint src --fix --ext .ts,.tsx",
     "format:fix": "prettier --write .",
     "lint:css:fix": "stylelint src/**/*.css --fix",

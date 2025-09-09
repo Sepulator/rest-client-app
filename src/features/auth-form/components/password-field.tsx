@@ -34,7 +34,7 @@ export const PasswordField = ({ register, error, name, passwordValue }: Props) =
     const value = PASSWORD_STRENGTH_MAX - issues.length;
 
     setPasswordStrength(value);
-  }, [passwordValue, passwordSchema]);
+  }, [passwordValue, passwordSchema, setPasswordStrength]);
 
   const toggleVisibility = () => {
     setIsPasswordVisible(!isPasswordVisible);

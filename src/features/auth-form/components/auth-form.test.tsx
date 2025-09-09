@@ -3,8 +3,8 @@ import type { ReactNode } from 'react';
 import { screen } from '@testing-library/react';
 import { describe, it, expect, vi, afterEach } from 'vitest';
 
-import { renderWithProviders as render } from '@/testing/test-utilities';
-import { renderWithUserEvent } from '@/testing/test-utilities';
+import { renderWithProviders as render } from '@/testing/utils/render-with-providers';
+import { renderWithUserEvent } from '@/testing/utils/render-with-user-event';
 
 import { AuthForm } from './auth-form';
 

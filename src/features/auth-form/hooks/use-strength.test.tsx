@@ -1,7 +1,7 @@
 import { renderHook, act } from '@testing-library/react';
 import { describe, it, expect } from 'vitest';
 
-import { IntlProvider } from '@/testing/test-utilities';
+import { IntlProvider } from '@/testing/utils/intl-provider';
 
 import { useStrength } from './use-strength';
 
