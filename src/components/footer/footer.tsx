@@ -1,27 +1,21 @@
-import { getTranslations } from 'next-intl/server';
+import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 
 import courseLogo from '@/assets/images/rs-logo.svg';
+import { teamInfo } from '@/components/footer/constants/team-info';
 import { GithubIcon } from '@/components/icons/github';
 import { saveSource } from '@/utils/save-source';
 
-const teamInfo = [
-  { name: 'yuri', github: 'https://github.com/Sepulator' },
-  { name: 'anastasiia', github: 'https://github.com/anastanei' },
-  { name: 'maria', github: 'https://github.com/IlinJoy' },
-] as const;
-
 const footerLinksClassName = 'opacity-70 duration-300 hover:opacity-100 flex gap-2 items-center';
 
-export async function Footer() {
-  const t = await getTranslations('Footer');
-  const currentYear = new Date().getFullYear();
+export function Footer() {
+  const t = useTranslations('Footer');
 
   return (
     <footer>
       <div className="border-divider border-t-1 p-6">
         <div className="mx-auto flex max-w-screen-2xl flex-col flex-wrap items-center justify-between gap-8 text-center whitespace-nowrap md:flex-row">
-          <span> © {currentYear}</span>
+          <span> © 2025</span>
 
           <div className="flex flex-wrap justify-center gap-3 text-sm">
             {teamInfo.map(({ name, github }) => (
