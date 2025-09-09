@@ -24,9 +24,8 @@ type Props = {
 
 export const PasswordField = ({ register, error, name, passwordValue }: Props) => {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
-  const [passwordStrength, setPasswordStrength] = useState<number>(0);
   const { passwordSchema } = useSchemas();
-  const { label: strengthLabel, color: strengthColor } = useStrength({ passwordStrength });
+  const { label: strengthLabel, color: strengthColor, passwordStrength, setPasswordStrength } = useStrength();
   const t = useTranslations('PasswordField');
 
   useEffect(() => {

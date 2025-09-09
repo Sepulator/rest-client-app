@@ -1,11 +1,10 @@
 import { useTranslations } from 'next-intl';
+import { useState } from 'react';
 
-type Props = {
-  passwordStrength: number;
-};
-
-export const useStrength = ({ passwordStrength }: Props) => {
+export const useStrength = () => {
   const t = useTranslations('PasswordStrength');
+
+  const [passwordStrength, setPasswordStrength] = useState<number>(0);
   const STRENGTH_CONFIG: Record<number, { label: string; color: 'danger' | 'warning' | 'success' }> = {
     0: {
       label: t('label0'),
@@ -31,5 +30,5 @@ export const useStrength = ({ passwordStrength }: Props) => {
 
   const { label, color } = STRENGTH_CONFIG[passwordStrength];
 
-  return { label, color } as const;
+  return { label, color, passwordStrength, setPasswordStrength } as const;
 };
