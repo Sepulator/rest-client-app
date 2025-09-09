@@ -1,7 +1,7 @@
 import type { Locale } from 'next-intl';
 
 import { cn } from '@heroui/react';
-import { getTranslations, setRequestLocale } from 'next-intl/server';
+import { getMessages, getTranslations, setRequestLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 
 import { routing } from '@/i18n/routing';
@@ -32,6 +32,7 @@ export function generateStaticParams() {
 
 export default async function LocaleLayout({ children, params }: LayoutProps<'/[locale]'>) {
   const { locale } = await params;
+  const messages = await getMessages();
 
   if (!isLocale(locale)) {
     notFound();
@@ -42,7 +43,7 @@ export default async function LocaleLayout({ children, params }: LayoutProps<'/[
   return (
     <html lang={locale}>
       <body className={cn(geistSans.variable, geistMono.variable, 'dark text-foreground bg-background antialiased')}>
-        <Providers locale={locale}>
+        <Providers locale={locale} messages={messages}>
           <AppLayout>{children}</AppLayout>
         </Providers>
       </body>

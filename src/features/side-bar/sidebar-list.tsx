@@ -3,11 +3,11 @@ import type { ReactNode } from 'react';
 import { cn } from '@heroui/react';
 import React from 'react';
 
-type WithTitle<T> = T & { title: string };
+type WithKey<T> = T & { key: string };
 
 type SidebarListProps<T> = {
-  itemData: WithTitle<T>[];
-  renderItem: (data: WithTitle<T>) => ReactNode;
+  itemData: WithKey<T>[];
+  renderItem: (data: WithKey<T>) => ReactNode;
   appendItems?: ReactNode[];
 };
 
@@ -22,7 +22,7 @@ export function SidebarList<T>({ itemData, renderItem, appendItems }: SidebarLis
       )}
     >
       {itemData.map((data) => {
-        return <li key={data.title}>{renderItem(data)}</li>;
+        return <li key={data.key}>{renderItem(data)}</li>;
       })}
 
       {appendItems?.map((item, index) => (

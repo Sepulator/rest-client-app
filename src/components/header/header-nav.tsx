@@ -1,5 +1,6 @@
 import { NavbarContent, NavbarItem, NavbarMenu, NavbarMenuItem, NavbarMenuToggle } from '@heroui/navbar';
 import { Button, cn } from '@heroui/react';
+import { useTranslations } from 'next-intl';
 import React, { useState } from 'react';
 
 import { HeaderLink } from '@/components/header/header-link';
@@ -7,12 +8,12 @@ import { LangToggle } from '@/components/header/lang-toggle';
 import { ROUTES } from '@/config/routes';
 
 const navLinks = {
-  base: [{ href: ROUTES.HOME, title: 'Home' }],
+  base: [{ href: ROUTES.HOME, key: 'home' }],
   auth: [
-    { href: ROUTES.LOGIN, title: 'Login' },
-    { href: ROUTES.SIGN_UP, title: 'Sign Up' },
+    { href: ROUTES.LOGIN, key: 'login' },
+    { href: ROUTES.SIGN_UP, key: 'sign-up' },
   ],
-};
+} as const;
 
 type HeaderNavProps = {
   isMenuOpen: boolean;
@@ -22,6 +23,7 @@ type HeaderNavProps = {
 export function HeaderNav({ isMenuOpen, checkIsActive }: HeaderNavProps) {
   const [isLoggedIn, setIsLoggedIn] = useState(true);
   const links = isLoggedIn ? navLinks.base : [...navLinks.base, ...navLinks.auth];
+  const t = useTranslations('userActions');
 
   const fakeLogout = () => {
     setIsLoggedIn(false);
@@ -32,12 +34,12 @@ export function HeaderNav({ isMenuOpen, checkIsActive }: HeaderNavProps) {
 
     return (
       <>
-        {links.map(({ title, href }, index) => {
+        {links.map(({ key, href }, index) => {
           if (!isMobile && href === ROUTES.HOME) return;
 
           return (
-            <Wrapper key={isMobile ? `${title}-${index.toString()}` : title} isActive={checkIsActive(href)}>
-              <HeaderLink title={title} href={href} isMobile={isMobile} />
+            <Wrapper key={isMobile ? `${key}-${index.toString()}` : key} isActive={checkIsActive(href)}>
+              <HeaderLink title={t(`navigation.${key}`)} href={href} isMobile={isMobile} />
             </Wrapper>
           );
         })}
@@ -48,7 +50,7 @@ export function HeaderNav({ isMenuOpen, checkIsActive }: HeaderNavProps) {
             onPress={fakeLogout}
             className={cn('text-foreground-700 hidden sm:flex', isMobile && 'flex p-6')}
           >
-            Logout
+            {t('actions.logout')}
           </Button>
         )}
       </>
@@ -60,7 +62,10 @@ export function HeaderNav({ isMenuOpen, checkIsActive }: HeaderNavProps) {
       <NavbarContent justify="end">
         {renderAuthNav()}
         <LangToggle />
-        <NavbarMenuToggle aria-label={isMenuOpen ? 'Close menu' : 'Open menu'} className="sm:hidden" />
+        <NavbarMenuToggle
+          aria-label={isMenuOpen ? t('actions.menuClose') : t('actions.menuOpen')}
+          className="sm:hidden"
+        />
       </NavbarContent>
 
       <NavbarMenu className="justify-center overflow-clip">{renderAuthNav(true)}</NavbarMenu>

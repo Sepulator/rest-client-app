@@ -2,22 +2,18 @@ import type { Key } from 'react';
 
 import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Button } from '@heroui/react';
 import { useSearchParams } from 'next/navigation';
-
-import type { Locale } from '@/i18n/routing';
+import { useTranslations } from 'use-intl';
 
 import { LangIcon } from '@/components/icons/lang-icon';
 import { usePathname, useRouter } from '@/i18n/navigation';
 import { routing } from '@/i18n/routing';
 import { isLocale } from '@/utils/type-guards';
 
-const LOCALE_NAMES: Record<Locale, string> = {
-  en: 'English',
-};
-
 export function LangToggle() {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
+  const t = useTranslations('Header.locales');
 
   const handleChange = (locale: Key) => {
     if (typeof locale !== 'string' || !isLocale(locale)) {
@@ -35,6 +31,7 @@ export function LangToggle() {
           <LangIcon className="text-xl" />
         </Button>
       </DropdownTrigger>
+
       <DropdownMenu aria-label="Languages" onAction={handleChange}>
         {routing.locales.map((locale) => (
           <DropdownItem
@@ -42,7 +39,7 @@ export function LangToggle() {
             key={locale}
             endContent={<span className="text-primary ml-auto text-xs">{locale.toUpperCase()}</span>}
           >
-            {LOCALE_NAMES[locale]}
+            {t(locale)}
           </DropdownItem>
         ))}
       </DropdownMenu>

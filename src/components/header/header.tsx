@@ -1,6 +1,7 @@
 'use client';
 
 import { cn, Navbar, NavbarContent, NavbarItem } from '@heroui/react';
+import { useTranslations } from 'next-intl';
 import React, { useEffect, useState } from 'react';
 
 import { HeaderLink } from '@/components/header/header-link';
@@ -26,6 +27,7 @@ export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const pathname = usePathname();
   const decorate = useChangeOnScroll(SCROLL_OFFSET, THROTTLE_DELAY);
+  const t = useTranslations('userActions.navigation');
 
   useEffect(() => {
     setIsMenuOpen(false);
@@ -52,7 +54,7 @@ export default function Header() {
       <NavbarContent>
         <Logo />
         <NavbarItem isActive={checkIsActive(ROUTES.HOME)}>
-          <HeaderLink href={ROUTES.HOME} title="Home" />
+          <HeaderLink href={ROUTES.HOME} title={t('home')} />
         </NavbarItem>
       </NavbarContent>
 

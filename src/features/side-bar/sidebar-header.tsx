@@ -1,13 +1,13 @@
-import { Button, cn } from '@heroui/react';
+import type { ReactNode } from 'react';
 
-import { ChevronIcon } from '@/components/icons/chevron';
+import { cn } from '@heroui/react';
 
 type SidebarHeaderProps = {
-  toggleSidebar: () => void;
   title: string;
+  menuTrigger: ReactNode;
 };
 
-export function SidebarHeader({ toggleSidebar, title }: SidebarHeaderProps) {
+export function SidebarHeader({ menuTrigger, title }: SidebarHeaderProps) {
   return (
     <div
       className={cn(
@@ -16,14 +16,7 @@ export function SidebarHeader({ toggleSidebar, title }: SidebarHeaderProps) {
       )}
     >
       <div className="text-default-foreground truncate md:group-data-[closed=true]:opacity-0">{title}</div>
-      <Button isIconOnly onPress={toggleSidebar} variant="light">
-        <ChevronIcon
-          className={cn(
-            'rotate-90 transform duration-500 group-data-[closed=true]:rotate-270',
-            'md:rotate-0 md:group-data-[closed=true]:rotate-180'
-          )}
-        />
-      </Button>
+      {menuTrigger}
     </div>
   );
 }

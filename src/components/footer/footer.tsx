@@ -1,3 +1,4 @@
+import { getTranslations } from 'next-intl/server';
 import Image from 'next/image';
 
 import courseLogo from '@/assets/images/rs-logo.svg';
@@ -5,14 +6,15 @@ import { GithubIcon } from '@/components/icons/github';
 import { saveSource } from '@/utils/save-source';
 
 const teamInfo = [
-  { name: 'Yuri S.', github: 'https://github.com/Sepulator' },
-  { name: 'Anastasiia Nikonova', github: 'https://github.com/anastanei' },
-  { name: 'Maria Ilina', github: 'https://github.com/IlinJoy' },
-];
+  { name: 'yuri', github: 'https://github.com/Sepulator' },
+  { name: 'anastasiia', github: 'https://github.com/anastanei' },
+  { name: 'maria', github: 'https://github.com/IlinJoy' },
+] as const;
 
 const footerLinksClassName = 'opacity-70 duration-300 hover:opacity-100 flex gap-2 items-center';
 
-export function Footer() {
+export async function Footer() {
+  const t = await getTranslations('Footer');
   const currentYear = new Date().getFullYear();
 
   return (
@@ -25,7 +27,7 @@ export function Footer() {
             {teamInfo.map(({ name, github }) => (
               <a key={name} href={github} className={footerLinksClassName} target="_blank" rel="noopener noreferrer">
                 <GithubIcon />
-                <span>{name}</span>
+                <span>{t(name)}</span>
               </a>
             ))}
           </div>
@@ -36,7 +38,7 @@ export function Footer() {
             rel="noopener noreferrer"
             className={footerLinksClassName}
           >
-            <Image width={24} height={24} alt="course logo" src={saveSource(courseLogo)} />
+            <Image width={24} height={24} alt={t('courseLogoAlt')} src={saveSource(courseLogo)} />
             <span className="text-sm">RS School</span>
           </a>
         </div>

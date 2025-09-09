@@ -1,10 +1,14 @@
+'use client';
+
 import { Button, cn } from '@heroui/react';
+import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 
 import { links } from '@/features/side-bar/links-list';
 import { SidebarHeader } from '@/features/side-bar/sidebar-header';
 import { SidebarLink } from '@/features/side-bar/sidebar-link';
 import { SidebarList } from '@/features/side-bar/sidebar-list';
+import { SidebarTrigger } from '@/features/side-bar/sidebar-trigger';
 
 type SideNavBarProps = {
   tempLogout: () => void;
@@ -12,6 +16,7 @@ type SideNavBarProps = {
 
 export function Sidebar({ tempLogout }: SideNavBarProps) {
   const [isOpen, setIsOpen] = useState(false);
+  const t = useTranslations('userActions');
 
   const toggleSidebar = () => {
     setIsOpen((previous) => !previous);
@@ -28,17 +33,26 @@ export function Sidebar({ tempLogout }: SideNavBarProps) {
         'duration-400 ease-in-out'
       )}
     >
-      <SidebarHeader toggleSidebar={toggleSidebar} title="Menu" />
+      <SidebarHeader
+        title={t('actions.menu')}
+        menuTrigger={
+          <SidebarTrigger
+            toggleSidebar={toggleSidebar}
+            ariaLabel={isOpen ? t('actions.menuClose') : t('actions.menuOpen')}
+          />
+        }
+      />
+
       <SidebarList
-        itemData={links}
-        renderItem={(link) => <SidebarLink {...link} />}
+        itemData={[...links]}
+        renderItem={({ href, Icon, key }) => <SidebarLink href={href} Icon={Icon} title={t(`navigation.${key}`)} />}
         appendItems={[
           <Button
             key="tempButton"
             className="w-full group-data-[closed=true]:invisible group-data-[closed=true]:opacity-0"
             onPress={tempLogout}
           >
-            Temp Logout remove later
+            {t('actions.logout')}
           </Button>,
         ]}
       />

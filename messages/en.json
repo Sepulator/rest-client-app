@@ -1,11 +1,82 @@
 {
+  "userActions": {
+    "navigation": {
+      "home": "Home",
+      "client": "REST Client",
+      "history": "History",
+      "variables": "Variables",
+      "login": "Login",
+      "sign-up": "Sign Up"
+    },
+    "actions": {
+      "logout": "Temp Logout",
+      "menuOpen": "Open menu",
+      "menuClose": "Close menu",
+      "menu": "Menu"
+    }
+  },
+
   "LocaleLayout": {
     "title": "Rest client",
     "description": "A light-weight rest client application"
   },
-  "HomePage": {
-    "title": "Welcome back"
-  },
+
   "NotFound": { "title": "Page not found" },
-  "WelcomePage": { "title": "Welcome, please login" }
+
+  "WelcomePage": { "title": "Welcome, please login" },
+
+  "Footer": {
+    "yuri": "Yuri S.",
+    "anastasiia": "Anastasiia Nikonova",
+    "maria": "Maria Ilina",
+    "courseLogoAlt": "Course logo"
+  },
+
+  "Header": {
+    "locales": { "en": "English" }
+  },
+
+  "HomePage": {
+    "intro": {
+      "title": "What is V-REST?",
+      "description": "This is a light weight alternative to Postman combines essential features in one app, developed in teams of three during RS School React course Supports authorization and authentication capabilities. Access to the tool is restricted to authorized users only. The history section provides quick access to previously executed requests"
+    },
+    "features": {
+      "title": "Key Features",
+      "description": "Streamline your API development workflow with our comprehensive REST client tool"
+    },
+    "greeting": { "user": "Welcome back, <i>{name}</i>👋", "guest": "Welcome, <i>please login</i>" },
+    "keyFeatures": {
+      "rest": {
+        "title": "REST Client",
+        "icon": "🌐",
+        "description": "HTTP client supporting all methods, headers, and request body with real-time response preview"
+      },
+      "history": {
+        "title": "Request History",
+        "icon": "📖",
+        "description": "Automatically save and manage your API call history with analytics"
+      },
+      "codeGeneration": {
+        "title": "Code Generation",
+        "icon": "💻",
+        "description": "Generate code snippets in multiple languages (curl, JavaScript, Python, Java, C#, Go) for your API requests"
+      },
+      "variables": {
+        "title": "Variables Management",
+        "icon": "🔤",
+        "description": "Create and reuse variables across requests"
+      },
+      "auth": {
+        "title": "Authentication",
+        "icon": "🔐",
+        "description": "Secure user authentication with email/password"
+      },
+      "lang": {
+        "title": "Multi-Language Support",
+        "icon": "🌍",
+        "description": "Full internationalization support with multiple language options"
+      }
+    }
+  }
 }

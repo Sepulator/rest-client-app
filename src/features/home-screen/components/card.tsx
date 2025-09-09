@@ -1,13 +1,13 @@
 'use client';
 import { Card, CardHeader, CardFooter, Divider } from '@heroui/react';
 
-import type { keyFeatures } from '@/features/home-screen/constants/key-features';
-
 type CardProps = {
-  cardInfo: (typeof keyFeatures)[number];
+  title: string;
+  icon: string;
+  description: string;
 };
 
-export function FeatureCard({ cardInfo: { title, icon, description } }: CardProps) {
+export function FeatureCard({ title, icon, description }: CardProps) {
   return (
     <Card shadow="none" key={title} className="min-w-80 flex-1 p-2 outline-1">
       <CardHeader className="flex flex-col items-start gap-8">

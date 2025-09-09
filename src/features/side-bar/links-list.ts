@@ -5,8 +5,8 @@ import { InboxStackIcon } from '@/components/icons/inbox-stack';
 import { ROUTES } from '@/config/routes';
 
 export const links = [
-  { href: ROUTES.HOME, title: 'Home', Icon: HomeIcon },
-  { href: ROUTES.CLIENT, title: 'REST Client', Icon: CodeBracketSquareIcon },
-  { href: ROUTES.HISTORY, title: 'History', Icon: InboxStackIcon },
-  { href: ROUTES.VARIABLES, title: 'Variables', Icon: BookOpenIcon },
-];
+  { href: ROUTES.HOME, key: 'home', Icon: HomeIcon },
+  { href: ROUTES.CLIENT, key: 'client', Icon: CodeBracketSquareIcon },
+  { href: ROUTES.HISTORY, key: 'history', Icon: InboxStackIcon },
+  { href: ROUTES.VARIABLES, key: 'variables', Icon: BookOpenIcon },
+] as const;
