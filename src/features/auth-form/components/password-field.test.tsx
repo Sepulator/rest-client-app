@@ -1,7 +1,9 @@
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { type UseFormRegister } from 'react-hook-form';
 import { describe, it, expect, vi } from 'vitest';
+
+import { renderWithProviders as render } from '@/testing/test-utilities';
 
 import type { AuthFormType } from '../types/types';
 

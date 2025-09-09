@@ -1,35 +1,30 @@
-const TEXTS = {
-  PASSWORD_STRENGTH_LABEL_0: 'Empty',
-  PASSWORD_STRENGTH_LABEL_1: 'Weak',
-  PASSWORD_STRENGTH_LABEL_2: 'Medium',
-  PASSWORD_STRENGTH_LABEL_3: 'Strong',
-  PASSWORD_STRENGTH_LABEL_4: 'Excellent',
-};
+import { useTranslations } from 'next-intl';
 
 type Props = {
   passwordStrength: number;
 };
 
 export const useStrength = ({ passwordStrength }: Props) => {
+  const t = useTranslations('PasswordStrength');
   const STRENGTH_CONFIG: Record<number, { label: string; color: 'danger' | 'warning' | 'success' }> = {
     0: {
-      label: TEXTS.PASSWORD_STRENGTH_LABEL_0,
+      label: t('label0'),
       color: 'danger',
     },
     1: {
-      label: TEXTS.PASSWORD_STRENGTH_LABEL_1,
+      label: t('label1'),
       color: 'danger',
     },
     2: {
-      label: TEXTS.PASSWORD_STRENGTH_LABEL_2,
+      label: t('label2'),
       color: 'warning',
     },
     3: {
-      label: TEXTS.PASSWORD_STRENGTH_LABEL_3,
+      label: t('label3'),
       color: 'warning',
     },
     4: {
-      label: TEXTS.PASSWORD_STRENGTH_LABEL_4,
+      label: t('label4'),
       color: 'success',
     },
   };

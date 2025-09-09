@@ -1,5 +1,6 @@
 import { Progress } from '@heroui/react';
 import { Input } from '@heroui/react';
+import { useTranslations } from 'next-intl';
 import { useState, useEffect } from 'react';
 import { type UseFormRegister } from 'react-hook-form';
 import * as v from 'valibot';
@@ -14,13 +15,6 @@ import { useSchemas } from '../hooks/use-schemas';
 import { useStrength } from '../hooks/use-strength';
 import { type AuthFormType } from '../types/types';
 
-const TEXTS = {
-  PASSWORD_STRENGTH: 'Password strength',
-  PASSWORD_PLACEHOLDER: 'Enter your password',
-  PASSWORD_TOGGLE_VISIBILITY: 'toggle password visibility',
-  PASSWORD_LABEL: 'Password',
-};
-
 type Props = {
   register: UseFormRegister<AuthFormType>;
   error: string[];
@@ -33,6 +27,7 @@ export const PasswordField = ({ register, error, name, passwordValue }: Props) =
   const [passwordStrength, setPasswordStrength] = useState<number>(0);
   const { passwordSchema } = useSchemas();
   const { label: strengthLabel, color: strengthColor } = useStrength({ passwordStrength });
+  const t = useTranslations('PasswordField');
 
   useEffect(() => {
     const parsed = v.safeParse(passwordSchema, passwordValue);
@@ -53,7 +48,7 @@ export const PasswordField = ({ register, error, name, passwordValue }: Props) =
         {...register(name)}
         endContent={
           <button
-            aria-label={TEXTS.PASSWORD_TOGGLE_VISIBILITY}
+            aria-label={t('passwordToggleVisibility')}
             className="cursor-pointer outline-transparent focus:outline-solid"
             type="button"
             onClick={toggleVisibility}
@@ -66,8 +61,8 @@ export const PasswordField = ({ register, error, name, passwordValue }: Props) =
           </button>
         }
         labelPlacement="outside"
-        label={TEXTS.PASSWORD_LABEL}
-        placeholder={TEXTS.PASSWORD_PLACEHOLDER}
+        label={t('passwordLabel')}
+        placeholder={t('passwordPlaceholder')}
         isInvalid={error.length > 0}
         errorMessage={ErrorMessageList({ errors: error })}
         classNames={{ input: cn(!isPasswordVisible && 'hidden-password') }}
@@ -80,7 +75,7 @@ export const PasswordField = ({ register, error, name, passwordValue }: Props) =
         }}
         label={strengthLabel}
         color={strengthColor}
-        aria-label={TEXTS.PASSWORD_STRENGTH}
+        aria-label={t('passwordStrength')}
         size="sm"
         maxValue={PASSWORD_STRENGTH_MAX}
         aria-valuemin={0}

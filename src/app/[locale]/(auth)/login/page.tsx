@@ -1,3 +1,4 @@
+import { ROUTES } from '@/config/routes';
 import { AuthForm } from '@/features/auth-form/components/auth-form';
 
 const TEXTS = {
@@ -9,7 +10,7 @@ const TEXTS = {
 export default function LoginPage() {
   const secondaryAction = {
     intro: TEXTS.SECONDARY_ACTION,
-    link: '/sign-up',
+    link: ROUTES.SIGN_UP,
     linkText: TEXTS.SECONDARY_ACTION_LINK,
   };
 

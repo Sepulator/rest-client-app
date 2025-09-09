@@ -135,6 +135,7 @@ export default tseslint.config(
         {
           ts: 'never',
           tsx: 'never',
+          json: 'always',
           svg: 'always',
           css: 'always',
           webp: 'always',

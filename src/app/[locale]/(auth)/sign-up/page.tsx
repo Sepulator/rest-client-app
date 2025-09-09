@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { ROUTES } from '@/config/routes';
 import { AuthForm } from '@/features/auth-form/components/auth-form';
 
 const TEXTS = {
@@ -11,7 +12,7 @@ const TEXTS = {
 export default function SignUpPage() {
   const secondaryAction = {
     intro: TEXTS.SECONDARY_ACTION,
-    link: '/login',
+    link: ROUTES.LOGIN,
     linkText: TEXTS.SECONDARY_ACTION_LINK,
   };
 

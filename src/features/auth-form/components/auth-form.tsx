@@ -5,9 +5,11 @@ import type { SubmitHandler } from 'react-hook-form';
 
 import { Form, Input, Button, Card, CardHeader, CardBody, CardFooter, Divider, Link as HeroLink } from '@heroui/react';
 import { valibotResolver } from '@hookform/resolvers/valibot';
+import { useTranslations } from 'next-intl';
 import { useForm } from 'react-hook-form';
 
 import { MailIcon } from '@/components/icons/mail-icon';
+import { ROUTES } from '@/config/routes';
 import { type AuthFormType } from '@/features/auth-form/types/types';
 import { useRouter } from '@/i18n/navigation';
 import { Link as IntlLink } from '@/i18n/navigation';
@@ -15,11 +17,6 @@ import { type SecondaryAction } from '@/types/types';
 
 import { useSchemas } from '../hooks/use-schemas';
 import { PasswordField } from './password-field';
-
-const TEXTS = {
-  EMAIL_LABEL: 'Email',
-  SUBMIT: 'Submit',
-};
 
 const EMAIL_NAME = 'email';
 const PASSWORD_NAME = 'password';
@@ -49,9 +46,10 @@ export const AuthForm = ({ heading, secondaryAction }: Props) => {
     criteriaMode: 'all',
     resolver: valibotResolver(authSchema),
   });
+  const t = useTranslations('AuthForm');
 
   const onSubmit: SubmitHandler<AuthFormType> = (_) => {
-    router.push('/');
+    router.push(ROUTES.MAIN);
   };
 
   const passwordValue = watch(PASSWORD_NAME);
@@ -73,7 +71,7 @@ export const AuthForm = ({ heading, secondaryAction }: Props) => {
             endContent={<MailIcon className="text-default-400 pointer-events-none shrink-0 text-2xl" />}
             className="w-full"
             autoComplete="email"
-            label={TEXTS.EMAIL_LABEL}
+            label={t('emailLabel')}
             labelPlacement="outside"
             placeholder={EMAIL_PLACEHOLDER}
             {...register(EMAIL_NAME)}
@@ -88,7 +86,7 @@ export const AuthForm = ({ heading, secondaryAction }: Props) => {
             passwordValue={passwordValue}
           />
           <Button color="primary" type="submit" className="w-full">
-            {TEXTS.SUBMIT}
+            {heading}
           </Button>
         </Form>
       </CardBody>

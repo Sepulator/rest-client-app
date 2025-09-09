@@ -1,33 +1,22 @@
+import { useTranslations } from 'next-intl';
 import * as v from 'valibot';
 
 import { MIN_PASSWORD_LENGTH } from '../constants/constants';
-
-const VALIDATION_MESSAGES = {
-  MIN_LENGTH: 'Password must be at least 8 characters',
-  LETTER: 'Password must contain at least one letter',
-  NUMBER: 'Password must contain at least one number',
-  SPECIAL_CHARACTER: 'Password must contain at least one special character',
-  EMAIL_REQUIRED: 'Email is required',
-  EMAIL_INVALID: 'Email is invalid',
-};
 
 const EMAIL_NAME = 'email';
 const PASSWORD_NAME = 'password';
 
 export const useSchemas = () => {
+  const t = useTranslations('Schemas');
   const passwordSchema = v.pipe(
     v.string(),
-    v.regex(/\p{N}/u, VALIDATION_MESSAGES.NUMBER),
-    v.regex(/\p{L}/u, VALIDATION_MESSAGES.LETTER),
-    v.regex(/[^\p{L}\p{N}]/u, VALIDATION_MESSAGES.SPECIAL_CHARACTER),
-    v.minLength(MIN_PASSWORD_LENGTH, VALIDATION_MESSAGES.MIN_LENGTH)
+    v.regex(/\p{N}/u, t('number')),
+    v.regex(/\p{L}/u, t('letter')),
+    v.regex(/[^\p{L}\p{N}]/u, t('specialCharacter')),
+    v.minLength(MIN_PASSWORD_LENGTH, t('minLength'))
   );
 
-  const emailSchema = v.pipe(
-    v.string(),
-    v.nonEmpty(VALIDATION_MESSAGES.EMAIL_REQUIRED),
-    v.email(VALIDATION_MESSAGES.EMAIL_INVALID)
-  );
+  const emailSchema = v.pipe(v.string(), v.nonEmpty(t('emailRequired')), v.email(t('emailInvalid')));
 
   const authSchema = v.object({
     [EMAIL_NAME]: emailSchema,

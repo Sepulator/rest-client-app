@@ -1,8 +1,10 @@
 import type { ReactNode } from 'react';
 
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, it, expect, vi, afterEach } from 'vitest';
+
+import { renderWithProviders as render } from '@/testing/test-utilities';
 
 import { AuthForm } from './auth-form';
 
@@ -47,7 +49,7 @@ describe('AuthForm', () => {
     const emailInput = screen.getByRole('textbox', { name: EMAIL_LABEL });
     const passwordInput = screen.getByLabelText(PASSWORD_LABEL);
     const progressBar = screen.getByRole('progressbar');
-    const submitButton = screen.getByRole('button', { name: /submit/i });
+    const submitButton = screen.getByRole('button', { name: 'heading' });
     const actionIntro = screen.getByText(secondaryActionMock.intro);
     const actionLink = screen.getByRole('link', { name: secondaryActionMock.linkText });
 
@@ -195,7 +197,7 @@ describe('AuthForm', () => {
 
     const emailInput = screen.getByRole('textbox', { name: 'Email' });
     const passwordInput = screen.getByLabelText(PASSWORD_LABEL);
-    const submitButton = screen.getByRole('button', { name: /submit/i });
+    const submitButton = screen.getByRole('button', { name: 'heading' });
 
     await user.click(emailInput);
     await user.type(emailInput, VALID_EMAIL);
@@ -214,7 +216,7 @@ describe('AuthForm', () => {
 
     const emailInput = screen.getByRole('textbox', { name: 'Email' });
     const passwordInput = screen.getByLabelText(PASSWORD_LABEL);
-    const submitButton = screen.getByRole('button', { name: /submit/i });
+    const submitButton = screen.getByRole('button', { name: 'heading' });
 
     await user.click(emailInput);
     await user.type(emailInput, VALID_EMAIL);
@@ -233,7 +235,7 @@ describe('AuthForm', () => {
 
     const emailInput = screen.getByRole('textbox', { name: 'Email' });
     const passwordInput = screen.getByLabelText(PASSWORD_LABEL);
-    const submitButton = screen.getByRole('button', { name: /submit/i });
+    const submitButton = screen.getByRole('button', { name: 'heading' });
 
     await user.click(emailInput);
     await user.type(emailInput, 'invalid email');
@@ -253,7 +255,7 @@ describe('AuthForm', () => {
 
     const emailInput = screen.getByRole('textbox', { name: 'Email' });
     const passwordInput = screen.getByLabelText(PASSWORD_LABEL);
-    const submitButton = screen.getByRole('button', { name: /submit/i });
+    const submitButton = screen.getByRole('button', { name: 'heading' });
 
     await user.click(emailInput);
     await user.type(emailInput, VALID_EMAIL);
