@@ -1,10 +1,10 @@
 import type { ReactNode } from 'react';
 
 import { screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 import { describe, it, expect, vi, afterEach } from 'vitest';
 
 import { renderWithProviders as render } from '@/testing/test-utilities';
+import { renderWithUserEvent } from '@/testing/test-utilities';
 
 import { AuthForm } from './auth-form';
 
@@ -74,8 +74,7 @@ describe('AuthForm', () => {
   });
 
   it('should render error message when email input is invalid', async () => {
-    render(<AuthForm heading="heading" secondaryAction={secondaryActionMock} />);
-    const user = userEvent.setup();
+    const { user } = renderWithUserEvent(<AuthForm heading="heading" secondaryAction={secondaryActionMock} />);
 
     const emailInput = screen.getByRole('textbox', { name: EMAIL_LABEL });
 
@@ -88,8 +87,7 @@ describe('AuthForm', () => {
   });
 
   it('should render email input with aria-invalid attribute when email is invalid', async () => {
-    render(<AuthForm heading="heading" secondaryAction={secondaryActionMock} />);
-    const user = userEvent.setup();
+    const { user } = renderWithUserEvent(<AuthForm heading="heading" secondaryAction={secondaryActionMock} />);
 
     const emailInput = screen.getByRole('textbox', { name: EMAIL_LABEL });
 
@@ -100,8 +98,7 @@ describe('AuthForm', () => {
   });
 
   it('should render email input without aria-invalid attribute when email is valid', async () => {
-    render(<AuthForm heading="heading" secondaryAction={secondaryActionMock} />);
-    const user = userEvent.setup();
+    const { user } = renderWithUserEvent(<AuthForm heading="heading" secondaryAction={secondaryActionMock} />);
 
     const emailInput = screen.getByRole('textbox', { name: EMAIL_LABEL });
 
@@ -112,8 +109,7 @@ describe('AuthForm', () => {
   });
 
   it('should render correct error message when password does not contain a number', async () => {
-    render(<AuthForm heading="heading" secondaryAction={secondaryActionMock} />);
-    const user = userEvent.setup();
+    const { user } = renderWithUserEvent(<AuthForm heading="heading" secondaryAction={secondaryActionMock} />);
 
     const passwordInput = screen.getByLabelText(PASSWORD_LABEL);
 
@@ -126,8 +122,7 @@ describe('AuthForm', () => {
   });
 
   it('should render correct error message when password does not contain a letter', async () => {
-    render(<AuthForm heading="heading" secondaryAction={secondaryActionMock} />);
-    const user = userEvent.setup();
+    const { user } = renderWithUserEvent(<AuthForm heading="heading" secondaryAction={secondaryActionMock} />);
 
     const passwordInput = screen.getByLabelText(PASSWORD_LABEL);
 
@@ -140,8 +135,7 @@ describe('AuthForm', () => {
   });
 
   it('should render correct error message when password does not contain a special character', async () => {
-    render(<AuthForm heading="heading" secondaryAction={secondaryActionMock} />);
-    const user = userEvent.setup();
+    const { user } = renderWithUserEvent(<AuthForm heading="heading" secondaryAction={secondaryActionMock} />);
 
     const passwordInput = screen.getByLabelText(PASSWORD_LABEL);
 
@@ -154,8 +148,7 @@ describe('AuthForm', () => {
   });
 
   it('should render correct error message when password is too short', async () => {
-    render(<AuthForm heading="heading" secondaryAction={secondaryActionMock} />);
-    const user = userEvent.setup();
+    const { user } = renderWithUserEvent(<AuthForm heading="heading" secondaryAction={secondaryActionMock} />);
 
     const passwordInput = screen.getByLabelText(PASSWORD_LABEL);
 
@@ -168,8 +161,7 @@ describe('AuthForm', () => {
   });
 
   it('should render password input with aria-invalid attribute when password is invalid', async () => {
-    render(<AuthForm heading="heading" secondaryAction={secondaryActionMock} />);
-    const user = userEvent.setup();
+    const { user } = renderWithUserEvent(<AuthForm heading="heading" secondaryAction={secondaryActionMock} />);
 
     const passwordInput = screen.getByLabelText(PASSWORD_LABEL);
 
@@ -180,8 +172,7 @@ describe('AuthForm', () => {
   });
 
   it('should render password input without aria-invalid attribute when password is valid', async () => {
-    render(<AuthForm heading="heading" secondaryAction={secondaryActionMock} />);
-    const user = userEvent.setup();
+    const { user } = renderWithUserEvent(<AuthForm heading="heading" secondaryAction={secondaryActionMock} />);
 
     const passwordInput = screen.getByLabelText(PASSWORD_LABEL);
 
@@ -192,8 +183,7 @@ describe('AuthForm', () => {
   });
 
   it('should redirect to the main page on submit', async () => {
-    render(<AuthForm heading="heading" secondaryAction={secondaryActionMock} />);
-    const user = userEvent.setup();
+    const { user } = renderWithUserEvent(<AuthForm heading="heading" secondaryAction={secondaryActionMock} />);
 
     const emailInput = screen.getByRole('textbox', { name: 'Email' });
     const passwordInput = screen.getByLabelText(PASSWORD_LABEL);
@@ -211,8 +201,7 @@ describe('AuthForm', () => {
   });
 
   it('should not redirect to the main page when invalid password is submitted', async () => {
-    render(<AuthForm heading="heading" secondaryAction={secondaryActionMock} />);
-    const user = userEvent.setup();
+    const { user } = renderWithUserEvent(<AuthForm heading="heading" secondaryAction={secondaryActionMock} />);
 
     const emailInput = screen.getByRole('textbox', { name: 'Email' });
     const passwordInput = screen.getByLabelText(PASSWORD_LABEL);
@@ -230,8 +219,7 @@ describe('AuthForm', () => {
   });
 
   it('should not redirect to the main page when invalid email is submitted', async () => {
-    render(<AuthForm heading="heading" secondaryAction={secondaryActionMock} />);
-    const user = userEvent.setup();
+    const { user } = renderWithUserEvent(<AuthForm heading="heading" secondaryAction={secondaryActionMock} />);
 
     const emailInput = screen.getByRole('textbox', { name: 'Email' });
     const passwordInput = screen.getByLabelText(PASSWORD_LABEL);
@@ -249,8 +237,7 @@ describe('AuthForm', () => {
   });
 
   it('should redirect to the main page on submit when password has unicode characters', async () => {
-    render(<AuthForm heading="heading" secondaryAction={secondaryActionMock} />);
-    const user = userEvent.setup();
+    const { user } = renderWithUserEvent(<AuthForm heading="heading" secondaryAction={secondaryActionMock} />);
     const unicodePassword = 'юникод8🚰';
 
     const emailInput = screen.getByRole('textbox', { name: 'Email' });
