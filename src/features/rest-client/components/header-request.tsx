@@ -31,6 +31,7 @@ export const HeaderRequest = ({ header, onUpdate, onRemove }: HeaderRequestProps
         className="border-b-1 border-gray-600"
       />
       <Button
+        aria-label="Remove header"
         startContent={<CloseIcon />}
         className="w-fit"
         isIconOnly
