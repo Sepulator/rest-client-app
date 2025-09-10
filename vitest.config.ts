@@ -34,6 +34,8 @@ export default defineConfig({
         'src/App.{js,jsx,ts,tsx}',
         'src/testing/setup-tests.{js,ts,tsx}',
         'src/**/*.d.ts',
+        'src/i18n/**/*',
+        '**/*/fonts.ts',
       ],
     },
   },

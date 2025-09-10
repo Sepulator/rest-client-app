@@ -2,7 +2,7 @@ import { getLocale } from 'next-intl/server';
 
 import { Greeting } from '@/features/home-screen/greeting';
 import { HomeScreen } from '@/features/home-screen/home-screen';
-import { getDayOfWeek } from '@/utils/get-day-of-week';
+import { getDayOfWeek } from '@/features/home-screen/utils/get-day-of-week';
 
 export default async function HomePage() {
   const locale = await getLocale();
