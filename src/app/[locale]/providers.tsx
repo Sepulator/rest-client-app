@@ -8,6 +8,8 @@ import { NextIntlClientProvider } from 'next-intl';
 
 import type { routing } from '@/i18n/routing';
 
+import { AuthProvider } from '@/stores/auth-context/auth-provider';
+
 type ProvidersProps = {
   children: ReactNode;
   locale: (typeof routing.locales)[number];
@@ -16,8 +18,10 @@ type ProvidersProps = {
 
 export function Providers({ children, locale, messages }: ProvidersProps) {
   return (
-    <NextIntlClientProvider locale={locale} messages={messages}>
-      <HeroUIProvider>{children}</HeroUIProvider>
+    <NextIntlClientProvider locale={locale} messages={messages} timeZone="Europe/Minsk">
+      <HeroUIProvider>
+        <AuthProvider>{children}</AuthProvider>
+      </HeroUIProvider>
     </NextIntlClientProvider>
   );
 }
