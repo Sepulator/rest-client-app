@@ -28,7 +28,6 @@ body {
   }
 
   h2 {
-    margin-bottom: 2rem;
     font-size: var(--text-2xl);
   }
 
@@ -40,7 +39,17 @@ body {
     color: hsl(var(--heroui-foreground) / 80%);
   }
 
+  button {
+    font-size: var(--text-2xl);
+  }
+
   svg {
     font-size: var(--text-2xl);
+  }
+}
+
+@layer utilities {
+  .hidden-password {
+    @apply [-webkit-text-security:disc];
   }
 }

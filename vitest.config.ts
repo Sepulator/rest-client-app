@@ -1,18 +1,16 @@
 import { defineConfig } from 'vitest/config';
-import react from '@vitejs/plugin-react';
+
 import tsconfigPaths from 'vite-tsconfig-paths';
 
+import react from '@vitejs/plugin-react-swc';
+
 export default defineConfig({
+  base: '/',
   plugins: [tsconfigPaths(), react()],
   test: {
     globals: true,
     environment: 'jsdom',
     setupFiles: ['./src/testing/setup-tests.ts'],
-    server: {
-      deps: {
-        inline: ['next-intl'],
-      },
-    },
     coverage: {
       reporter: 'text',
       thresholds: {

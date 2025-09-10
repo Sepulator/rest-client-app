@@ -78,5 +78,33 @@
         "description": "Full internationalization support with multiple language options"
       }
     }
+  },
+
+  "AuthForm": {
+    "emailLabel": "Email"
+  },
+
+  "Schemas": {
+    "minLength": "Password must be at least 8 characters",
+    "letter": "Password must contain at least one letter",
+    "number": "Password must contain at least one number",
+    "specialCharacter": "Password must contain at least one special character",
+    "emailRequired": "Email is required",
+    "emailInvalid": "Email is invalid"
+  },
+
+  "PasswordField": {
+    "passwordStrength": "Password strength",
+    "passwordPlaceholder": "Enter your password",
+    "passwordToggleVisibility": "toggle password visibility",
+    "passwordLabel": "Password"
+  },
+
+  "PasswordStrength": {
+    "label0": "Empty",
+    "label1": "Weak",
+    "label2": "Medium",
+    "label3": "Strong",
+    "label4": "Excellent"
   }
 }

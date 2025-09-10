@@ -13,14 +13,14 @@ export async function HomeScreen() {
   return (
     <div className="relative flex flex-col gap-15">
       <div>
-        <h2>{t('intro.title')}</h2>
+        <h2 className="mb-4">{t('intro.title')}</h2>
         <p className={textStyle}>{t('intro.description')} </p>
       </div>
 
       <Divider />
 
       <div>
-        <h2>{t('features.title')}</h2>
+        <h2 className="mb-4">{t('features.title')}</h2>
         <p className={textStyle}>{t('features.description')}</p>
 
         <div className="my-20 flex flex-wrap gap-5">

@@ -53,8 +53,8 @@ export default function Header() {
     >
       <NavbarContent>
         <Logo />
-        <NavbarItem isActive={checkIsActive(ROUTES.HOME)}>
-          <HeaderLink href={ROUTES.HOME} title={t('home')} />
+        <NavbarItem isActive={checkIsActive(ROUTES.MAIN)}>
+          <HeaderLink href={ROUTES.MAIN} title={t('home')} />
         </NavbarItem>
       </NavbarContent>
 

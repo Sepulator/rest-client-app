@@ -8,7 +8,7 @@ import { LangToggle } from '@/components/header/lang-toggle';
 import { ROUTES } from '@/config/routes';
 
 const navLinks = {
-  base: [{ href: ROUTES.HOME, key: 'home' }],
+  base: [{ href: ROUTES.MAIN, key: 'home' }],
   auth: [
     { href: ROUTES.LOGIN, key: 'login' },
     { href: ROUTES.SIGN_UP, key: 'sign-up' },
@@ -35,7 +35,7 @@ export function HeaderNav({ isMenuOpen, checkIsActive }: HeaderNavProps) {
     return (
       <>
         {links.map(({ key, href }, index) => {
-          if (!isMobile && href === ROUTES.HOME) return;
+          if (!isMobile && href === ROUTES.MAIN) return;
 
           return (
             <Wrapper key={isMobile ? `${key}-${index.toString()}` : key} isActive={checkIsActive(href)}>

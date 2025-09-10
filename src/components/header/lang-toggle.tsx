@@ -35,7 +35,7 @@ export function LangToggle() {
       <DropdownMenu aria-label="Languages" onAction={handleChange}>
         {routing.locales.map((locale) => (
           <DropdownItem
-            classNames={{ base: 'data-[hover=true]:hover:bg-default-300' }}
+            classNames={{ base: 'data-[hover=true]:hover:bg-default-300/50' }}
             key={locale}
             endContent={<span className="text-primary ml-auto text-xs">{locale.toUpperCase()}</span>}
           >
