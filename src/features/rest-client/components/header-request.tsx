@@ -1,5 +1,6 @@
 import { Button, Input } from '@heroui/react';
 import { CloseIcon } from '@heroui/shared-icons';
+import { useTranslations } from 'next-intl';
 
 import type { Header } from '@/types/http-request';
 
@@ -10,6 +11,8 @@ type HeaderRequestProps = {
 };
 
 export const HeaderRequest = ({ header, onUpdate, onRemove }: HeaderRequestProps) => {
+  const t = useTranslations('RestClient');
+
   return (
     <div className="mb-2 flex gap-2">
       <Input
@@ -18,7 +21,7 @@ export const HeaderRequest = ({ header, onUpdate, onRemove }: HeaderRequestProps
         onValueChange={(key) => {
           onUpdate({ key });
         }}
-        placeholder="header"
+        placeholder={t('header')}
         className="border-b-1 border-gray-600"
       />
       <Input
@@ -27,7 +30,7 @@ export const HeaderRequest = ({ header, onUpdate, onRemove }: HeaderRequestProps
         onValueChange={(value) => {
           onUpdate({ value });
         }}
-        placeholder="value"
+        placeholder={t('value')}
         className="border-b-1 border-gray-600"
       />
       <Button

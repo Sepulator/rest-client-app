@@ -1,4 +1,5 @@
 import { Spinner } from '@heroui/react';
+import { useTranslations } from 'next-intl';
 
 import type { ResponseData } from '@/types/http-request';
 
@@ -12,6 +13,7 @@ type Props = {
 const HTTP_ERROR = 400;
 
 export const ResponseSection = ({ response, isLoading }: Props) => {
+  const t = useTranslations('RestClient');
   const statusStyle = response.status >= HTTP_ERROR ? 'text-red-500' : 'text-green-500';
 
   if (isLoading) {
@@ -28,18 +30,14 @@ export const ResponseSection = ({ response, isLoading }: Props) => {
 
   return (
     <section>
-      <div className="mb-4 flex gap-4">
-        <div>
-          <span className="text-sm text-gray-500">Status:</span>
-          <span className={`ml-2 font-semibold ${statusStyle}`}>{response.status || ''}</span>
-        </div>
-        <div>
-          <span className="text-sm text-gray-500">Status Text:</span>
-          <span className={`ml-2 font-semibold ${statusStyle}`}>{response.statusText}</span>
-        </div>
+      <div className="mb-4">
+        <span className="text-sm text-gray-500">{t('status')}:</span>
+        <span className={`ml-2 font-semibold ${statusStyle}`}>
+          {response.status || ''} {response.statusText}
+        </span>
       </div>
 
-      {response.body && <RequestBodyEditor body={response.body} mode="json" readOnly title="Response Body" />}
+      {response.body && <RequestBodyEditor body={response.body} mode="json" readOnly title={t('resBody')} />}
     </section>
   );
 };

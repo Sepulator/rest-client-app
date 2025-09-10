@@ -1,6 +1,7 @@
 'use client';
 
 import { Button, Input } from '@heroui/react';
+import { useTranslations } from 'next-intl';
 import { useCallback, useState, type ChangeEvent, type FormEvent } from 'react';
 
 import { HeadersSection } from '@/features/rest-client/components/headers-section';
@@ -11,6 +12,7 @@ import { useHeaders } from '@/features/rest-client/hooks/use-headers';
 import { useHttpRequest } from '@/features/rest-client/hooks/use-http-request';
 
 export const HttpRequestForm = () => {
+  const t = useTranslations('RestClient');
   const { method, setMethod, url, setUrl, executeRequest, HTTP_METHODS, response, isLoading } = useHttpRequest();
   const { headers, addHeader, updateHeader, removeHeader } = useHeaders();
 
@@ -42,9 +44,15 @@ export const HttpRequestForm = () => {
         <section>
           <form onSubmit={(event) => void handleSubmit(event)} className="mb-6 flex flex-row">
             <MethodSelector method={method} methods={HTTP_METHODS} onChange={handleSelectionChange} />
-            <Input value={url} onValueChange={setUrl} radius="none" className="border-1 border-l-0 border-gray-600" />
+            <Input
+              value={url}
+              placeholder={t('url')}
+              onValueChange={setUrl}
+              radius="none"
+              className="border-1 border-l-0 border-gray-600"
+            />
             <Button type="submit" color="primary" radius="none" className="h-auto">
-              Send
+              {t('send')}
             </Button>
           </form>
 
@@ -63,7 +71,7 @@ export const HttpRequestForm = () => {
                 handleModeToggle(false);
               }}
             >
-              Text
+              {t('text')}
             </Button>
             <Button
               size="sm"
@@ -72,13 +80,13 @@ export const HttpRequestForm = () => {
                 handleModeToggle(true);
               }}
             >
-              JSON
+              {t('json')}
             </Button>
           </div>
           {isJsonMode ? (
-            <RequestBodyEditor body={jsonBody} mode="json" onChange={setJsonBody} />
+            <RequestBodyEditor body={jsonBody} mode="json" onChange={setJsonBody} title={t('jsonContent')} />
           ) : (
-            <RequestBodyEditor body={textBody} mode="text" onChange={setTextBody} title="Text Content" />
+            <RequestBodyEditor body={textBody} mode="text" onChange={setTextBody} title={t('textContent')} />
           )}
         </section>
 

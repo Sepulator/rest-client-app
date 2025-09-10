@@ -2,6 +2,7 @@ import { json } from '@codemirror/lang-json';
 import { EditorView } from '@codemirror/view';
 import { Button } from '@heroui/react';
 import CodeMirror from '@uiw/react-codemirror';
+import { useTranslations } from 'next-intl';
 import { useMemo } from 'react';
 
 type Props = {
@@ -14,13 +15,8 @@ type Props = {
 
 const SPACE_SIZE = 2;
 
-export const RequestBodyEditor = ({
-  body,
-  onChange,
-  readOnly = false,
-  mode = 'json',
-  title = 'JSON Content',
-}: Props) => {
+export const RequestBodyEditor = ({ body, onChange, readOnly = false, mode = 'json', title }: Props) => {
+  const t = useTranslations('RestClient');
   const { jsonError, parsedJson } = useMemo(() => {
     if (mode !== 'json' || !body.trim()) return { jsonError: null, parsedJson: null };
     try {
@@ -49,7 +45,7 @@ export const RequestBodyEditor = ({
         <span>{title}</span>
         {mode === 'json' && !readOnly && onChange && (
           <Button size="sm" variant="flat" radius="none" onPress={prettifyJSON}>
-            Prettify JSON
+            {t('prettify')}
           </Button>
         )}
       </div>

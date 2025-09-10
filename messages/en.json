@@ -6,8 +6,12 @@
   "HomePage": {
     "title": "Welcome back"
   },
-  "NotFound": { "title": "Page not found" },
-  "WelcomePage": { "title": "Welcome, please login" },
+  "NotFound": {
+    "title": "Page not found"
+  },
+  "WelcomePage": {
+    "title": "Welcome, please login"
+  },
   "AuthForm": {
     "emailLabel": "Email"
   },
@@ -31,5 +35,20 @@
     "label2": "Medium",
     "label3": "Strong",
     "label4": "Excellent"
+  },
+  "RestClient": {
+    "send": "Send",
+    "headers": "HTTP Headers",
+    "addHeader": "Add Header",
+    "resBody": "Response Body",
+    "header": "header",
+    "value": "value",
+    "status": "Status",
+    "prettify": "Prettify JSON",
+    "jsonContent": "JSON Content",
+    "textContent": "Text Content",
+    "text": "Text",
+    "json": "JSON",
+    "url": "Enter Url"
   }
 }
