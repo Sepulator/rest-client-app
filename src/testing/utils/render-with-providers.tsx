@@ -15,8 +15,10 @@ type MockProviderProps = Partial<RequiredProviderProps>;
 
 export type ExtendedOptions = Omit<RenderOptions, 'wrapper'> & { providerOptions?: MockProviderProps };
 
+export const MOCK_LOCALE = 'en';
+
 const baseMockOptions: RequiredProviderProps = {
-  locale: 'en',
+  locale: MOCK_LOCALE,
   messages: en,
   userData: mockUser,
 };

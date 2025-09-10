@@ -1,5 +1,5 @@
-import { Greeting } from '@/features/home-screen/components/greeting';
-import { HomeScreen } from '@/features/home-screen/components/home-screen';
+import { Greeting } from '@/features/home-screen/greeting';
+import { HomeScreen } from '@/features/home-screen/home-screen';
 
 export default function WelcomePage() {
   return (

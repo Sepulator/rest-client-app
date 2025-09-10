@@ -1,13 +1,13 @@
 import { Divider } from '@heroui/react';
-import { getTranslations } from 'next-intl/server';
+import { useTranslations } from 'next-intl';
 
-import { Background } from '@/features/home-screen/components/background';
-import { FeatureCard } from '@/features/home-screen/components/card';
+import { Background } from '@/features/home-screen/ui/background';
+import { FeatureCard } from '@/features/home-screen/ui/card';
 
 const CARDS_KEYS = ['rest', 'history', 'codeGeneration', 'variables', 'auth', 'lang'] as const;
 
-export async function HomeScreen() {
-  const t = await getTranslations('HomePage');
+export function HomeScreen() {
+  const t = useTranslations('HomePage');
   const textStyle = 'text-small max-w-200';
 
   return (

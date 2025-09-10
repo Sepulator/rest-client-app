@@ -1,7 +1,7 @@
 import { getLocale } from 'next-intl/server';
 
-import { Greeting } from '@/features/home-screen/components/greeting';
-import { HomeScreen } from '@/features/home-screen/components/home-screen';
+import { Greeting } from '@/features/home-screen/greeting';
+import { HomeScreen } from '@/features/home-screen/home-screen';
 import { getDayOfWeek } from '@/utils/get-day-of-week';
 
 export default async function HomePage() {
