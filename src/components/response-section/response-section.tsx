@@ -36,7 +36,8 @@ export const ResponseSection = ({ response, isLoading }: Props) => {
           <span className={`ml-2 font-semibold ${statusStyle}`}>{response.statusText}</span>
         </div>
       </div>
-      <RequestBodyEditor body={response.body} mode="json" readOnly title="Response Body" />
+
+      {response.body && <RequestBodyEditor body={response.body} mode="json" readOnly title="Response Body" />}
     </section>
   );
 };
