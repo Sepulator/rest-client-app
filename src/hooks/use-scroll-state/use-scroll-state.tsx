@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 
 import { throttle } from '@/utils/throttle';
 
-export function useChangeOnScroll(offset: number, delay?: number) {
+export function useScrollState(offset: number, delay?: number) {
   const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {

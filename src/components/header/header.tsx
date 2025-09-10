@@ -8,7 +8,7 @@ import { HeaderLink } from '@/components/header/ui/header-link';
 import { HeaderNav } from '@/components/header/ui/header-nav';
 import { Logo } from '@/components/header/ui/logo';
 import { ROUTES } from '@/config/routes';
-import { useChangeOnScroll } from '@/hooks/use-change-on-scroll';
+import { useScrollState } from '@/hooks/use-scroll-state/use-scroll-state';
 import { usePathname } from '@/i18n/navigation';
 
 const linkClasses = [
@@ -26,7 +26,7 @@ const THROTTLE_DELAY = 50;
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const pathname = usePathname();
-  const decorate = useChangeOnScroll(SCROLL_OFFSET, THROTTLE_DELAY);
+  const decorate = useScrollState(SCROLL_OFFSET, THROTTLE_DELAY);
   const t = useTranslations('userActions.navigation');
 
   useEffect(() => {
