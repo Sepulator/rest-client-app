@@ -1,4 +1,5 @@
 export const ROUTES = {
+  MAIN: '/',
   CLIENT: '/client',
   HISTORY: '/history',
   VARIABLES: '/variables',

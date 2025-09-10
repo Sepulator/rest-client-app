@@ -2,7 +2,7 @@ import type { Locale } from 'next-intl';
 
 import { clsx } from 'clsx';
 import { hasLocale } from 'next-intl';
-import { getTranslations, setRequestLocale } from 'next-intl/server';
+import { getMessages, getTranslations, setRequestLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 
 import { routing } from '@/i18n/routing';
@@ -39,10 +39,12 @@ export default async function LocaleLayout({ children, params }: LayoutProps<'/[
 
   setRequestLocale(locale);
 
+  const messages = await getMessages();
+
   return (
     <html lang={locale}>
       <body className={clsx(geistSans.variable, geistMono.variable, 'dark antialiased')}>
-        <Providers locale={locale}>
+        <Providers locale={locale} messages={messages}>
           <AppLayout>{children}</AppLayout>
         </Providers>
       </body>
