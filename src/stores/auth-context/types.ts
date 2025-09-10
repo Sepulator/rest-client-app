@@ -4,7 +4,7 @@ export type UserData = {
 };
 
 export type AuthContextType = {
-  user: UserData | null;
+  user?: UserData;
   login: (userData: UserData) => void;
   logout: () => void;
 };

@@ -33,7 +33,8 @@
   },
 
   "Header": {
-    "locales": { "en": "English" }
+    "locales": { "en": "English" },
+    "chooseLanguage": "Choose language"
   },
 
   "HomePage": {

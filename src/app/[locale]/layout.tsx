@@ -5,10 +5,11 @@ import { getMessages, getTranslations, setRequestLocale } from 'next-intl/server
 import { notFound } from 'next/navigation';
 
 import { routing } from '@/i18n/routing';
+import { mockUser } from '@/testing/mocks/user';
 import { isLocale } from '@/utils/type-guards';
 
-import { AppLayout } from './_components/app-layout';
 import './globals.css';
+import { AppLayout } from './_components/app-layout';
 import { geistMono, geistSans } from './fonts';
 import { Providers } from './providers';
 
@@ -33,6 +34,7 @@ export function generateStaticParams() {
 export default async function LocaleLayout({ children, params }: LayoutProps<'/[locale]'>) {
   const { locale } = await params;
   const messages = await getMessages();
+  const user = mockUser;
 
   if (!isLocale(locale)) {
     notFound();
@@ -43,7 +45,7 @@ export default async function LocaleLayout({ children, params }: LayoutProps<'/[
   return (
     <html lang={locale}>
       <body className={cn(geistSans.variable, geistMono.variable, 'dark text-foreground bg-background antialiased')}>
-        <Providers locale={locale} messages={messages}>
+        <Providers locale={locale} messages={messages} userData={user}>
           <AppLayout>{children}</AppLayout>
         </Providers>
       </body>

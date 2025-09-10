@@ -13,7 +13,7 @@ export function LangToggle() {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const t = useTranslations('Header.locales');
+  const t = useTranslations('Header');
 
   const handleChange = (locale: Key) => {
     if (typeof locale !== 'string' || !isLocale(locale)) {
@@ -27,19 +27,19 @@ export function LangToggle() {
   return (
     <Dropdown>
       <DropdownTrigger>
-        <Button isIconOnly variant="flat">
+        <Button isIconOnly variant="flat" aria-label={t('chooseLanguage')}>
           <LangIcon className="text-xl" />
         </Button>
       </DropdownTrigger>
 
-      <DropdownMenu aria-label="Languages" onAction={handleChange}>
+      <DropdownMenu onAction={handleChange}>
         {routing.locales.map((locale) => (
           <DropdownItem
             classNames={{ base: 'data-[hover=true]:hover:bg-default-300/50' }}
             key={locale}
             endContent={<span className="text-primary ml-auto text-xs">{locale.toUpperCase()}</span>}
           >
-            {t(locale)}
+            {t(`locales.${locale}`)}
           </DropdownItem>
         ))}
       </DropdownMenu>
