@@ -1,5 +1,5 @@
-import { HttpRequestForm } from '@/components/http-request-form/http-request-form';
+import { HttpRequestForm } from '@/features/rest-client/components/http-request-form';
 
-export default function HistoryPage() {
+export default function ClientPage() {
   return <HttpRequestForm />;
 }

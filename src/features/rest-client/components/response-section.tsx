@@ -1,6 +1,6 @@
 import type { ResponseData } from '@/types/http-request';
 
-import { RequestBodyEditor } from '@/components/request-body-editor/request-body-editor';
+import { RequestBodyEditor } from '@/features/rest-client/components/request-body-editor';
 
 type Props = {
   response: ResponseData;

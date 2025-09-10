@@ -3,13 +3,12 @@
 import { Button, Input } from '@heroui/react';
 import { useCallback, useState, type ChangeEvent, type FormEvent } from 'react';
 
-import { RequestBodyEditor } from '@/components/request-body-editor/request-body-editor';
-import { ResponseSection } from '@/components/response-section/response-section';
-import { useHeaders } from '@/hooks/use-headers';
-import { useHttpRequest } from '@/hooks/use-http-request';
-
-import { HeadersSection } from './headers-section';
-import { MethodSelector } from './method-selector';
+import { HeadersSection } from '@/features/rest-client/components/headers-section';
+import { MethodSelector } from '@/features/rest-client/components/method-selector';
+import { RequestBodyEditor } from '@/features/rest-client/components/request-body-editor';
+import { ResponseSection } from '@/features/rest-client/components/response-section';
+import { useHeaders } from '@/features/rest-client/hooks/use-headers';
+import { useHttpRequest } from '@/features/rest-client/hooks/use-http-request';
 
 export const HttpRequestForm = () => {
   const { method, setMethod, url, setUrl, executeRequest, HTTP_METHODS, response, isLoading } = useHttpRequest();

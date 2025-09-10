@@ -2,7 +2,7 @@ import { Button } from '@heroui/react';
 
 import type { Header } from '@/types/http-request';
 
-import { HeaderRequest } from '@/components/header-request/header-request';
+import { HeaderRequest } from '@/features/rest-client/components/header-request';
 
 type HeadersSectionProps = {
   headers: Header[];
