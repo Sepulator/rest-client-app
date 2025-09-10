@@ -15,7 +15,9 @@ export function SidebarHeader({ menuTrigger, title }: SidebarHeaderProps) {
         'md:absolute md:px-6 md:group-data-[closed=true]:justify-center'
       )}
     >
-      <div className="text-default-foreground truncate md:group-data-[closed=true]:opacity-0">{title}</div>
+      <div className="text-default-foreground truncate md:group-data-[closed=true]:invisible md:group-data-[closed=true]:opacity-0">
+        {title}
+      </div>
       {menuTrigger}
     </div>
   );

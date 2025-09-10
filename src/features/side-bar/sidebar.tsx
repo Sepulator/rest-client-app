@@ -4,11 +4,11 @@ import { Button, cn } from '@heroui/react';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 
-import { links } from '@/features/side-bar/links-list';
-import { SidebarHeader } from '@/features/side-bar/sidebar-header';
-import { SidebarLink } from '@/features/side-bar/sidebar-link';
-import { SidebarList } from '@/features/side-bar/sidebar-list';
-import { SidebarTrigger } from '@/features/side-bar/sidebar-trigger';
+import { links } from '@/features/side-bar/ui/links-list';
+import { SidebarHeader } from '@/features/side-bar/ui/sidebar-header';
+import { SidebarLink } from '@/features/side-bar/ui/sidebar-link';
+import { SidebarList } from '@/features/side-bar/ui/sidebar-list';
+import { SidebarTrigger } from '@/features/side-bar/ui/sidebar-trigger';
 
 type SideNavBarProps = {
   tempLogout: () => void;

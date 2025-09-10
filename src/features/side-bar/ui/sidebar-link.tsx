@@ -17,6 +17,8 @@ export function SidebarLink({ title, href, Icon }: SidebarLinkProps) {
   return (
     <Link
       href={href}
+      aria-current={isActive && 'page'}
+      tabIndex={isActive ? -1 : 0}
       className={cn(
         'border-default-700 hover:bg-default-300/50 flex rounded-lg border-l-4',
         'group-data-[closed=true]:pointer-events-none group-data-[closed=true]:border-l-0',
