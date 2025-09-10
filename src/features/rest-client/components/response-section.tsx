@@ -1,3 +1,5 @@
+import { Spinner } from '@heroui/react';
+
 import type { ResponseData } from '@/types/http-request';
 
 import { RequestBodyEditor } from '@/features/rest-client/components/request-body-editor';
@@ -13,7 +15,7 @@ export const ResponseSection = ({ response, isLoading }: Props) => {
   const statusStyle = response.status >= HTTP_ERROR ? 'text-red-500' : 'text-green-500';
 
   if (isLoading) {
-    return <section>Loading...</section>;
+    return <Spinner color="warning" label="Loading..." />;
   }
 
   if (response.error) {
