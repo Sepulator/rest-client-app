@@ -4,9 +4,9 @@ import { cn, Navbar, NavbarContent, NavbarItem } from '@heroui/react';
 import { useTranslations } from 'next-intl';
 import React, { useEffect, useState } from 'react';
 
-import { HeaderLink } from '@/components/header/header-link';
-import { HeaderNav } from '@/components/header/header-nav';
-import { Logo } from '@/components/header/logo';
+import { HeaderLink } from '@/components/header/ui/header-link';
+import { HeaderNav } from '@/components/header/ui/header-nav';
+import { Logo } from '@/components/header/ui/logo';
 import { ROUTES } from '@/config/routes';
 import { useChangeOnScroll } from '@/hooks/use-change-on-scroll';
 import { usePathname } from '@/i18n/navigation';

@@ -1,11 +1,11 @@
 import { NavbarContent, NavbarItem, NavbarMenu, NavbarMenuItem, NavbarMenuToggle } from '@heroui/navbar';
 import { Button, cn } from '@heroui/react';
 import { useTranslations } from 'next-intl';
-import React, { useState } from 'react';
 
-import { HeaderLink } from '@/components/header/header-link';
-import { LangToggle } from '@/components/header/lang-toggle';
+import { HeaderLink } from '@/components/header/ui/header-link';
+import { LangToggle } from '@/components/header/ui/lang-toggle';
 import { ROUTES } from '@/config/routes';
+import { useAuth } from '@/stores/auth-context/use-auth';
 
 const navLinks = {
   base: [{ href: ROUTES.MAIN, key: 'home' }],
@@ -21,13 +21,9 @@ type HeaderNavProps = {
 };
 
 export function HeaderNav({ isMenuOpen, checkIsActive }: HeaderNavProps) {
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
-  const links = isLoggedIn ? navLinks.base : [...navLinks.base, ...navLinks.auth];
+  const { user, logout } = useAuth();
+  const links = user ? navLinks.base : [...navLinks.base, ...navLinks.auth];
   const t = useTranslations('userActions');
-
-  const fakeLogout = () => {
-    setIsLoggedIn(false);
-  };
 
   const renderAuthNav = (isMobile?: boolean) => {
     const Wrapper = isMobile ? NavbarMenuItem : NavbarItem;
@@ -44,10 +40,10 @@ export function HeaderNav({ isMenuOpen, checkIsActive }: HeaderNavProps) {
           );
         })}
 
-        {isLoggedIn && (
+        {user && (
           <Button
             variant="flat"
-            onPress={fakeLogout}
+            onPress={logout}
             className={cn('text-foreground-700 hidden sm:flex', isMobile && 'flex p-6')}
           >
             {t('actions.logout')}

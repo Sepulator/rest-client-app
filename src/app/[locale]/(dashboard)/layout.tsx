@@ -1,18 +1,14 @@
 'use client';
-import { useState } from 'react';
 
 import { Sidebar } from '@/features/side-bar/sidebar';
+import { useAuth } from '@/stores/auth-context/use-auth';
 
 export default function DashboardLayout({ children, welcome }: LayoutProps<'/[locale]'>) {
-  const [isTemporaryLogin, setIsTemporaryLogin] = useState(true);
+  const { user, logout } = useAuth();
 
-  const tempLogout = () => {
-    setIsTemporaryLogin(false);
-  };
-
-  return isTemporaryLogin ? (
+  return user ? (
     <section className="relative flex w-full flex-col gap-4 pt-5 md:flex-row">
-      <Sidebar tempLogout={tempLogout} />
+      <Sidebar tempLogout={logout} />
       <div className="flex min-h-[80vh] flex-1 content-center items-center justify-center px-6">{children}</div>
     </section>
   ) : (

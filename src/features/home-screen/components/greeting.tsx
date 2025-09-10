@@ -1,16 +1,19 @@
+'use client';
+
 import type { ReactNode } from 'react';
 
 import { useTranslations } from 'next-intl';
 
 import { AuthNav } from '@/components/auth-nav';
 import { CalendarIcon } from '@/components/icons/calendar';
+import { useAuth } from '@/stores/auth-context/use-auth';
 
 type GreetingProps = {
-  user?: { name: string; email: string };
   dayOfWeek?: string;
 };
 
-export function Greeting({ dayOfWeek, user }: GreetingProps) {
+export function Greeting({ dayOfWeek }: GreetingProps) {
+  const { user } = useAuth();
   const t = useTranslations('HomePage.greeting');
 
   const renderRichText = (message: 'user' | 'guest', values?: { name: string }) => {
