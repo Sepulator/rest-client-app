@@ -33,6 +33,10 @@ export const HttpRequestForm = () => {
     await executeRequest(headers, body);
   };
 
+  const handleModeToggle = (jsonMode: boolean) => {
+    setIsJsonMode(jsonMode);
+  };
+
   return (
     <div className="@container">
       <div className="grid max-w-2xl grid-cols-1 gap-6 @6xl:max-w-6xl @6xl:grid-cols-2">
@@ -57,7 +61,7 @@ export const HttpRequestForm = () => {
               size="sm"
               variant={isJsonMode ? 'bordered' : 'solid'}
               onPress={() => {
-                setIsJsonMode(false);
+                handleModeToggle(false);
               }}
             >
               Text
@@ -66,7 +70,7 @@ export const HttpRequestForm = () => {
               size="sm"
               variant={isJsonMode ? 'solid' : 'bordered'}
               onPress={() => {
-                setIsJsonMode(true);
+                handleModeToggle(true);
               }}
             >
               JSON

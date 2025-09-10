@@ -21,23 +21,25 @@ export const RequestBodyEditor = ({
   mode = 'json',
   title = 'JSON Content',
 }: Props) => {
-  const jsonError = useMemo(() => {
-    if (mode !== 'json' || !body.trim()) return null;
+  const { jsonError, parsedJson } = useMemo(() => {
+    if (mode !== 'json' || !body.trim()) return { jsonError: null, parsedJson: null };
     try {
-      JSON.parse(body);
+      const parsed: unknown = JSON.parse(body);
 
-      return null;
+      return { jsonError: null, parsedJson: parsed };
     } catch (error) {
-      return error instanceof Error ? error.message : 'Invalid JSON';
+      return {
+        jsonError: error instanceof Error ? error.message : 'Invalid JSON',
+        parsedJson: null,
+      };
     }
   }, [body, mode]);
 
   const prettifyJSON = () => {
-    if (!onChange) return;
-    try {
-      const parsed: unknown = JSON.parse(body);
+    if (!onChange || !parsedJson) return;
 
-      onChange(JSON.stringify(parsed, null, SPACE_SIZE));
+    try {
+      onChange(JSON.stringify(parsedJson, null, SPACE_SIZE));
     } catch {}
   };
 

@@ -6,7 +6,7 @@ export const useHeaders = (initialHeaders: Header[] = [{ id: '1', key: 'Accept',
   const [headers, setHeaders] = useState<Header[]>(initialHeaders);
 
   const addHeader = () => {
-    setHeaders((previous) => [...previous, { id: Date.now().toString(), key: '', value: '' }]);
+    setHeaders((previous) => [...previous, { id: crypto.randomUUID(), key: '', value: '' }]);
   };
 
   const updateHeader = (id: string, updates: Partial<Header>) => {
