@@ -40,7 +40,7 @@
   "HomePage": {
     "intro": {
       "title": "What is V-REST?",
-      "description": "This is a light weight alternative to Postman combines essential features in one app, developed in teams of three during RS School React course Supports authorization and authentication capabilities. Access to the tool is restricted to authorized users only. The history section provides quick access to previously executed requests"
+      "description": "A lightweight alternative to Postman, combining essential features in one app. Developed in teams of three during the RS School React course, it supports authorization and authentication. Access to the tool is restricted to authorized users. The history section provides quick access to previously executed requests"
     },
     "features": {
       "title": "Key Features",
