@@ -24,23 +24,19 @@ body {
   }
 
   h1 {
-    font-size: var(--text-3xl);
+    font-size: calc(var(--heroui-font-size-large) * 1.6);
   }
 
   h2 {
-    font-size: var(--text-2xl);
+    font-size: calc(var(--heroui-font-size-large) * 1.2);
   }
 
   h3 {
-    font-size: var(--text-2xl);
+    font-size: var(--heroui-font-size-large);
   }
 
   p {
     color: hsl(var(--heroui-foreground) / 80%);
-  }
-
-  button {
-    font-size: var(--text-2xl);
   }
 }
 
