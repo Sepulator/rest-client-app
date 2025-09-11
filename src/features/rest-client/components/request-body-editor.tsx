@@ -3,7 +3,7 @@ import { EditorView } from '@codemirror/view';
 import { Button } from '@heroui/react';
 import CodeMirror from '@uiw/react-codemirror';
 import { useTranslations } from 'next-intl';
-import { useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 
 type Props = {
   body: string;
@@ -17,27 +17,30 @@ const SPACE_SIZE = 2;
 
 export const RequestBodyEditor = ({ body, onChange, readOnly = false, mode = 'json', title }: Props) => {
   const t = useTranslations('RestClient');
-  const { jsonError, parsedJson } = useMemo(() => {
-    if (mode !== 'json' || !body.trim()) return { jsonError: null, parsedJson: null };
+
+  const { jsonError, parsedJson, displayBody } = useMemo(() => {
+    if (mode !== 'json' || !body.trim()) return { jsonError: null, parsedJson: null, displayBody: body };
     try {
       const parsed: unknown = JSON.parse(body);
+      const prettified = JSON.stringify(parsed, null, SPACE_SIZE);
 
-      return { jsonError: null, parsedJson: parsed };
+      return { jsonError: null, parsedJson: parsed, displayBody: prettified };
     } catch (error) {
       return {
         jsonError: error instanceof Error ? error.message : 'Invalid JSON',
         parsedJson: null,
+        displayBody: body,
       };
     }
   }, [body, mode]);
 
-  const prettifyJSON = () => {
+  const prettifyJSON = useCallback(() => {
     if (!onChange || !parsedJson) return;
 
     try {
       onChange(JSON.stringify(parsedJson, null, SPACE_SIZE));
     } catch {}
-  };
+  }, [onChange, parsedJson]);
 
   return (
     <>
@@ -50,7 +53,7 @@ export const RequestBodyEditor = ({ body, onChange, readOnly = false, mode = 'js
         )}
       </div>
       <CodeMirror
-        value={body}
+        value={displayBody}
         onChange={onChange}
         editable={!readOnly}
         extensions={mode === 'json' ? [json(), EditorView.lineWrapping] : [EditorView.lineWrapping]}
