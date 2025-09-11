@@ -1,5 +1,6 @@
 import { screen } from '@testing-library/react';
 
+import { CARDS_KEYS } from '@/features/home-screen/constants';
 import { HomeScreen } from '@/features/home-screen/home-screen';
 import { renderWithProviders } from '@/testing/utils/render-with-providers';
 
@@ -21,10 +22,10 @@ describe('HomeScreen', () => {
       renderWithProviders(<HomeScreen />);
       const homeCardsInfo = en.HomePage.keyFeatures;
 
-      Object.values(homeCardsInfo).forEach((cardInfo) => {
-        expect(screen.getByText(cardInfo.title)).toBeInTheDocument();
-        expect(screen.getByText(cardInfo.icon)).toBeInTheDocument();
-        expect(screen.getByText(cardInfo.description)).toBeInTheDocument();
+      CARDS_KEYS.forEach((key) => {
+        expect(screen.getByText(homeCardsInfo[key].title)).toBeInTheDocument();
+        expect(screen.getByText(homeCardsInfo[key].icon)).toBeInTheDocument();
+        expect(screen.getByText(homeCardsInfo[key].description)).toBeInTheDocument();
       });
     });
   });

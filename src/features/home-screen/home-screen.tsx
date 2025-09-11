@@ -1,10 +1,9 @@
 import { Divider } from '@heroui/react';
 import { useTranslations } from 'next-intl';
 
+import { CARDS_KEYS } from '@/features/home-screen/constants';
 import { Background } from '@/features/home-screen/ui/background';
 import { FeatureCard } from '@/features/home-screen/ui/card';
-
-const CARDS_KEYS = ['rest', 'history', 'codeGeneration', 'variables', 'auth', 'lang'] as const;
 
 export function HomeScreen() {
   const t = useTranslations('HomePage');

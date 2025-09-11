@@ -6,6 +6,8 @@ import { ROUTES } from '@/config/routes';
 import { Sidebar } from '@/features/side-bar/sidebar';
 import { renderWithUserEvent } from '@/testing/utils/render-with-user-event';
 
+import en from '../../../messages/en.json';
+
 type MockIntlLink = { [key: string]: unknown; children: ReactNode; href: string };
 
 let pathnameMock: string;
@@ -21,28 +23,7 @@ vi.mock('@/i18n/navigation', () => {
   };
 });
 
-const mockTranslations = {
-  navigation: {
-    home: 'Home',
-    client: 'REST Client',
-    history: 'History',
-    variables: 'Variables',
-  },
-  actions: {
-    logout: 'Temp Logout',
-    menuOpen: 'Open menu',
-    menuClose: 'Close menu',
-    menu: 'Menu',
-  },
-};
-
-const { menu, menuOpen, menuClose } = mockTranslations.actions;
-
-vi.mock('react-i18next', () => ({
-  useTranslations: () => ({
-    t: (key: keyof typeof mockTranslations) => mockTranslations[key],
-  }),
-}));
+const { menu, menuOpen, menuClose } = en.userActions.actions;
 
 const mockLogout = vi.fn();
 const setupSidebar = () => ({ ...renderWithUserEvent(<Sidebar tempLogout={mockLogout} />) });
@@ -80,16 +61,17 @@ describe('Sidebar', () => {
     it('should open and close sidebar on button click', async () => {
       const { user } = setupSidebar();
       const button = screen.getByRole('button', { name: menuOpen });
+      const sidebar = screen.getByRole('navigation');
 
       await user.click(button);
 
       expect(button).toHaveAccessibleName(menuClose);
-      Object.values(mockTranslations.navigation).forEach((value) => expect(screen.getByText(value)).toBeVisible());
+      expect(sidebar).not.toHaveAttribute('data-closed', 'true');
 
       await user.click(button);
 
       expect(button).toHaveAccessibleName(menuOpen);
-      Object.values(mockTranslations.navigation).forEach((value) => expect(screen.queryByText(value)).toBeVisible());
+      expect(sidebar).toHaveAttribute('data-closed', 'true');
     });
 
     it('should show active link', () => {
