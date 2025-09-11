@@ -34,7 +34,7 @@ export function SidebarLink({ title, href, Icon }: SidebarLinkProps) {
           'group-data-[closed=true]:translate-x-0 group-data-[closed=true]:opacity-0 md:group-data-[closed=true]:opacity-100'
         )}
       >
-        {Icon && <Icon className={cn(isActive && 'text-primary')} />}
+        {Icon && <Icon className={cn('text-2xl', isActive && 'text-primary-500')} />}
         <span
           className={cn(
             'truncate whitespace-nowrap',

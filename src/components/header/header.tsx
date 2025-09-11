@@ -16,7 +16,7 @@ const linkClasses = [
   'opacity-70',
   'data-[active=true]:pointer-events-none',
   'data-[active=true]:opacity-100',
-  'data-[active=true]:text-primary ',
+  'data-[active=true]:text-primary-500',
   'hover:opacity-100',
 ];
 

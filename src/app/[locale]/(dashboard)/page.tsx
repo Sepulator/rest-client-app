@@ -9,7 +9,7 @@ export default async function HomePage() {
   const dayOfWeek = getDayOfWeek(locale);
 
   return (
-    <div className="mr-auto mb-auto flex flex-col gap-8">
+    <div className="flex flex-col">
       <Greeting dayOfWeek={dayOfWeek} />
       <HomeScreen />
     </div>

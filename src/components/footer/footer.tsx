@@ -20,7 +20,7 @@ export function Footer() {
           <div className="flex flex-wrap justify-center gap-3 text-sm">
             {teamInfo.map(({ name, github }) => (
               <a key={name} href={github} className={footerLinksClassName} target="_blank" rel="noopener noreferrer">
-                <GithubIcon />
+                <GithubIcon className="text-large" />
                 <span>{t(name)}</span>
               </a>
             ))}

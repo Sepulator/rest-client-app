@@ -42,10 +42,6 @@ body {
   button {
     font-size: var(--text-2xl);
   }
-
-  svg {
-    font-size: var(--text-2xl);
-  }
 }
 
 @layer utilities {

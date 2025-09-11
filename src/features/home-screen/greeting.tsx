@@ -18,7 +18,7 @@ export function Greeting({ dayOfWeek }: GreetingProps) {
 
   const renderRichText = (message: 'user' | 'guest', values?: { name: string }) => {
     const tags = {
-      i: (chunks: ReactNode) => <span className="text-primary whitespace-nowrap">{chunks}</span>,
+      i: (chunks: ReactNode) => <span className="text-primary-500 whitespace-nowrap">{chunks}</span>,
     };
 
     return t.rich(message, { ...tags, ...values });
@@ -29,7 +29,7 @@ export function Greeting({ dayOfWeek }: GreetingProps) {
       {user ? (
         <div>
           <h1>{renderRichText('user', { name: user.name })}</h1>
-          <p className="text-medium text-secondary-800 dark:text-secondary">{user.email}</p>
+          <p className="text-medium">{user.email}</p>
         </div>
       ) : (
         <div className="flex flex-col gap-5">
@@ -40,7 +40,7 @@ export function Greeting({ dayOfWeek }: GreetingProps) {
 
       {dayOfWeek && (
         <div className="mb-4 flex h-fit items-center gap-2">
-          <CalendarIcon className="text-primary" />
+          <CalendarIcon className="text-medium text-primary-500" />
           {dayOfWeek}
         </div>
       )}
