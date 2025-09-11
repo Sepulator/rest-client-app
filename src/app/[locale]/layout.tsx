@@ -34,7 +34,7 @@ export function generateStaticParams() {
 export default async function LocaleLayout({ children, params }: LayoutProps<'/[locale]'>) {
   const { locale } = await params;
   const messages = await getMessages();
-  const user = mockUser;
+  const user = process.env.NODE_ENV === 'development' ? mockUser : undefined;
 
   if (!isLocale(locale)) {
     notFound();
