@@ -1,6 +1,6 @@
-import type { ReactNode } from 'react';
-
 import { screen, waitFor, within } from '@testing-library/react';
+
+import type { MockIntlLink } from '@/testing/mocks/types';
 
 import Header from '@/components/header/header';
 import { ROUTES } from '@/config/routes';
@@ -15,8 +15,6 @@ const createRouterMock = () => ({
 vi.mock('next/navigation', () => {
   return { useSearchParams: vi.fn() };
 });
-
-type MockIntlLink = { [key: string]: unknown; children: ReactNode; href: string };
 
 vi.mock('@/i18n/navigation', () => {
   return {

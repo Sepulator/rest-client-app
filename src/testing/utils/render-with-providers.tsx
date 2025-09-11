@@ -7,25 +7,25 @@ import type { ProvidersProps } from '@/app/[locale]/providers';
 
 import { Providers } from '@/app/[locale]/providers';
 import { mockUser } from '@/testing/mocks/user';
-
-import en from '../../../messages/en.json';
+import { IntlProvider } from '@/testing/utils/intl-provider';
 
 type RequiredProviderProps = Omit<ProvidersProps, 'children'>;
 type MockProviderProps = Partial<RequiredProviderProps>;
 
 export type ExtendedOptions = Omit<RenderOptions, 'wrapper'> & { providerOptions?: MockProviderProps };
 
-export const MOCK_LOCALE = 'en';
-
 const baseMockOptions: RequiredProviderProps = {
-  locale: MOCK_LOCALE,
-  messages: en,
   userData: mockUser,
 };
 
 export const renderWithProviders = (ui: ReactElement, options?: ExtendedOptions): ReturnType<typeof render> => {
   const providerProps = { ...baseMockOptions, ...options?.providerOptions };
-  const wrapper = ({ children }: PropsWithChildren) => <Providers {...providerProps}>{children}</Providers>;
+
+  const wrapper = ({ children }: PropsWithChildren) => (
+    <IntlProvider>
+      <Providers {...providerProps}>{children}</Providers>
+    </IntlProvider>
+  );
 
   return render(ui, { wrapper, ...options });
 };

@@ -10,9 +10,6 @@ export default defineConfig({
   test: {
     globals: true,
     environment: 'jsdom',
-    css: {
-      include: /.+/,
-    },
     server: {
       deps: {
         inline: ['next-intl'],
