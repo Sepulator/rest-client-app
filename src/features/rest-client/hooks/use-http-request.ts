@@ -1,20 +1,11 @@
 import { getReasonPhrase } from 'http-status-codes';
 import { useState } from 'react';
+import { parse } from 'valibot';
 
-import type { Header, HttpMethod, ResponseData } from '@/types/http-request';
+import type { Header, ResponseData } from '@/types/http-request';
 
-const HTTP_METHODS: readonly HttpMethod[] = ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'HEAD', 'OPTIONS'];
-const DEFAULT_URL = 'https://jsonplaceholder.typicode.com/posts/1';
-const responseData: ResponseData = {
-  body: '',
-  headers: {},
-  status: 0,
-  statusText: '',
-  timestamp: '',
-  duration: 0,
-  requestSize: 0,
-  responseSize: 0,
-};
+import { DEFAULT_URL, HTTP_METHODS, responseData } from '@/features/rest-client/constants/http-request';
+import { ProxyResponseSchema } from '@/features/rest-client/schemas/proxy-schema';
 
 export const useHttpRequest = () => {
   const [method, setMethod] = useState<string>(HTTP_METHODS[0]);
@@ -49,16 +40,27 @@ export const useHttpRequest = () => {
       }
 
       const requestSize = new Blob([requestBody ?? '']).size;
-      const result = await fetch(url, { method, headers: requestHeaders, body: requestBody });
-      const responseBody = await result.text();
+
+      const result = await fetch('/api/proxy', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ url, method, headers: requestHeaders, body: requestBody }),
+      });
+
+      const data: unknown = await result.json();
+      const proxyResponse = parse(ProxyResponseSchema, data);
       const duration = performance.now() - startTime;
-      const responseSize = new Blob([responseBody]).size;
+      const responseSize = new Blob([proxyResponse.body]).size;
+
+      if (proxyResponse.error) {
+        throw new Error(proxyResponse.error);
+      }
 
       setResponse({
-        status: result.status,
-        statusText: getReasonPhrase(result.status),
-        headers: Object.fromEntries(result.headers.entries()),
-        body: responseBody,
+        status: proxyResponse.status,
+        statusText: getReasonPhrase(proxyResponse.status),
+        headers: proxyResponse.headers,
+        body: proxyResponse.body,
         timestamp,
         duration,
         requestSize,
