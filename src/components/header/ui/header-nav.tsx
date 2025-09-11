@@ -11,7 +11,7 @@ const navLinks = {
   base: [{ href: ROUTES.MAIN, key: 'home' }],
   auth: [
     { href: ROUTES.LOGIN, key: 'login' },
-    { href: ROUTES.SIGN_UP, key: 'sign-up' },
+    { href: ROUTES.SIGN_UP, key: 'signUp' },
   ],
 } as const;
 

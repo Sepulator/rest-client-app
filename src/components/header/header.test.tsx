@@ -9,11 +9,7 @@ import { renderWithProviders } from '@/testing/utils/render-with-providers';
 import { renderWithUserEvent } from '@/testing/utils/render-with-user-event';
 
 const createRouterMock = () => ({
-  push: vi.fn(),
   replace: vi.fn(),
-  back: vi.fn(),
-  forward: vi.fn(),
-  prefetch: vi.fn(),
 });
 
 vi.mock('next/navigation', () => {

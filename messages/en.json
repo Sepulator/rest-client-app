@@ -6,7 +6,7 @@
       "history": "History",
       "variables": "Variables",
       "login": "Login",
-      "sign-up": "Sign Up"
+      "signUp": "Sign Up"
     },
     "actions": {
       "logout": "Temp Logout",
