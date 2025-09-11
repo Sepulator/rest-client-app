@@ -4,7 +4,7 @@ import Image from 'next/image';
 import courseLogo from '@/assets/images/rs-logo.svg';
 import { teamInfo } from '@/components/footer/constants/team-info';
 import { GithubIcon } from '@/components/icons/github';
-import { saveSource } from '@/utils/save-source';
+import { safeSource } from '@/utils/safe-source';
 
 const footerLinksClassName = 'opacity-70 duration-300 hover:opacity-100 flex gap-2 items-center';
 
@@ -32,7 +32,7 @@ export function Footer() {
             rel="noopener noreferrer"
             className={footerLinksClassName}
           >
-            <Image width={24} height={24} alt={t('courseLogoAlt')} src={saveSource(courseLogo)} />
+            <Image width={24} height={24} alt={t('courseLogoAlt')} src={safeSource(courseLogo)} />
             <span className="text-sm">RS School</span>
           </a>
         </div>

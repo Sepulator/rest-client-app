@@ -9,7 +9,7 @@ type CardProps = {
 
 export function FeatureCard({ title, icon, description }: CardProps) {
   return (
-    <Card shadow="none" key={title} className="min-w-60 flex-1 p-2 outline-1 md:min-w-90">
+    <Card shadow="none" className="min-w-60 flex-1 p-2 outline-1 md:min-w-90">
       <CardHeader className="flex flex-col items-start gap-8">
         <span className="text-4xl">{icon}</span>
         <h3>{title}</h3>
