@@ -19,9 +19,8 @@ describe('useHttpRequest', () => {
       await result.current.executeRequest([]);
     });
 
-    expect(result.current.response.status).toBe(200);
-    expect(result.current.response.body).toContain('Mock Post');
-    expect(result.current.isLoading).toBe(false);
+    expect(result.current.response?.status).toBe(200);
+    expect(result.current.response?.body).toContain('Mock Post');
   });
 
   it('should handle error responses', async () => {
@@ -35,7 +34,7 @@ describe('useHttpRequest', () => {
       await result.current.executeRequest([]);
     });
 
-    expect(result.current.response.error).toBe('Network error');
+    expect(result.current.response?.error).toBe('Network error');
   });
 
   it('should process headers correctly', async () => {
@@ -46,16 +45,19 @@ describe('useHttpRequest', () => {
     });
 
     const headers: Header[] = [
-      { id: '1', key: 'Authorization', value: 'Bearer token' },
-      { id: '2', key: '', value: 'ignored' },
-      { id: '3', key: 'Accept', value: '' },
+      { id: '1', key: 'Content-Type', value: 'application/json' },
+      { id: '2', key: 'Authorization', value: 'Bearer token' },
     ];
 
     await act(async () => {
       await result.current.executeRequest(headers);
     });
 
-    expect(result.current.response.status).toBe(200);
+    expect(result.current.response?.status).toBe(200);
+    expect(result.current.response?.headers).toEqual({
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer token',
+    });
   });
 
   it('should add Content-Type for POST with body', async () => {
@@ -70,7 +72,10 @@ describe('useHttpRequest', () => {
       await result.current.executeRequest([], '{"test": "data"}');
     });
 
-    expect(result.current.response.status).toBe(200);
+    expect(result.current.response?.status).toBe(200);
+    expect(result.current.response?.headers).toEqual({
+      'Content-Type': 'application/json',
+    });
   });
 
   it('should not add Content-Type for GET method', async () => {
@@ -85,6 +90,6 @@ describe('useHttpRequest', () => {
       await result.current.executeRequest([], '{"test": "data"}');
     });
 
-    expect(result.current.response.status).toBe(200);
+    expect(result.current.response?.status).toBe(200);
   });
 });

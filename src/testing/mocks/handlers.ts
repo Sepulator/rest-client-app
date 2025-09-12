@@ -6,7 +6,7 @@ import { ProxyRequestSchema } from '@/features/rest-client/schemas/proxy-schema'
 export const handlers = [
   http.post('/api/proxy', async ({ request }) => {
     const data: unknown = await request.json();
-    const { url, method } = parse(ProxyRequestSchema, data);
+    const { url, method, headers } = parse(ProxyRequestSchema, data);
 
     if (url.includes('jsonplaceholder')) {
       return HttpResponse.json({
@@ -30,7 +30,7 @@ export const handlers = [
     return HttpResponse.json({
       status: 200,
       statusText: 'OK',
-      headers: { 'content-type': 'application/json' },
+      headers: { ...headers },
       body: JSON.stringify({ message: 'Mock response', method }),
     });
   }),
