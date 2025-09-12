@@ -31,7 +31,9 @@ export function HeaderNav({ isMenuOpen, checkIsActive }: HeaderNavProps) {
     return (
       <>
         {links.map(({ key, href }, index) => {
-          if (!isMobile && href === ROUTES.MAIN) return;
+          if (!isMobile && href === ROUTES.MAIN) {
+            return;
+          }
 
           return (
             <Wrapper key={isMobile ? `${key}-${index.toString()}` : key} isActive={checkIsActive(href)}>

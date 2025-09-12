@@ -15,28 +15,28 @@
       "menu": "Menu"
     }
   },
-
   "LocaleLayout": {
     "title": "Rest client",
     "description": "A light-weight rest client application"
   },
-
-  "NotFound": { "title": "Page not found" },
-
-  "WelcomePage": { "title": "Welcome, please login" },
-
+  "NotFound": {
+    "title": "Page not found"
+  },
+  "WelcomePage": {
+    "title": "Welcome, please login"
+  },
   "Footer": {
     "yuri": "Yuri S.",
     "anastasiia": "Anastasiia Nikonova",
     "maria": "Maria Ilina",
     "courseLogoAlt": "Course logo"
   },
-
   "Header": {
-    "locales": { "en": "English" },
+    "locales": {
+      "en": "English"
+    },
     "chooseLanguage": "Choose language"
   },
-
   "HomePage": {
     "intro": {
       "title": "What is V-REST?",
@@ -46,7 +46,10 @@
       "title": "Key Features",
       "description": "Streamline your API development workflow with our comprehensive REST client tool"
     },
-    "greeting": { "user": "Welcome back, <i>{name}</i>👋", "guest": "Welcome, <i>please login</i>" },
+    "greeting": {
+      "user": "Welcome back, <i>{name}</i>👋",
+      "guest": "Welcome, <i>please login</i>"
+    },
     "keyFeatures": {
       "rest": {
         "title": "REST Client",
@@ -80,11 +83,9 @@
       }
     }
   },
-
   "AuthForm": {
     "emailLabel": "Email"
   },
-
   "Schemas": {
     "minLength": "Password must be at least 8 characters",
     "letter": "Password must contain at least one letter",
@@ -93,19 +94,32 @@
     "emailRequired": "Email is required",
     "emailInvalid": "Email is invalid"
   },
-
   "PasswordField": {
     "passwordStrength": "Password strength",
     "passwordPlaceholder": "Enter your password",
     "passwordToggleVisibility": "toggle password visibility",
     "passwordLabel": "Password"
   },
-
   "PasswordStrength": {
     "label0": "Empty",
     "label1": "Weak",
     "label2": "Medium",
     "label3": "Strong",
     "label4": "Excellent"
+  },
+  "RestClient": {
+    "send": "Send",
+    "headers": "HTTP Headers",
+    "addHeader": "Add Header",
+    "resBody": "Response Body",
+    "header": "header",
+    "value": "value",
+    "status": "Status",
+    "prettify": "Prettify JSON",
+    "jsonContent": "JSON Content",
+    "textContent": "Text Content",
+    "text": "Text",
+    "json": "JSON",
+    "url": "Enter Url"
   }
 }
