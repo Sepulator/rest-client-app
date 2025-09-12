@@ -6,8 +6,6 @@ import { teamInfo } from '@/components/footer/constants/team-info';
 import { GithubIcon } from '@/components/icons/github';
 import { safeSource } from '@/utils/safe-source';
 
-const footerLinksClassName = 'opacity-70 duration-300 hover:opacity-100 flex gap-2 items-center';
-
 export function Footer() {
   const t = useTranslations('Footer');
 
@@ -19,19 +17,14 @@ export function Footer() {
 
           <div className="flex flex-wrap justify-center gap-3 text-sm">
             {teamInfo.map(({ name, github }) => (
-              <a key={name} href={github} className={footerLinksClassName} target="_blank" rel="noopener noreferrer">
+              <a key={name} href={github} className="link" target="_blank" rel="noopener noreferrer">
                 <GithubIcon className="text-large" />
                 <span>{t(name)}</span>
               </a>
             ))}
           </div>
 
-          <a
-            href="https://rs.school/courses/reactjs"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={footerLinksClassName}
-          >
+          <a href="https://rs.school/courses/reactjs" target="_blank" rel="noopener noreferrer" className="link">
             <Image width={24} height={24} alt={t('courseLogoAlt')} src={safeSource(courseLogo)} />
             <span className="text-sm">RS School</span>
           </a>

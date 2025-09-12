@@ -42,7 +42,13 @@ export default async function LocaleLayout({ children, params }: LayoutProps<'/[
 
   return (
     <html lang={locale}>
-      <body className={cn(geistSans.variable, geistMono.variable, 'dark text-foreground bg-background antialiased')}>
+      <body
+        className={cn(
+          geistSans.variable,
+          geistMono.variable,
+          'styled-scrollbar dark text-foreground bg-background antialiased'
+        )}
+      >
         <NextIntlClientProvider>
           <Providers userData={user}>
             <AppLayout>{children}</AppLayout>

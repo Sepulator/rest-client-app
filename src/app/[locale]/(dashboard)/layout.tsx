@@ -7,7 +7,7 @@ export default function DashboardLayout({ children, welcome }: LayoutProps<'/[lo
   const { user, logout } = useAuth();
 
   return user ? (
-    <section className="flex flex-1 flex-col gap-4 pt-5 md:flex-row">
+    <section className="flex flex-1 flex-col gap-4 md:flex-row md:pt-5">
       <Sidebar tempLogout={logout} />
       <div className="mt-4 flex flex-1 flex-col self-start px-6">{children}</div>
     </section>

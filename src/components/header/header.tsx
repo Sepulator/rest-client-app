@@ -11,15 +11,6 @@ import { ROUTES } from '@/config/routes';
 import { useScrollState } from '@/hooks/use-scroll-state/use-scroll-state';
 import { usePathname } from '@/i18n/navigation';
 
-const linkClasses = [
-  'transition-all duration-300 ease-in-out',
-  'opacity-70',
-  'data-[active=true]:pointer-events-none',
-  'data-[active=true]:opacity-100',
-  'data-[active=true]:text-primary-500',
-  'hover:opacity-100',
-];
-
 const SCROLL_OFFSET = 50;
 const THROTTLE_DELAY = 50;
 
@@ -45,8 +36,8 @@ export default function Header() {
       maxWidth="full"
       className={cn(decorate && 'bg-default-100/50')}
       classNames={{
-        item: [...linkClasses, 'hidden sm:flex', 'data-[active=true]:font-normal'],
-        menuItem: [...linkClasses, 'w-full p-5 text-center text-xl'],
+        item: ['link header-link', 'hidden sm:flex', 'data-[active=true]:font-normal'],
+        menuItem: ['link header-link', 'w-full p-5 text-center text-xl'],
         content: ['gap-8'],
         wrapper: ['transition-all duration-200 ease-in-out max-w-screen-2xl'],
       }}

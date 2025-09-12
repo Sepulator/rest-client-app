@@ -49,3 +49,13 @@ body {
     @apply [-webkit-text-security:disc];
   }
 }
+
+@layer components {
+  .link {
+    @apply flex items-center gap-2 opacity-70 duration-300 ease-in-out hover:opacity-100;
+  }
+
+  .header-link {
+    @apply data-[active=true]:text-primary-500 data-[active=true]:pointer-events-none data-[active=true]:opacity-100;
+  }
+}

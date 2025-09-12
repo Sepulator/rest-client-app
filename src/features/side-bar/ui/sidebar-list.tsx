@@ -17,7 +17,7 @@ export function SidebarList<T>({ itemData, renderItem, appendItems }: SidebarLis
       className={cn(
         'flex h-[40vh] flex-col justify-center gap-4',
         'group-data-[closed=true]:invisible group-data-[closed=true]:h-0',
-        'md:group-data-[closed=true]:visible md:group-data-[closed=true]:h-screen',
+        'md:group-data-[closed=true]:visible',
         'duration-400 ease-in-out'
       )}
     >
