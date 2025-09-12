@@ -7,7 +7,7 @@ export const DEFAULT_URL = 'https://jsonplaceholder.typicode.com/posts/1';
 export const responseData: ResponseData = {
   body: '',
   headers: {},
-  status: 0,
+  status: 500,
   statusText: '',
   timestamp: '',
   duration: 0,

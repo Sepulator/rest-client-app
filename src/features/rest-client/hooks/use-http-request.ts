@@ -10,15 +10,13 @@ import { ProxyResponseSchema } from '@/features/rest-client/schemas/proxy-schema
 export const useHttpRequest = () => {
   const [method, setMethod] = useState<string>(HTTP_METHODS[0]);
   const [url, setUrl] = useState(DEFAULT_URL);
-  const [response, setResponse] = useState<ResponseData>(responseData);
-  const [isLoading, setIsLoading] = useState(false);
+  const [response, setResponse] = useState<ResponseData | null>(null);
 
   const executeRequest = async (headers: Header[], body = '') => {
     if (!url) {
       return;
     }
 
-    setIsLoading(true);
     const timestamp = new Date().toISOString();
     const startTime = performance.now();
 
@@ -78,8 +76,6 @@ export const useHttpRequest = () => {
         duration,
         requestSize: new Blob([body || '']).size,
       });
-    } finally {
-      setIsLoading(false);
     }
   };
 
@@ -91,6 +87,5 @@ export const useHttpRequest = () => {
     executeRequest,
     HTTP_METHODS,
     response,
-    isLoading,
   };
 };

@@ -1,5 +1,4 @@
 import { json } from '@codemirror/lang-json';
-import { EditorView } from '@codemirror/view';
 import { Button } from '@heroui/react';
 import CodeMirror from '@uiw/react-codemirror';
 import { useTranslations } from 'next-intl';
@@ -17,6 +16,7 @@ const SPACE_SIZE = 2;
 
 export const RequestBodyEditor = ({ body, onChange, readOnly = false, mode = 'json', title }: Props) => {
   const t = useTranslations('RestClient');
+  const isPrettifyEnabled = mode === 'json' && !readOnly;
 
   const { jsonError, parsedJson, displayBody } = useMemo(() => {
     if (mode !== 'json' || !body.trim()) {
@@ -24,9 +24,8 @@ export const RequestBodyEditor = ({ body, onChange, readOnly = false, mode = 'js
     }
     try {
       const parsed: unknown = JSON.parse(body);
-      const prettified = JSON.stringify(parsed, null, SPACE_SIZE);
 
-      return { jsonError: null, parsedJson: parsed, displayBody: prettified };
+      return { jsonError: null, parsedJson: parsed, displayBody: body };
     } catch (error) {
       return {
         jsonError: error instanceof Error ? error.message : 'Invalid JSON',
@@ -37,7 +36,7 @@ export const RequestBodyEditor = ({ body, onChange, readOnly = false, mode = 'js
   }, [body, mode]);
 
   const prettifyJSON = useCallback(() => {
-    if (!onChange || !parsedJson) {
+    if (!onChange) {
       return;
     }
 
@@ -48,7 +47,7 @@ export const RequestBodyEditor = ({ body, onChange, readOnly = false, mode = 'js
     <>
       <div className="mb-2 flex h-8 items-center justify-between">
         <span>{title}</span>
-        {mode === 'json' && !readOnly && onChange && (
+        {isPrettifyEnabled && (
           <Button size="sm" variant="flat" radius="none" onPress={prettifyJSON}>
             {t('prettify')}
           </Button>
@@ -58,7 +57,7 @@ export const RequestBodyEditor = ({ body, onChange, readOnly = false, mode = 'js
         value={displayBody}
         onChange={onChange}
         editable={!readOnly}
-        extensions={mode === 'json' ? [json(), EditorView.lineWrapping] : [EditorView.lineWrapping]}
+        extensions={mode === 'json' ? [json()] : []}
         height="400px"
         theme="dark"
         style={{

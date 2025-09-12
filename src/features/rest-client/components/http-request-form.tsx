@@ -2,7 +2,7 @@
 
 import { Button, Input } from '@heroui/react';
 import { useTranslations } from 'next-intl';
-import { useCallback, useState, type ChangeEvent, type FormEvent } from 'react';
+import { useCallback, useState, useTransition, type ChangeEvent, type FormEvent } from 'react';
 
 import { HeadersSection } from '@/features/rest-client/components/headers-section';
 import { MethodSelector } from '@/features/rest-client/components/method-selector';
@@ -12,13 +12,14 @@ import { useHeaders } from '@/features/rest-client/hooks/use-headers';
 import { useHttpRequest } from '@/features/rest-client/hooks/use-http-request';
 
 export const HttpRequestForm = () => {
-  const t = useTranslations('RestClient');
-  const { method, setMethod, url, setUrl, executeRequest, HTTP_METHODS, response, isLoading } = useHttpRequest();
+  const [isLoading, startTransition] = useTransition();
+  const { method, setMethod, url, setUrl, executeRequest, HTTP_METHODS, response } = useHttpRequest();
   const { headers, addHeader, updateHeader, removeHeader } = useHeaders();
-
   const [isJsonMode, setIsJsonMode] = useState(true);
   const [jsonBody, setJsonBody] = useState('');
   const [textBody, setTextBody] = useState('');
+
+  const t = useTranslations('RestClient');
 
   const handleSelectionChange = useCallback(
     (event: ChangeEvent<HTMLSelectElement>) => {
@@ -27,11 +28,16 @@ export const HttpRequestForm = () => {
     [setMethod]
   );
 
-  const handleSubmit = async (event: FormEvent) => {
+  const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
+    if (!url) {
+      return;
+    }
     const body = isJsonMode ? jsonBody : textBody;
 
-    await executeRequest(headers, body);
+    startTransition(async () => {
+      await executeRequest(headers, body);
+    });
   };
 
   const handleModeToggle = (jsonMode: boolean) => {
@@ -42,7 +48,7 @@ export const HttpRequestForm = () => {
     <div className="@container">
       <div className="grid max-w-2xl grid-cols-1 gap-6 @6xl:max-w-6xl @6xl:grid-cols-2">
         <section>
-          <form onSubmit={(event) => void handleSubmit(event)} className="mb-6 flex flex-row">
+          <form onSubmit={handleSubmit} className="mb-6 flex flex-row">
             <MethodSelector method={method} methods={HTTP_METHODS} onChange={handleSelectionChange} />
             <Input
               value={url}
@@ -51,7 +57,14 @@ export const HttpRequestForm = () => {
               radius="none"
               className="border-1 border-l-0 border-gray-600"
             />
-            <Button type="submit" color="primary" radius="none" className="h-auto">
+            <Button
+              type="submit"
+              color="primary"
+              radius="none"
+              className="h-auto"
+              isDisabled={isLoading}
+              isLoading={isLoading}
+            >
               {t('send')}
             </Button>
           </form>

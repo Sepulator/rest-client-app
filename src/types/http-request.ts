@@ -1,3 +1,5 @@
+import type { StatusCodes } from 'http-status-codes';
+
 export type Header = {
   id: string;
   key: string;
@@ -5,7 +7,7 @@ export type Header = {
 };
 
 export type ResponseData = {
-  status: number;
+  status: StatusCodes;
   statusText: string;
   headers: Record<string, string>;
   body: string;
