@@ -6,33 +6,56 @@
 
 @custom-variant dark (&:is(.dark *));
 
-:root {
-  --background: #fff;
-  --foreground: #171717;
-}
-
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scrollbar-gutter: stable;
 }
 
 body {
   font-family: Geist, Arial, Helvetica, sans-serif;
-  color: var(--foreground);
-  background: var(--background);
+}
+
+@layer base {
+  h1,
+  h2,
+  h3,
+  span {
+    font-family: var(--font-geist-mono);
+  }
+
+  h1 {
+    font-size: calc(var(--heroui-font-size-large) * 1.6);
+  }
+
+  h2 {
+    font-size: calc(var(--heroui-font-size-large) * 1.2);
+  }
+
+  h3 {
+    font-size: var(--heroui-font-size-large);
+  }
+
+  p {
+    color: hsl(var(--heroui-foreground) / 80%);
+  }
 }
 
 @layer utilities {
   .hidden-password {
     @apply [-webkit-text-security:disc];
+  }
+}
+
+@layer components {
+  .link {
+    @apply flex items-center gap-2 opacity-70 duration-300 ease-in-out hover:opacity-100;
+  }
+
+  .header-link {
+    @apply data-[active=true]:text-primary-500 data-[active=true]:pointer-events-none data-[active=true]:opacity-100;
   }
 }

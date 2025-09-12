@@ -1,7 +1,7 @@
-import type { ReactNode } from 'react';
-
 import { screen } from '@testing-library/react';
 import { describe, it, expect, vi, afterEach } from 'vitest';
+
+import type { MockIntlLink } from '@/testing/mocks/types';
 
 import { renderWithProviders as render } from '@/testing/utils/render-with-providers';
 import { renderWithUserEvent } from '@/testing/utils/render-with-user-event';
@@ -22,7 +22,7 @@ vi.mock('next/navigation', () => ({ useRouter: createRouterMock }));
 
 vi.mock('@/i18n/navigation', () => ({
   useRouter: () => createRouterMock(),
-  Link: ({ children, href, ...props }: { [key: string]: unknown; children: ReactNode; href: string }) => (
+  Link: ({ children, href, ...props }: MockIntlLink) => (
     <a href={href} {...props}>
       {children}
     </a>
