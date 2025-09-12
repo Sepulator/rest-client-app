@@ -91,5 +91,6 @@ describe('useHttpRequest', () => {
     });
 
     expect(result.current.response?.status).toBe(200);
+    expect(result.current.response?.headers).toEqual({});
   });
 });
