@@ -14,7 +14,9 @@ export const useHttpRequest = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const executeRequest = async (headers: Header[], body = '') => {
-    if (!url) return;
+    if (!url) {
+      return;
+    }
 
     setIsLoading(true);
     const timestamp = new Date().toISOString();

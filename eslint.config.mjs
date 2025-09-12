@@ -87,13 +87,11 @@ export default tseslint.config(
       ...jsxA11y.configs.recommended.rules,
       'no-console': ['error', { allow: ['error'] }],
       'no-empty': 'warn',
-      curly: ['error', 'all'],
       'no-warning-comments': ['error', { terms: [''], location: 'anywhere' }],
       'quote-props': ['error', 'always'],
       'prefer-const': 'error',
       'prefer-arrow-callback': 'error',
       'no-confusing-arrow': ['error', { allowParens: true }],
-      curly: 'error',
       'no-restricted-imports': [
         'error',
         {
@@ -142,6 +140,7 @@ export default tseslint.config(
         },
       ],
       ...prettierConfig.rules,
+      curly: ['error', 'all'],
       'import-x/extensions': [
         'error',
         {

@@ -19,7 +19,9 @@ export const RequestBodyEditor = ({ body, onChange, readOnly = false, mode = 'js
   const t = useTranslations('RestClient');
 
   const { jsonError, parsedJson, displayBody } = useMemo(() => {
-    if (mode !== 'json' || !body.trim()) return { jsonError: null, parsedJson: null, displayBody: body };
+    if (mode !== 'json' || !body.trim()) {
+      return { jsonError: null, parsedJson: null, displayBody: body };
+    }
     try {
       const parsed: unknown = JSON.parse(body);
       const prettified = JSON.stringify(parsed, null, SPACE_SIZE);
@@ -35,7 +37,9 @@ export const RequestBodyEditor = ({ body, onChange, readOnly = false, mode = 'js
   }, [body, mode]);
 
   const prettifyJSON = useCallback(() => {
-    if (!onChange || !parsedJson) return;
+    if (!onChange || !parsedJson) {
+      return;
+    }
 
     onChange(JSON.stringify(parsedJson, null, SPACE_SIZE));
   }, [onChange, parsedJson]);
