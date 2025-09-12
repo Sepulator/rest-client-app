@@ -1,14 +1,11 @@
-import { getTranslations } from 'next-intl/server';
+import { Greeting } from '@/features/home-screen/greeting';
+import { HomeScreen } from '@/features/home-screen/home-screen';
 
-import { AuthNav } from '@/components/auth-nav';
-
-export default async function WelcomePage() {
-  const t = await getTranslations('WelcomePage');
-
+export default function WelcomePage() {
   return (
-    <section className="flex h-full flex-1 flex-col items-center justify-center gap-4">
-      <h1>{t('title')}</h1>
-      <AuthNav />
+    <section className="mx-auto flex h-full flex-1 flex-col justify-center gap-20 p-8">
+      <Greeting />
+      <HomeScreen />
     </section>
   );
 }

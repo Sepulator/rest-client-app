@@ -1,11 +1,17 @@
-import { getTranslations } from 'next-intl/server';
+import { getLocale } from 'next-intl/server';
+
+import { Greeting } from '@/features/home-screen/greeting';
+import { HomeScreen } from '@/features/home-screen/home-screen';
+import { getDayOfWeek } from '@/features/home-screen/utils/get-day-of-week';
 
 export default async function HomePage() {
-  const t = await getTranslations('HomePage');
+  const locale = await getLocale();
+  const dayOfWeek = getDayOfWeek(locale);
 
   return (
-    <div>
-      <h1>{t('title')}</h1>
+    <div className="flex flex-col">
+      <Greeting dayOfWeek={dayOfWeek} />
+      <HomeScreen />
     </div>
   );
 }

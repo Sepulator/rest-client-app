@@ -1,16 +1,16 @@
-import type { Locale } from 'next-intl';
-
-import { clsx } from 'clsx';
-import { hasLocale } from 'next-intl';
-import { getMessages, getTranslations, setRequestLocale } from 'next-intl/server';
+import { cn } from '@heroui/react';
+import { NextIntlClientProvider, type Locale } from 'next-intl';
+import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 
 import { routing } from '@/i18n/routing';
+import { mockUser } from '@/testing/mocks/user';
+import { isLocale } from '@/utils/type-guards';
 
+import './globals.css';
 import { AppLayout } from './_components/app-layout';
 import { geistMono, geistSans } from './fonts';
 import { Providers } from './providers';
-import './globals.css';
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: Locale }> }) {
   const { locale } = await params;
@@ -32,21 +32,28 @@ export function generateStaticParams() {
 
 export default async function LocaleLayout({ children, params }: LayoutProps<'/[locale]'>) {
   const { locale } = await params;
+  const user = process.env.NODE_ENV === 'development' ? mockUser : undefined;
 
-  if (!hasLocale(routing.locales, locale)) {
+  if (!isLocale(locale)) {
     notFound();
   }
 
   setRequestLocale(locale);
 
-  const messages = await getMessages();
-
   return (
     <html lang={locale}>
-      <body className={clsx(geistSans.variable, geistMono.variable, 'dark antialiased')}>
-        <Providers locale={locale} messages={messages}>
-          <AppLayout>{children}</AppLayout>
-        </Providers>
+      <body
+        className={cn(
+          geistSans.variable,
+          geistMono.variable,
+          'styled-scrollbar dark text-foreground bg-background antialiased'
+        )}
+      >
+        <NextIntlClientProvider>
+          <Providers userData={user}>
+            <AppLayout>{children}</AppLayout>
+          </Providers>
+        </NextIntlClientProvider>
       </body>
     </html>
   );

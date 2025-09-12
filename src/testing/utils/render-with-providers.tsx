@@ -1,13 +1,31 @@
 import type { RenderOptions } from '@testing-library/react';
-import type { ReactElement } from 'react';
+import type { PropsWithChildren, ReactElement } from 'react';
 
 import { render } from '@testing-library/react';
 
-import { IntlProvider } from './intl-provider';
+import type { ProvidersProps } from '@/app/[locale]/providers';
 
-export const renderWithProviders = (
-  ui: ReactElement,
-  options?: Omit<RenderOptions, 'wrapper'>
-): ReturnType<typeof render> => {
-  return render(ui, { wrapper: IntlProvider, ...options });
+import { Providers } from '@/app/[locale]/providers';
+import { mockUser } from '@/testing/mocks/user';
+import { IntlProvider } from '@/testing/utils/intl-provider';
+
+type RequiredProviderProps = Omit<ProvidersProps, 'children'>;
+type MockProviderProps = Partial<RequiredProviderProps>;
+
+export type ExtendedOptions = Omit<RenderOptions, 'wrapper'> & { providerOptions?: MockProviderProps };
+
+const baseMockOptions: RequiredProviderProps = {
+  userData: mockUser,
+};
+
+export const renderWithProviders = (ui: ReactElement, options?: ExtendedOptions): ReturnType<typeof render> => {
+  const providerProps = { ...baseMockOptions, ...options?.providerOptions };
+
+  const wrapper = ({ children }: PropsWithChildren) => (
+    <IntlProvider>
+      <Providers {...providerProps}>{children}</Providers>
+    </IntlProvider>
+  );
+
+  return render(ui, { wrapper, ...options });
 };

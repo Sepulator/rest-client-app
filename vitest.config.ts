@@ -10,6 +10,11 @@ export default defineConfig({
   test: {
     globals: true,
     environment: 'jsdom',
+    server: {
+      deps: {
+        inline: ['next-intl'],
+      },
+    },
     setupFiles: ['./src/testing/setup-tests.ts'],
     coverage: {
       reporter: 'text',
@@ -26,6 +31,8 @@ export default defineConfig({
         'src/App.{js,jsx,ts,tsx}',
         'src/testing/setup-tests.{js,ts,tsx}',
         'src/**/*.d.ts',
+        'src/i18n/**/*',
+        '**/*/fonts.ts',
       ],
     },
   },

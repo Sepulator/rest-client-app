@@ -64,7 +64,7 @@ export const AuthForm = ({ heading, secondaryAction }: Props) => {
       <Divider />
       <CardBody>
         <Form
-          className="flex w-full flex-col items-stretch gap-4"
+          className="mt-2 flex w-full flex-col items-stretch gap-4"
           onSubmit={(event) => void handleSubmit(onSubmit)(event)}
         >
           <Input
