@@ -9,7 +9,10 @@ const FieldSchema = v.pipe(
     key: v.pipe(
       v.string(),
       skipEmptyString((value) => !/^\s|\s$/.test(value), 'Must not have leading or trailing whitespace'),
-      skipEmptyString((value) => /^[a-zA-Z0-9]+$/.test(value), 'Must contain only English letters or numbers')
+      skipEmptyString(
+        (value) => /^[a-zA-Z0-9_-]+$/.test(value),
+        'Must contain only English letters, numbers, underscores or hyphens'
+      )
     ),
     value: v.string(),
   })

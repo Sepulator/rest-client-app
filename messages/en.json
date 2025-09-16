@@ -112,7 +112,7 @@
     "headers": "HTTP Headers",
     "addHeader": "Add Header",
     "resBody": "Response Body",
-    "key": "header",
+    "header": "header",
     "value": "value",
     "status": "Status",
     "prettify": "Prettify JSON",
@@ -122,8 +122,14 @@
     "json": "JSON",
     "url": "Enter Url"
   },
-  "RestInputs": {
+  "Variables": {
+    "heading": "Variables",
+    "addButton": "Add Variable",
     "key": "key",
-    "value": "value"
+    "value": "value",
+    "duplicate": "Duplicate keys found: the last value will be applied"
+  },
+  "RemovableRow": {
+    "remove": "Remove inputs row"
   }
 }

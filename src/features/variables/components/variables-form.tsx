@@ -1,17 +1,19 @@
 import { valibotResolver } from '@hookform/resolvers/valibot';
+import { useTranslations } from 'next-intl';
 import { useEffect } from 'react';
 import { useFieldArray, useForm } from 'react-hook-form';
 
 import type { VariablesFields } from '@/features/variables/schema/form-schema';
 
-import { FormHeading } from '@/components/forms/components/forms-heading';
-import { MemoizedRowsController } from '@/features/variables/components/rows-controller';
+import { FormHeading } from '@/components/forms-ui/forms-heading';
+import { MemoizedRow } from '@/features/variables/components/input-row';
 import { variablesSchema } from '@/features/variables/schema/form-schema';
 import { defaultField, useVariables, useVariablesActions } from '@/stores/variables/store';
 
 export function VariableForm() {
   const defaultFields = useVariables();
   const { addVariable } = useVariablesActions();
+  const t = useTranslations('Variables');
 
   const {
     control,
@@ -37,11 +39,11 @@ export function VariableForm() {
 
   return (
     <form>
-      <FormHeading handleAdd={handleAdd} />
+      <FormHeading action={handleAdd} heading={t('heading')} actionText={t('addButton')} />
 
       {fields.map((field, index) => {
         return (
-          <MemoizedRowsController
+          <MemoizedRow
             key={field.id}
             index={index}
             onRemove={remove}
