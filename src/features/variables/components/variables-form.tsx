@@ -1,4 +1,5 @@
 import { valibotResolver } from '@hookform/resolvers/valibot';
+import { useEffect } from 'react';
 import { useFieldArray, useForm } from 'react-hook-form';
 
 import type { VariablesFields } from '@/features/variables/schema/form-schema';
@@ -15,6 +16,7 @@ export function VariableForm() {
   const {
     control,
     register,
+    trigger,
     formState: { errors },
   } = useForm<VariablesFields>({
     defaultValues: { variables: defaultFields },
@@ -23,6 +25,10 @@ export function VariableForm() {
   });
 
   const { fields, append, remove } = useFieldArray({ control, name: 'variables' });
+
+  useEffect(() => {
+    void trigger();
+  }, [trigger]);
 
   const handleAdd = () => {
     append(defaultField);
