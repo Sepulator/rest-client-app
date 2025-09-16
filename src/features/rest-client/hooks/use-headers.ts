@@ -4,7 +4,7 @@ import type { Header } from '@/types/http-request';
 
 export const useHeaders = (initialSearchParams?: Record<string, string>) => {
   const [headers, setHeaders] = useState<Header[]>(() => {
-    if (initialSearchParams) {
+    if (initialSearchParams && Object.keys(initialSearchParams).length > 0) {
       return Object.entries(initialSearchParams).map(([key, value]) => ({
         id: crypto.randomUUID(),
         key,
