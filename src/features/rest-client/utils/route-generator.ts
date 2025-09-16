@@ -1,0 +1,31 @@
+export const generateRouteUrl = (
+  method: string,
+  requestUrl: string,
+  body?: string,
+  headers: Record<string, string> = {}
+): string => {
+  const encodedUrl = btoa(requestUrl);
+  const encodedBody = body ? btoa(JSON.stringify(body)) : undefined;
+
+  const queryParams = new URLSearchParams();
+
+  Object.entries(headers).forEach(([key, value]) => {
+    if (key && value) {
+      queryParams.append(key, value);
+    }
+  });
+
+  let route = `/client/${method}/${encodedUrl}`;
+
+  if (encodedBody) {
+    route += `/${encodedBody}`;
+  }
+
+  const queryString = queryParams.toString();
+
+  if (queryString) {
+    route += `?${queryString}`;
+  }
+
+  return route;
+};
