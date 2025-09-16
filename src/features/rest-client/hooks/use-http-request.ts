@@ -1,4 +1,5 @@
 import { getReasonPhrase } from 'http-status-codes';
+import { useLocale } from 'next-intl';
 import { useState } from 'react';
 import { parse } from 'valibot';
 
@@ -6,13 +7,40 @@ import type { Header, ResponseData } from '@/types/http-request';
 
 import { DEFAULT_URL, HTTP_METHODS, responseData } from '@/features/rest-client/constants/http-request';
 import { ProxyResponseSchema } from '@/features/rest-client/schemas/proxy-schema';
+import { generateRouteUrl } from '@/features/rest-client/utils/route-generator';
 
-export const useHttpRequest = () => {
-  const [method, setMethod] = useState<string>(HTTP_METHODS[0]);
-  const [url, setUrl] = useState(DEFAULT_URL);
+const MIN_SEARCH_PARAMS = 2;
+
+export const useHttpRequest = (initialParams?: string[]) => {
+  const locale = useLocale();
+
+  const [method, setMethod] = useState<string>(() => {
+    if (initialParams && initialParams.length > 0) {
+      try {
+        return decodeURIComponent(initialParams[0]).toUpperCase();
+      } catch {
+        return HTTP_METHODS[0];
+      }
+    }
+
+    return HTTP_METHODS[0];
+  });
+
+  const [url, setUrl] = useState(() => {
+    if (initialParams && initialParams.length >= MIN_SEARCH_PARAMS) {
+      try {
+        return atob(decodeURIComponent(initialParams[1]));
+      } catch {
+        return DEFAULT_URL;
+      }
+    }
+
+    return DEFAULT_URL;
+  });
+
   const [response, setResponse] = useState<ResponseData | null>(null);
 
-  const executeRequest = async (headers: Header[], body = '') => {
+  const executeRequest = async (headers: Header[], body = ''): Promise<string | undefined> => {
     if (!url) {
       return;
     }
@@ -66,16 +94,15 @@ export const useHttpRequest = () => {
         requestSize,
         responseSize,
       });
-    } catch (error) {
-      const duration = performance.now() - startTime;
 
+      return generateRouteUrl(method, url, locale, hasBody ? body : undefined, requestHeaders);
+    } catch (error) {
       setResponse({
         ...responseData,
         error: error instanceof Error ? error.message : 'Unknown error',
-        timestamp,
-        duration,
-        requestSize: new Blob([body || '']).size,
       });
+
+      return undefined;
     }
   };
 

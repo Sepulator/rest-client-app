@@ -1,6 +1,7 @@
 export const generateRouteUrl = (
   method: string,
   requestUrl: string,
+  locale: string,
   body?: string,
   headers: Record<string, string> = {}
 ): string => {
@@ -15,7 +16,7 @@ export const generateRouteUrl = (
     }
   });
 
-  let route = `/client/${method}/${encodedUrl}`;
+  let route = `/${locale}/client/${method}/${encodedUrl}`;
 
   if (encodedBody) {
     route += `/${encodedBody}`;
