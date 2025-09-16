@@ -3,8 +3,10 @@ import type { FieldError, FieldErrorsImpl, Merge, UseFormRegister } from 'react-
 import { memo } from 'react';
 
 import type { VariablesFields, VariablesValue } from '@/features/variables/schema/form-schema';
+import type { DefaultField } from '@/stores/variables/store';
 
 import { FormRowFields } from '@/components/forms/components/form-row';
+import { useDebounce } from '@/hooks/use-debounce-function/use-debounce-function';
 import { useIsDuplicate, useVariablesActions } from '@/stores/variables/store';
 
 type RowsControllerProps = {
@@ -18,6 +20,10 @@ function RowsController({ index, onRemove, register, errors }: RowsControllerPro
   const { updateVariable, removeVariable } = useVariablesActions();
   const isDuplicate = useIsDuplicate(index);
 
+  const debouncedUpdate = useDebounce((updates: Partial<DefaultField>) => {
+    updateVariable(updates, index);
+  });
+
   const handleRemove = () => {
     onRemove(index);
     removeVariable(index);
@@ -27,9 +33,7 @@ function RowsController({ index, onRemove, register, errors }: RowsControllerPro
 
   return (
     <FormRowFields
-      onUpdate={(updates) => {
-        updateVariable(updates, index);
-      }}
+      onUpdate={debouncedUpdate}
       onRemove={handleRemove}
       registeredData={{
         registerOptions: {
