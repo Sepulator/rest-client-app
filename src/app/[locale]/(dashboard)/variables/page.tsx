@@ -1,3 +1,5 @@
+import { Variables } from '@/features/variables/components/variables';
+
 export default function VariablesPage() {
-  return <div>VariablesPage</div>;
+  return <Variables />;
 }

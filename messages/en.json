@@ -112,7 +112,7 @@
     "headers": "HTTP Headers",
     "addHeader": "Add Header",
     "resBody": "Response Body",
-    "header": "header",
+    "key": "header",
     "value": "value",
     "status": "Status",
     "prettify": "Prettify JSON",
@@ -121,5 +121,9 @@
     "text": "Text",
     "json": "JSON",
     "url": "Enter Url"
+  },
+  "RestInputs": {
+    "key": "key",
+    "value": "value"
   }
 }
