@@ -8,7 +8,9 @@ export function useReplaceWithVariable() {
   const variablesObject = useMemo(
     () =>
       variables.reduce<Record<string, string>>((acc, { key, value }) => {
-        acc[key] = value;
+        if (key) {
+          acc[key] = value;
+        }
 
         return acc;
       }, {}),
@@ -16,8 +18,12 @@ export function useReplaceWithVariable() {
   );
 
   const replaceWithValue = useCallback(
-    (string: string) =>
-      string.replaceAll(/\{\{(.+?)\}\}/g, (match, key: string) => variablesObject[key.trim()] || match),
+    (string: string) => {
+      const regexp = /\{\{\s*(.+?)\s*\}\}/g;
+
+      return string.replaceAll(regexp, (match, key: string) => variablesObject[key] || match);
+    },
+
     [variablesObject]
   );
 

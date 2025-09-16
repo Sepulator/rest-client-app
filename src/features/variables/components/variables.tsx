@@ -1,13 +1,27 @@
 'use client';
-import { VariableForm } from '@/features/variables/components/variables-form';
-import { useIsHydrated } from '@/stores/variables/store';
+import { useTranslations } from 'next-intl';
+
+import { FormHeading } from '@/components/forms-ui/forms-heading';
+import { MemoizedRow } from '@/features/variables/components/input-row';
+import { useIsHydrated, useVariables, useVariablesActions } from '@/stores/variables/store';
 
 export function Variables() {
+  const fields = useVariables();
+  const { addVariable } = useVariablesActions();
+  const t = useTranslations('Variables');
   const hydrated = useIsHydrated();
 
   if (!hydrated) {
     return <div>Loading</div>;
   }
 
-  return <VariableForm />;
+  return (
+    <div>
+      <FormHeading action={addVariable} heading={t('heading')} actionText={t('addButton')} />
+
+      {fields.map((field, index) => {
+        return <MemoizedRow key={field.id} index={index} field={field} />;
+      })}
+    </div>
+  );
 }

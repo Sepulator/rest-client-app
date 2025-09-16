@@ -1,12 +1,10 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
-import type { VariablesValue } from '@/features/variables/schema/form-schema';
-
-export type DefaultField = { key: string; value: string };
+export type DefaultField = { key: string; value: string; id: string };
 
 type VariablesStoreType = {
-  variables: VariablesValue[];
+  variables: DefaultField[];
   isHydrated: boolean;
 };
 
@@ -14,12 +12,12 @@ type VariablesStoreActions = {
   actions: {
     addVariable: () => void;
     removeVariable: (index: number) => void;
-    updateVariable: (updates: Partial<VariablesValue>, index: number) => void;
+    updateVariable: (updates: Partial<DefaultField>, index: number) => void;
     setHydrated: () => void;
   };
 };
 
-export const defaultField = { key: '', value: '' };
+export const defaultField = { key: '', value: '', id: crypto.randomUUID() };
 const setHydratedStorage = (state?: VariablesStoreType & VariablesStoreActions) => {
   state?.actions.setHydrated();
 };
@@ -27,7 +25,7 @@ const setHydratedStorage = (state?: VariablesStoreType & VariablesStoreActions) 
 export const useVariablesStore = create<VariablesStoreType & VariablesStoreActions>()(
   persist(
     (set) => ({
-      variables: [defaultField],
+      variables: [{ ...defaultField, id: 'default' }],
       isHydrated: false,
 
       actions: {
@@ -35,7 +33,7 @@ export const useVariablesStore = create<VariablesStoreType & VariablesStoreActio
 
         addVariable: () =>
           set((state) => {
-            return { variables: [...state.variables, defaultField] };
+            return { variables: [...state.variables, { key: '', value: '', id: crypto.randomUUID() }] };
           }),
 
         removeVariable: (index) =>
