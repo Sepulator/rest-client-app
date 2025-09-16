@@ -6,13 +6,21 @@ import { useTranslations } from 'next-intl';
 
 import type { DefaultField } from '@/stores/variables/store';
 
+import { addOptions, type RegisteredData } from '@/components/forms/utils/add-options';
+
 type FormRowFieldsProps<T extends FieldValues> = {
   data?: T & DefaultField;
-  onUpdate?: (updates: Partial<DefaultField>) => void;
+  onUpdate: (updates: Partial<DefaultField>) => void;
   onRemove: () => void;
+  registeredData?: RegisteredData<T>;
 };
 
-export function FormRowFields<T extends FieldValues>({ data, onUpdate, onRemove }: FormRowFieldsProps<T>) {
+export function FormRowFields<T extends FieldValues>({
+  data,
+  onUpdate,
+  onRemove,
+  registeredData,
+}: FormRowFieldsProps<T>) {
   const t = useTranslations('RestInputs');
 
   return (
@@ -21,22 +29,24 @@ export function FormRowFields<T extends FieldValues>({ data, onUpdate, onRemove 
         variant="underlined"
         value={data?.key}
         onValueChange={(key) => {
-          onUpdate?.({ key });
+          onUpdate({ key });
         }}
         placeholder={t('key')}
         className="border-b-1 border-gray-600"
+        {...(registeredData && addOptions('key', registeredData))}
       />
       <Input
         variant="underlined"
         value={data?.value}
         onValueChange={(value) => {
-          onUpdate?.({ value });
+          onUpdate({ value });
         }}
         placeholder={t('value')}
         className="border-b-1 border-gray-600"
+        {...(registeredData && addOptions('value', registeredData))}
       />
       <Button
-        aria-label="Remove Input Row"
+        aria-label="Remove row"
         startContent={<CloseIcon />}
         className="w-fit"
         isIconOnly

@@ -1,49 +1,13 @@
 'use client';
-
-import { useFieldArray, useForm } from 'react-hook-form';
-
-import { FormRowFields } from '@/components/forms/components/form-row';
-import { FormHeading } from '@/components/forms/components/forms-heading';
-
-type VariablesFields = {
-  variables: {
-    key: string;
-    value: string;
-  }[];
-};
-
-const defaultField = { key: '', value: '' };
+import { VariableForm } from '@/features/variables/components/variables-form';
+import { useIsHydrated } from '@/stores/variables/store';
 
 export function Variables() {
-  const { control } = useForm<VariablesFields>({
-    defaultValues: { variables: [defaultField] },
-    mode: 'onChange',
-  });
+  const hydrated = useIsHydrated();
 
-  const { fields, append, remove } = useFieldArray({ control, name: 'variables' });
+  if (!hydrated) {
+    return <div>Loading</div>;
+  }
 
-  const handleAdd = () => {
-    append(defaultField);
-  };
-
-  const handleRemove = (index: number) => {
-    remove(index);
-  };
-
-  return (
-    <form>
-      <FormHeading handleAdd={handleAdd} />
-
-      {fields.map((field, index) => {
-        return (
-          <FormRowFields
-            key={field.id}
-            onRemove={() => {
-              handleRemove(index);
-            }}
-          />
-        );
-      })}
-    </form>
-  );
+  return <VariableForm />;
 }

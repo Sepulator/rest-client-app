@@ -104,6 +104,7 @@ export default tseslint.config(
           message: 'Please import from `@/i18n/navigation` instead.',
         },
       ],
+      '@typescript-eslint/restrict-template-expressions': 'off',
       '@typescript-eslint/prefer-readonly': 'error',
       '@typescript-eslint/no-explicit-any': 'error',
       '@typescript-eslint/no-magic-numbers': [
