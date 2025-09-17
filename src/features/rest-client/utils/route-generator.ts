@@ -6,7 +6,15 @@ export const generateRouteUrl = (
   headers: Record<string, string> = {}
 ): string => {
   const encodedUrl = btoa(requestUrl);
-  const encodedBody = body ? btoa(JSON.stringify(JSON.parse(body))) : undefined;
+  const encodedBody = body
+    ? (() => {
+        try {
+          return btoa(JSON.stringify(JSON.parse(body)));
+        } catch {
+          return btoa(body.trim());
+        }
+      })()
+    : undefined;
 
   const queryParams = new URLSearchParams();
 

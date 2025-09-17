@@ -21,7 +21,10 @@ export const getBodyFromParams = (parameters?: string[]): string => {
 export const getMethodFromParams = (initialParams?: string[]) => {
   if (initialParams && initialParams.length > 0) {
     try {
-      return decodeURIComponent(initialParams[0]).toUpperCase();
+      const method = decodeURIComponent(initialParams[0]).toUpperCase();
+      const validMethod = HTTP_METHODS.find((m) => m === method);
+
+      return validMethod ?? HTTP_METHODS[0];
     } catch {
       return HTTP_METHODS[0];
     }
