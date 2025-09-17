@@ -9,8 +9,8 @@ type Props = {
 };
 
 export default async function ClientPage({ params, searchParams }: Props) {
-  const resolvedParams = params ? await params : undefined;
-  const resolvedSearchParams = searchParams ? await searchParams : undefined;
+  const resolvedParams = await params;
+  const resolvedSearchParams = await searchParams;
 
   return (
     <Suspense

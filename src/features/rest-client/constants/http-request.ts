@@ -2,7 +2,7 @@ import type { ResponseData } from '@/types/http-request';
 
 export const DEFAULT_URL = 'https://jsonplaceholder.typicode.com/posts/1';
 
-export const HTTP_METHODS = ['GET', 'HEAD', 'OPTIONS', 'POST', 'PUT', 'DELETE', 'PATCH'] as const;
+export const HTTP_METHODS = ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'HEAD', 'OPTIONS'] as const;
 
 export const responseData: ResponseData = {
   body: '',

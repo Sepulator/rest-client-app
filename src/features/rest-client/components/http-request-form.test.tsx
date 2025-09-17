@@ -15,7 +15,6 @@ vi.mock('@/features/rest-client/hooks/use-http-request', () => ({
     url: 'https://jsonplaceholder.typicode.com/posts/1',
     setUrl: vi.fn(),
     executeRequest: mockExecuteRequest,
-    HTTP_METHODS: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'HEAD', 'OPTIONS'],
     response: {
       body: '',
       headers: {},

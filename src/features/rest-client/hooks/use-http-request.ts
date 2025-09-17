@@ -1,6 +1,5 @@
 import { getReasonPhrase } from 'http-status-codes';
 import { useLocale } from 'next-intl';
-import { HTTP_METHODS } from 'next/dist/server/web/http';
 import { useState } from 'react';
 import { parse } from 'valibot';
 
@@ -89,7 +88,6 @@ export const useHttpRequest = (initialParams?: string[]) => {
     url,
     setUrl,
     executeRequest,
-    HTTP_METHODS,
     response,
   };
 };

@@ -8,6 +8,7 @@ import { HeadersSection } from '@/features/rest-client/components/headers-sectio
 import { MethodSelector } from '@/features/rest-client/components/method-selector';
 import { RequestBodyEditor } from '@/features/rest-client/components/request-body-editor';
 import { ResponseSection } from '@/features/rest-client/components/response-section';
+import { HTTP_METHODS } from '@/features/rest-client/constants/http-request';
 import { useHeaders } from '@/features/rest-client/hooks/use-headers';
 import { useHttpRequest } from '@/features/rest-client/hooks/use-http-request';
 import { getBodyFromParams } from '@/features/rest-client/utils/get-parameters';
@@ -19,7 +20,7 @@ type Props = {
 
 export const HttpRequestForm = ({ initialParams, initialSearchParams }: Props = {}) => {
   const [isLoading, startTransition] = useTransition();
-  const { method, setMethod, url, setUrl, executeRequest, HTTP_METHODS, response } = useHttpRequest(initialParams);
+  const { method, setMethod, url, setUrl, executeRequest, response } = useHttpRequest(initialParams);
   const { headers, addHeader, updateHeader, removeHeader } = useHeaders(initialSearchParams);
   const [isJsonMode, setIsJsonMode] = useState(true);
   const [jsonBody, setJsonBody] = useState(() => getBodyFromParams(initialParams));

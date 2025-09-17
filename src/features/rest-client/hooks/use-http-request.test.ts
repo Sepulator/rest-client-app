@@ -1,10 +1,14 @@
 import { renderHook, act } from '@testing-library/react';
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
 
 import type { Header } from '@/types/http-request';
 
 import { DEFAULT_URL } from '@/features/rest-client/constants/http-request';
 import { useHttpRequest } from '@/features/rest-client/hooks/use-http-request';
+
+vi.mock('next-intl', () => ({
+  useLocale: () => 'en',
+}));
 
 describe('useHttpRequest', () => {
   it('should execute request successfully', async () => {
