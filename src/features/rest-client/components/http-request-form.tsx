@@ -55,6 +55,14 @@ export const HttpRequestForm = ({ initialParams, initialSearchParams }: Props = 
     setIsJsonMode(jsonMode);
   };
 
+  const handleTextMode = () => {
+    handleModeToggle(false);
+  };
+
+  const handleJsonMode = () => {
+    handleModeToggle(true);
+  };
+
   return (
     <div className="@container">
       <div className="grid max-w-2xl grid-cols-1 gap-6 @6xl:max-w-6xl @6xl:grid-cols-2">
@@ -88,22 +96,10 @@ export const HttpRequestForm = ({ initialParams, initialSearchParams }: Props = 
           />
 
           <div className="mt-6 mb-4 flex gap-1">
-            <Button
-              size="sm"
-              variant={isJsonMode ? 'bordered' : 'solid'}
-              onPress={() => {
-                handleModeToggle(false);
-              }}
-            >
+            <Button size="sm" variant={isJsonMode ? 'bordered' : 'solid'} onPress={handleTextMode}>
               {t('text')}
             </Button>
-            <Button
-              size="sm"
-              variant={isJsonMode ? 'solid' : 'bordered'}
-              onPress={() => {
-                handleModeToggle(true);
-              }}
-            >
+            <Button size="sm" variant={isJsonMode ? 'solid' : 'bordered'} onPress={handleJsonMode}>
               {t('json')}
             </Button>
           </div>

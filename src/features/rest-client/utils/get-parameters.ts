@@ -4,6 +4,7 @@ import { DEFAULT_URL, HTTP_METHODS } from '@/features/rest-client/constants/http
 
 const MIN_PARAMS_FOR_URL = 2;
 const MIN_PARAMS_FOR_BODY = 3;
+const DEFAULT_HEADER = { id: '1', key: 'Accept', value: '*/*' };
 
 export const getBodyFromParams = (parameters?: string[]): string => {
   if (!parameters || parameters.length < MIN_PARAMS_FOR_BODY) {
@@ -42,7 +43,13 @@ export const getUrlFromParams = (initialParams?: string[]) => {
 };
 
 export const getHeadersFromSearchParams = (initialSearchParams?: Record<string, string>): Header[] => {
-  if (initialSearchParams && Object.keys(initialSearchParams).length > 0) {
+  if (!initialSearchParams) {
+    return [DEFAULT_HEADER];
+  }
+
+  const entries = Object.entries(initialSearchParams);
+
+  if (entries.length > 0) {
     return Object.entries(initialSearchParams).map(([key, value]) => ({
       id: crypto.randomUUID(),
       key,
@@ -50,5 +57,5 @@ export const getHeadersFromSearchParams = (initialSearchParams?: Record<string, 
     }));
   }
 
-  return [{ id: '1', key: 'Accept', value: '*/*' }];
+  return [DEFAULT_HEADER];
 };

@@ -15,6 +15,14 @@ type HeadersSectionProps = {
 export const HeadersSection = ({ headers, onAddHeader, onUpdateHeader, onRemoveHeader }: HeadersSectionProps) => {
   const t = useTranslations('RestClient');
 
+  const handleUpdate = (id: string) => (updates: Partial<Header>) => {
+    onUpdateHeader(id, updates);
+  };
+
+  const handleRemove = (id: string) => () => {
+    onRemoveHeader(id);
+  };
+
   return (
     <>
       <div className="mb-4 flex items-center justify-between">
@@ -28,12 +36,8 @@ export const HeadersSection = ({ headers, onAddHeader, onUpdateHeader, onRemoveH
         <HeaderRequest
           key={header.id}
           header={header}
-          onUpdate={(updates) => {
-            onUpdateHeader(header.id, updates);
-          }}
-          onRemove={() => {
-            onRemoveHeader(header.id);
-          }}
+          onUpdate={handleUpdate(header.id)}
+          onRemove={handleRemove(header.id)}
         />
       ))}
     </>
