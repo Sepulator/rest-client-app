@@ -44,7 +44,7 @@ export const HttpRequestForm = ({ initialParams, initialSearchParams }: Props = 
     startTransition(async () => {
       const routeUrl = await executeRequest(headers, body);
 
-      if (routeUrl && typeof window !== 'undefined') {
+      if (routeUrl) {
         window.history.replaceState(null, '', routeUrl);
       }
     });
