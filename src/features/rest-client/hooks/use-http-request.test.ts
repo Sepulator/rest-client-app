@@ -87,4 +87,49 @@ describe('useHttpRequest', () => {
     expect(result.current.response?.status).toBe(200);
     expect(result.current.response?.headers).toEqual({});
   });
+
+  it('should not execute request for invalid URLs', async () => {
+    const { result } = setupHook();
+
+    setUrlAndMethod(result, 'invalid-url');
+    await executeRequest(result);
+
+    expect(result.current.response).toBeNull();
+  });
+
+  it('should not execute request for non-HTTP protocols', async () => {
+    const { result } = setupHook();
+
+    setUrlAndMethod(result, 'ftp://example.com');
+    await executeRequest(result);
+
+    expect(result.current.response).toBeNull();
+  });
+
+  it('should accept valid HTTP URLs', async () => {
+    const { result } = setupHook();
+
+    setUrlAndMethod(result, 'http://api.example.com');
+    await executeRequest(result);
+
+    expect(result.current.response?.status).toBe(200);
+  });
+
+  it('should accept valid HTTPS URLs', async () => {
+    const { result } = setupHook();
+
+    setUrlAndMethod(result, 'https://api.example.com');
+    await executeRequest(result);
+
+    expect(result.current.response?.status).toBe(200);
+  });
+
+  it('should handle network errors', async () => {
+    const { result } = setupHook();
+
+    setUrlAndMethod(result, 'https://network-error.example.com');
+    await executeRequest(result);
+
+    expect(result.current.response?.error).toBe('Network error');
+  });
 });

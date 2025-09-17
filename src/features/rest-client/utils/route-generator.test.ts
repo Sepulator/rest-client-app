@@ -9,10 +9,29 @@ describe('generateRouteUrl', () => {
     expect(result).toBe('/en/client/GET/aHR0cHM6Ly9hcGkuZXhhbXBsZS5jb20=');
   });
 
-  it('should generate route with body', () => {
+  it('should generate route with valid JSON body', () => {
     const result = generateRouteUrl('POST', 'https://api.example.com', 'en', '{"test": "data"}');
 
     expect(result).toBe('/en/client/POST/aHR0cHM6Ly9hcGkuZXhhbXBsZS5jb20=/eyJ0ZXN0IjoiZGF0YSJ9');
+  });
+
+  it('should generate route with invalid JSON body (fallback to trimmed)', () => {
+    const result = generateRouteUrl('POST', 'https://api.example.com', 'en', 'invalid json');
+
+    expect(result).toBe('/en/client/POST/aHR0cHM6Ly9hcGkuZXhhbXBsZS5jb20=/aW52YWxpZCBqc29u');
+  });
+
+  it('should generate route with whitespace body (trimmed)', () => {
+    const result = generateRouteUrl('POST', 'https://api.example.com', 'en', '  text with spaces  ');
+
+    expect(result).toBe('/en/client/POST/aHR0cHM6Ly9hcGkuZXhhbXBsZS5jb20=/dGV4dCB3aXRoIHNwYWNlcw==');
+  });
+
+  it('should normalize JSON formatting', () => {
+    const formattedJson = '{\n  "name": "test",\n  "value": 123\n}';
+    const result = generateRouteUrl('POST', 'https://api.example.com', 'en', formattedJson);
+
+    expect(result).toBe('/en/client/POST/aHR0cHM6Ly9hcGkuZXhhbXBsZS5jb20=/eyJuYW1lIjoidGVzdCIsInZhbHVlIjoxMjN9');
   });
 
   it('should generate route with headers', () => {

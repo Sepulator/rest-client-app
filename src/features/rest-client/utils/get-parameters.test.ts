@@ -35,15 +35,34 @@ describe('getMethodFromParams', () => {
     expect(getMethodFromParams([])).toBe('GET');
   });
 
-  it('should decode and uppercase method from first parameter', () => {
+  it('should decode and uppercase valid method from first parameter', () => {
     expect(getMethodFromParams(['post'])).toBe('POST');
     expect(getMethodFromParams(['get'])).toBe('GET');
+    expect(getMethodFromParams(['delete'])).toBe('DELETE');
   });
 
-  it('should handle encoded method', () => {
+  it('should return default method for invalid HTTP method', () => {
+    expect(getMethodFromParams(['INVALID'])).toBe('GET');
+    expect(getMethodFromParams(['CUSTOM'])).toBe('GET');
+    expect(getMethodFromParams(['123'])).toBe('GET');
+  });
+
+  it('should handle encoded valid method', () => {
     const encoded = encodeURIComponent('put');
 
     expect(getMethodFromParams([encoded])).toBe('PUT');
+  });
+
+  it('should handle encoded invalid method', () => {
+    const encoded = encodeURIComponent('invalid');
+
+    expect(getMethodFromParams([encoded])).toBe('GET');
+  });
+
+  it('should handle case-insensitive valid methods', () => {
+    expect(getMethodFromParams(['patch'])).toBe('PATCH');
+    expect(getMethodFromParams(['Head'])).toBe('HEAD');
+    expect(getMethodFromParams(['OPTIONS'])).toBe('OPTIONS');
   });
 
   it('should handle decode errors gracefully', () => {
