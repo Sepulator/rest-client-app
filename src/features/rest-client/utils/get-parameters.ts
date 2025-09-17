@@ -53,7 +53,7 @@ export const getHeadersFromSearchParams = (initialSearchParams?: Record<string, 
   const entries = Object.entries(initialSearchParams);
 
   if (entries.length > 0) {
-    return Object.entries(initialSearchParams).map(([key, value]) => ({
+    return entries.map(([key, value]) => ({
       id: crypto.randomUUID(),
       key,
       value,

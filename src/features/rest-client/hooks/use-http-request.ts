@@ -87,9 +87,15 @@ export const useHttpRequest = (initialParams?: string[]) => {
 
       return generateRouteUrl(method, url, locale, hasBody ? body : undefined, requestHeaders);
     } catch (error) {
+      const duration = performance.now() - startTime;
+      const requestSize = new TextEncoder().encode(body).length;
+
       setResponse({
         ...responseData,
         error: error instanceof Error ? error.message : 'Unknown error',
+        requestSize,
+        timestamp,
+        duration,
       });
 
       return undefined;
