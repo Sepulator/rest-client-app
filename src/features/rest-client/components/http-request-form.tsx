@@ -10,7 +10,7 @@ import { RequestBodyEditor } from '@/features/rest-client/components/request-bod
 import { ResponseSection } from '@/features/rest-client/components/response-section';
 import { useHeaders } from '@/features/rest-client/hooks/use-headers';
 import { useHttpRequest } from '@/features/rest-client/hooks/use-http-request';
-import { getBodyFromParams } from '@/features/rest-client/utils/parameters-body';
+import { getBodyFromParams } from '@/features/rest-client/utils/get-parameters';
 
 type Props = {
   initialParams?: string[];
@@ -22,7 +22,7 @@ export const HttpRequestForm = ({ initialParams, initialSearchParams }: Props = 
   const { method, setMethod, url, setUrl, executeRequest, HTTP_METHODS, response } = useHttpRequest(initialParams);
   const { headers, addHeader, updateHeader, removeHeader } = useHeaders(initialSearchParams);
   const [isJsonMode, setIsJsonMode] = useState(true);
-  const [jsonBody, setJsonBody] = useState(() => (initialParams ? getBodyFromParams(initialParams) : ''));
+  const [jsonBody, setJsonBody] = useState(() => getBodyFromParams(initialParams));
   const [textBody, setTextBody] = useState('');
 
   const t = useTranslations('RestClient');

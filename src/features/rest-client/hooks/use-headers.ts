@@ -2,18 +2,10 @@ import { useState } from 'react';
 
 import type { Header } from '@/types/http-request';
 
-export const useHeaders = (initialSearchParams?: Record<string, string>) => {
-  const [headers, setHeaders] = useState<Header[]>(() => {
-    if (initialSearchParams && Object.keys(initialSearchParams).length > 0) {
-      return Object.entries(initialSearchParams).map(([key, value]) => ({
-        id: crypto.randomUUID(),
-        key,
-        value,
-      }));
-    }
+import { getHeadersFromSearchParams } from '@/features/rest-client/utils/get-parameters';
 
-    return [{ id: '1', key: 'Accept', value: '*/*' }];
-  });
+export const useHeaders = (initialSearchParams?: Record<string, string>) => {
+  const [headers, setHeaders] = useState<Header[]>(() => getHeadersFromSearchParams(initialSearchParams));
 
   const addHeader = () => {
     setHeaders((previous) => [...previous, { id: crypto.randomUUID(), key: '', value: '' }]);

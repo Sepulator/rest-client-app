@@ -20,7 +20,7 @@ export default async function ClientPage({ params, searchParams }: Props) {
         </div>
       }
     >
-      <HttpRequestForm initialParams={resolvedParams?.rest} initialSearchParams={resolvedSearchParams} />;
+      <HttpRequestForm initialParams={resolvedParams?.rest} initialSearchParams={resolvedSearchParams} />
     </Suspense>
   );
 }
