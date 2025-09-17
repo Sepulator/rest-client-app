@@ -4,7 +4,7 @@ import { memo } from 'react';
 
 import type { DefaultField } from '@/stores/variables/store';
 
-import { RemovableRow } from '@/components/forms-ui/deletable-row';
+import { ActionRow } from '@/components/forms-ui/action-row';
 import { AlertTooltip } from '@/features/variables/components/alert-tooltip';
 import { useDebounce } from '@/hooks/use-debounce-function/use-debounce-function';
 import { useIsDuplicate, useVariablesActions } from '@/stores/variables/store';
@@ -28,7 +28,7 @@ function InputRow({ index, field }: RowsControllerProps) {
   };
 
   return (
-    <RemovableRow onRemove={handleRemove}>
+    <ActionRow action={handleRemove}>
       <Input
         variant="underlined"
         defaultValue={field.key}
@@ -48,7 +48,7 @@ function InputRow({ index, field }: RowsControllerProps) {
         placeholder={t('value')}
         className="border-default-300 border-b-1"
       />
-    </RemovableRow>
+    </ActionRow>
   );
 }
 

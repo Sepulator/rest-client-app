@@ -12,12 +12,13 @@ type VariablesStoreActions = {
   actions: {
     addVariable: () => void;
     removeVariable: (index: number) => void;
+    clearVariables: () => void;
     updateVariable: (updates: Partial<DefaultField>, index: number) => void;
     setHydrated: () => void;
   };
 };
 
-export const defaultField = { key: '', value: '', id: crypto.randomUUID() };
+export const defaultField = { key: '', value: '', id: 'default' };
 const setHydratedStorage = (state?: VariablesStoreType & VariablesStoreActions) => {
   state?.actions.setHydrated();
 };
@@ -25,7 +26,7 @@ const setHydratedStorage = (state?: VariablesStoreType & VariablesStoreActions) 
 export const useVariablesStore = create<VariablesStoreType & VariablesStoreActions>()(
   persist(
     (set) => ({
-      variables: [{ ...defaultField, id: 'default' }],
+      variables: [defaultField],
       isHydrated: false,
 
       actions: {
@@ -39,6 +40,11 @@ export const useVariablesStore = create<VariablesStoreType & VariablesStoreActio
         removeVariable: (index) =>
           set((state) => {
             return { variables: state.variables.toSpliced(index, 1) };
+          }),
+
+        clearVariables: () =>
+          set(() => {
+            return { variables: [defaultField] };
           }),
 
         updateVariable: (updates, index) =>

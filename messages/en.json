@@ -127,9 +127,10 @@
     "addButton": "Add Variable",
     "key": "key",
     "value": "value",
+    "reset": "reset Variables",
     "duplicate": "Duplicate keys found: the last value will be applied"
   },
-  "RemovableRow": {
-    "remove": "Remove inputs row"
+  "actionRow": {
+    "remove": "Remove row"
   }
 }
