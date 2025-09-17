@@ -2,8 +2,10 @@
 
 import { Button, Input } from '@heroui/react';
 import { useTranslations } from 'next-intl';
+import dynamic from 'next/dynamic';
 import { useCallback, useState, useTransition, type ChangeEvent, type FormEvent } from 'react';
 
+import { Loading } from '@/components/loading/loading';
 import { HeadersSection } from '@/features/rest-client/components/headers-section';
 import { MethodSelector } from '@/features/rest-client/components/method-selector';
 import { RequestBodyEditor } from '@/features/rest-client/components/request-body-editor';
@@ -108,3 +110,8 @@ export const HttpRequestForm = () => {
     </div>
   );
 };
+
+export const HttpRequestFormDynamic = dynamic(
+  () => import('@/features/rest-client/components/http-request-form').then((module_) => module_.HttpRequestForm),
+  { loading: () => <Loading />, ssr: false }
+);

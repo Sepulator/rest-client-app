@@ -11,7 +11,7 @@ import { useIsDuplicate, useVariablesActions } from '@/stores/variables/store';
 
 type RowsControllerProps = {
   index: number;
-  field: { key: string; value: string };
+  field: DefaultField;
 };
 
 function InputRow({ index, field }: RowsControllerProps) {
