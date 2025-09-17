@@ -18,7 +18,8 @@ type VariablesStoreActions = {
   };
 };
 
-export const defaultField = { key: '', value: '', id: 'default' };
+export const defaultField = { key: '', value: '' };
+const getField = () => ({ key: '', value: '', id: crypto.randomUUID() });
 const setHydratedStorage = (state?: VariablesStoreType & VariablesStoreActions) => {
   state?.actions.setHydrated();
 };
@@ -26,7 +27,7 @@ const setHydratedStorage = (state?: VariablesStoreType & VariablesStoreActions) 
 export const useVariablesStore = create<VariablesStoreType & VariablesStoreActions>()(
   persist(
     (set) => ({
-      variables: [defaultField],
+      variables: [getField()],
       isHydrated: false,
 
       actions: {
@@ -34,7 +35,7 @@ export const useVariablesStore = create<VariablesStoreType & VariablesStoreActio
 
         addVariable: () =>
           set((state) => {
-            return { variables: [...state.variables, { key: '', value: '', id: crypto.randomUUID() }] };
+            return { variables: [...state.variables, getField()] };
           }),
 
         removeVariable: (index) =>
@@ -44,7 +45,7 @@ export const useVariablesStore = create<VariablesStoreType & VariablesStoreActio
 
         clearVariables: () =>
           set(() => {
-            return { variables: [defaultField] };
+            return { variables: [getField()] };
           }),
 
         updateVariable: (updates, index) =>
