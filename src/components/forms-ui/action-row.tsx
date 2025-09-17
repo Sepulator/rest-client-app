@@ -13,12 +13,14 @@ type ActionRowProps = {
 
 export function ActionRow({ children, action, icon, ariaLabel }: ActionRowProps) {
   const t = useTranslations('actionRow');
+  const title = ariaLabel ?? t('remove');
 
   return (
     <div className="mb-2 flex gap-2">
       {children}
       <Button
-        aria-label={ariaLabel ?? t('remove')}
+        aria-label={title}
+        title={title}
         startContent={icon ?? <CloseIcon />}
         className="w-fit"
         isIconOnly

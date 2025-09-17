@@ -127,7 +127,7 @@
     "addButton": "Add Variable",
     "key": "key",
     "value": "value",
-    "reset": "reset Variables",
+    "reset": "Reset variables",
     "duplicate": "Duplicate keys found: the last value will be applied"
   },
   "actionRow": {
