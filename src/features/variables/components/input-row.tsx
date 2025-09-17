@@ -7,7 +7,7 @@ import type { DefaultField } from '@/stores/variables/store';
 import { ActionRow } from '@/components/forms-ui/action-row';
 import { AlertTooltip } from '@/features/variables/components/alert-tooltip';
 import { useDebounce } from '@/hooks/use-debounce-function/use-debounce-function';
-import { useIsDuplicate, useVariablesActions } from '@/stores/variables/store';
+import { useIsDuplicate, useVariablesActions } from '@/stores/variables/selectors';
 
 type RowsControllerProps = {
   index: number;

@@ -1,6 +1,6 @@
 import { useCallback, useMemo } from 'react';
 
-import { useVariables } from '@/stores/variables/store';
+import { useVariables } from '@/stores/variables/selectors';
 
 export function useReplaceWithVariable() {
   const variables = useVariables();

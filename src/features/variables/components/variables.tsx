@@ -8,7 +8,7 @@ import { FormHeading } from '@/components/forms-ui/forms-heading';
 import { ArrowPathIcon } from '@/components/icons/arrow-path';
 import { Loading } from '@/components/loading/loading';
 import { MemoizedRow } from '@/features/variables/components/input-row';
-import { useIsHydrated, useVariables, useVariablesActions } from '@/stores/variables/store';
+import { useIsHydrated, useVariables, useVariablesActions } from '@/stores/variables/selectors';
 
 const ROWS_KEYS = ['key', 'value'] as const;
 
