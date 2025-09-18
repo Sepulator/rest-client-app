@@ -120,6 +120,10 @@
     "textContent": "Text Content",
     "text": "Text",
     "json": "JSON",
-    "url": "Enter Url"
+    "url": "Enter Url",
+    "codeMessage": "Please configure method and URL to generate code",
+    "codeTitle": "Code Snippet",
+    "copy": "Copy",
+    "copied": "Copied"
   }
 }

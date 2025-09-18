@@ -4,6 +4,7 @@ import { Button, Input } from '@heroui/react';
 import { useTranslations } from 'next-intl';
 import { useCallback, useState, useTransition, type ChangeEvent, type FormEvent } from 'react';
 
+import { CodeGeneration } from '@/features/rest-client/components/code-generation';
 import { HeadersSection } from '@/features/rest-client/components/headers-section';
 import { MethodSelector } from '@/features/rest-client/components/method-selector';
 import { RequestBodyEditor } from '@/features/rest-client/components/request-body-editor';
@@ -65,7 +66,7 @@ export const HttpRequestForm = ({ initialParams, initialSearchParams }: Props = 
 
   return (
     <div className="@container">
-      <div className="grid max-w-2xl grid-cols-1 gap-6 @6xl:max-w-6xl @6xl:grid-cols-2">
+      <div className="grid grid-cols-1 gap-6 @6xl:grid-cols-2">
         <section>
           <form onSubmit={handleSubmit} className="mb-6 flex flex-row">
             <MethodSelector method={method} methods={HTTP_METHODS} onChange={handleSelectionChange} />
@@ -109,8 +110,13 @@ export const HttpRequestForm = ({ initialParams, initialSearchParams }: Props = 
             <RequestBodyEditor body={textBody} mode="text" onChange={setTextBody} title={t('textContent')} />
           )}
         </section>
-
-        <ResponseSection response={response} isLoading={isLoading} />
+        <section>
+          <ResponseSection response={response} isLoading={isLoading} />
+          <div className="mt-6">
+            <h3 className="mb-4 text-lg font-semibold">{t('codeTitle')}</h3>
+            <CodeGeneration method={method} url={url} headers={headers} body={isJsonMode ? jsonBody : textBody} />
+          </div>
+        </section>
       </div>
     </div>
   );

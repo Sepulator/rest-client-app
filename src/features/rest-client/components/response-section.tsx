@@ -28,7 +28,7 @@ export const ResponseSection = ({ response, isLoading }: Props) => {
   }
 
   return (
-    <section>
+    <div>
       <div className="mb-4">
         <span className="text-sm text-gray-500">{t('status')}:</span>
         <span className={`ml-2 font-semibold ${statusStyle}`}>
@@ -37,6 +37,6 @@ export const ResponseSection = ({ response, isLoading }: Props) => {
       </div>
 
       {response?.body && <RequestBodyEditor body={response.body} mode="json" readOnly title={t('resBody')} />}
-    </section>
+    </div>
   );
 };
