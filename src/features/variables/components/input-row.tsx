@@ -9,12 +9,12 @@ import { AlertTooltip } from '@/features/variables/components/alert-tooltip';
 import { useDebounce } from '@/hooks/use-debounce-function/use-debounce-function';
 import { useIsDuplicate, useVariablesActions } from '@/stores/variables/selectors';
 
-type RowsControllerProps = {
+export type InputRowProps = {
   index: number;
   field: DefaultField;
 };
 
-function InputRow({ index, field }: RowsControllerProps) {
+export function InputRow({ index, field }: InputRowProps) {
   const { updateVariable, removeVariable } = useVariablesActions();
   const isDuplicate = useIsDuplicate(index);
   const t = useTranslations('Variables');

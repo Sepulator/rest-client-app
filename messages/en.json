@@ -125,8 +125,8 @@
   "Variables": {
     "heading": "Variables",
     "addButton": "Add Variable",
-    "key": "key",
-    "value": "value",
+    "key": "Key",
+    "value": "Value",
     "reset": "Reset variables",
     "duplicate": "Duplicate keys found: the last value will be applied"
   },
