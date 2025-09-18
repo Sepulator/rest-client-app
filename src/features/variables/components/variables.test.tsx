@@ -16,11 +16,11 @@ describe('Variables', () => {
   });
 
   describe('Render', () => {
-    it('should not render when not hydrated', () => {
+    it('should render loading when not hydrated', () => {
       useVariablesStore.getState().isHydrated = false;
-      const { container } = renderWithProviders(<Variables />);
+      renderWithProviders(<Variables />);
 
-      expect(container).toHaveTextContent('');
+      expect(screen.getByRole('status', { name: /loading/i })).toHaveTextContent('');
     });
 
     it('should render headings and add button', () => {

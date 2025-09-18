@@ -19,7 +19,7 @@ export function Variables() {
   const hydrated = useIsHydrated();
 
   if (!hydrated) {
-    return null;
+    return <Loading />;
   }
 
   return (

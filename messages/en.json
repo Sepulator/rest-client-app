@@ -12,7 +12,8 @@
       "logout": "Temp Logout",
       "menuOpen": "Open menu",
       "menuClose": "Close menu",
-      "menu": "Menu"
+      "menu": "Menu",
+      "loading": "Loading"
     }
   },
   "LocaleLayout": {
@@ -120,7 +121,8 @@
     "textContent": "Text Content",
     "text": "Text",
     "json": "JSON",
-    "url": "Enter Url"
+    "url": "Enter Url",
+    "removeHeader": "Remove header"
   },
   "Variables": {
     "heading": "Variables",
