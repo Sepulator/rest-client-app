@@ -75,3 +75,7 @@ export const useVariablesStore = create<VariablesStoreType & VariablesStoreActio
     partialize: (state) => ({ variables: state.variables }),
   })
 );
+
+export const updateStore = () => {
+  void useVariablesStore.persist.rehydrate();
+};

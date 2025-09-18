@@ -1,13 +1,12 @@
 'use client';
 
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect } from 'react';
 
 import { useVariables } from '@/stores/variables/selectors';
-import { STORAGE_KEY } from '@/stores/variables/store';
+import { updateStore } from '@/stores/variables/store';
 
 export function useReplaceWithVariable() {
   const variables = useVariables();
-  const [_, setStorageVersion] = useState(0);
 
   const variablesObject = variables.reduce<Record<string, string>>((acc, { key, value }) => {
     if (key) {
@@ -18,16 +17,12 @@ export function useReplaceWithVariable() {
   }, {});
 
   useEffect(() => {
-    const syncWithStorage = (event: StorageEvent) => {
-      if (event.key === STORAGE_KEY && event.newValue) {
-        setStorageVersion((previous) => previous + 1);
-      }
-    };
-
-    window.addEventListener('storage', syncWithStorage);
+    document.addEventListener('visibilitychange', updateStore);
+    window.addEventListener('focus', updateStore);
 
     return () => {
-      window.removeEventListener('storage', syncWithStorage);
+      document.removeEventListener('visibilitychange', updateStore);
+      window.removeEventListener('focus', updateStore);
     };
   }, []);
 
