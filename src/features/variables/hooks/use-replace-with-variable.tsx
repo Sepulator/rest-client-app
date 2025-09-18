@@ -19,7 +19,7 @@ export function useReplaceWithVariable() {
 
   const replaceWithValue = useCallback(
     (string: string) => {
-      const regexp = /\{\{\s*(.+?)\s*\}\}/g;
+      const regexp = /\{\{(.+?)\}\}/g;
 
       return string.replaceAll(regexp, (match, key: string) => variablesObject[key] || match);
     },
