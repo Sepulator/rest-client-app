@@ -9,6 +9,7 @@ import { responseData } from '@/features/rest-client/constants/http-request';
 import { ProxyResponseSchema } from '@/features/rest-client/schemas/proxy-schema';
 import { getMethodFromParams, getUrlFromParams } from '@/features/rest-client/utils/get-parameters';
 import { generateRouteUrl } from '@/features/rest-client/utils/route-generator';
+import { useReplaceWithVariable } from '@/features/variables/hooks/use-replace-with-variable';
 
 const isValidUrl = (url: string): boolean => {
   try {
@@ -25,6 +26,7 @@ export const useHttpRequest = (initialParams?: string[]) => {
   const [method, setMethod] = useState<string>(() => getMethodFromParams(initialParams));
   const [url, setUrl] = useState(() => getUrlFromParams(initialParams));
   const [response, setResponse] = useState<ResponseData | null>(null);
+  const replaceVariables = useReplaceWithVariable();
 
   const executeRequest = async (headers: Header[], body = ''): Promise<string | undefined> => {
     if (!url || !isValidUrl(url)) {
@@ -48,17 +50,20 @@ export const useHttpRequest = (initialParams?: string[]) => {
 
       if (hasBody) {
         requestBody = body;
-        if (!requestHeaders['Content-Type'] && !requestHeaders['content-type']) {
+        if (!Object.keys(requestHeaders).some((header) => /^content-type$/i.test(header))) {
           requestHeaders['Content-Type'] = 'application/json';
         }
       }
 
       const requestSize = new TextEncoder().encode(requestBody ?? '').length;
+      const bodyWithVariables = replaceVariables(
+        JSON.stringify({ url, method, headers: requestHeaders, body: requestBody })
+      );
 
       const result = await fetch('/api/proxy', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ url, method, headers: requestHeaders, body: requestBody }),
+        body: bodyWithVariables,
       });
 
       if (!result.ok) {

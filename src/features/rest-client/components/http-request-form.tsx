@@ -2,8 +2,10 @@
 
 import { Button, Input } from '@heroui/react';
 import { useTranslations } from 'next-intl';
+import dynamic from 'next/dynamic';
 import { useCallback, useState, useTransition, type ChangeEvent, type FormEvent } from 'react';
 
+import { Loading } from '@/components/loading/loading';
 import { ModeSwitcher } from '@/components/ui/mode-switcher';
 import { CodeGeneration } from '@/features/rest-client/components/code-generation';
 import { HeadersSection } from '@/features/rest-client/components/headers-section';
@@ -109,3 +111,8 @@ export const HttpRequestForm = ({ initialParams, initialSearchParams }: Props = 
     </div>
   );
 };
+
+export const HttpRequestFormDynamic = dynamic(
+  () => import('@/features/rest-client/components/http-request-form').then((module_) => module_.HttpRequestForm),
+  { loading: () => <Loading />, ssr: false }
+);

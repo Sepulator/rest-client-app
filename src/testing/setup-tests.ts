@@ -7,6 +7,7 @@ import { server } from '@/testing/mocks/server';
 afterEach(() => {
   cleanup();
   vi.clearAllMocks();
+  localStorage.clear();
 });
 
 beforeAll(() => {

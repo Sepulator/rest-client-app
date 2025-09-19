@@ -9,7 +9,7 @@ export default function DashboardLayout({ children, welcome }: LayoutProps<'/[lo
   return user ? (
     <section className="flex flex-1 flex-col gap-4 md:flex-row md:pt-5">
       <Sidebar tempLogout={logout} />
-      <div className="mt-4 flex flex-1 flex-col px-6">{children}</div>
+      <div className="mt-4 flex w-full flex-1 flex-col px-6">{children}</div>
     </section>
   ) : (
     welcome
