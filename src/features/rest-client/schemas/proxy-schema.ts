@@ -1,8 +1,10 @@
-import { object, optional, record, string, number } from 'valibot';
+import { object, optional, record, string, number, picklist } from 'valibot';
+
+import { HTTP_METHODS } from '@/features/rest-client/constants/http-request';
 
 export const ProxyRequestSchema = object({
   url: string(),
-  method: string(),
+  method: picklist(HTTP_METHODS),
   headers: record(string(), string()),
   body: optional(string()),
 });

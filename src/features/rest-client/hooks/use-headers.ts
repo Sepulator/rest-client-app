@@ -2,8 +2,10 @@ import { useState } from 'react';
 
 import type { Header } from '@/types/http-request';
 
-export const useHeaders = (initialHeaders: Header[] = [{ id: '1', key: 'Accept', value: '*/*' }]) => {
-  const [headers, setHeaders] = useState<Header[]>(initialHeaders);
+import { getHeadersFromSearchParams } from '@/features/rest-client/utils/get-parameters';
+
+export const useHeaders = (initialSearchParams?: Record<string, string>) => {
+  const [headers, setHeaders] = useState<Header[]>(() => getHeadersFromSearchParams(initialSearchParams));
 
   const addHeader = () => {
     setHeaders((previous) => [...previous, { id: crypto.randomUUID(), key: '', value: '' }]);
@@ -19,6 +21,7 @@ export const useHeaders = (initialHeaders: Header[] = [{ id: '1', key: 'Accept',
 
   return {
     headers,
+    setHeaders,
     addHeader,
     updateHeader,
     removeHeader,

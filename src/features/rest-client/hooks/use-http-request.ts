@@ -1,21 +1,35 @@
 import { getReasonPhrase } from 'http-status-codes';
+import { useLocale } from 'next-intl';
 import { useState } from 'react';
 import { parse } from 'valibot';
 
 import type { Header, ResponseData } from '@/types/http-request';
 
-import { DEFAULT_URL, HTTP_METHODS, responseData } from '@/features/rest-client/constants/http-request';
+import { responseData } from '@/features/rest-client/constants/http-request';
 import { ProxyResponseSchema } from '@/features/rest-client/schemas/proxy-schema';
+import { getMethodFromParams, getUrlFromParams } from '@/features/rest-client/utils/get-parameters';
+import { generateRouteUrl } from '@/features/rest-client/utils/route-generator';
 import { useReplaceWithVariable } from '@/features/variables/hooks/use-replace-with-variable';
 
-export const useHttpRequest = () => {
-  const [method, setMethod] = useState<string>(HTTP_METHODS[0]);
-  const [url, setUrl] = useState(DEFAULT_URL);
+const isValidUrl = (url: string): boolean => {
+  try {
+    const parsedUrl = new URL(url);
+
+    return ['http:', 'https:'].includes(parsedUrl.protocol);
+  } catch {
+    return false;
+  }
+};
+
+export const useHttpRequest = (initialParams?: string[]) => {
+  const locale = useLocale();
+  const [method, setMethod] = useState<string>(() => getMethodFromParams(initialParams));
+  const [url, setUrl] = useState(() => getUrlFromParams(initialParams));
   const [response, setResponse] = useState<ResponseData | null>(null);
   const replaceVariables = useReplaceWithVariable();
 
-  const executeRequest = async (headers: Header[], body = '') => {
-    if (!url) {
+  const executeRequest = async (headers: Header[], body = ''): Promise<string | undefined> => {
+    if (!url || !isValidUrl(url)) {
       return;
     }
 
@@ -31,7 +45,7 @@ export const useHttpRequest = () => {
         return acc;
       }, {});
 
-      const hasBody = !['GET', 'HEAD'].includes(method) && body.trim();
+      const hasBody = !['GET', 'HEAD'].includes(method) && body.trim().length > 0;
       let requestBody: string | undefined;
 
       if (hasBody) {
@@ -41,7 +55,7 @@ export const useHttpRequest = () => {
         }
       }
 
-      const requestSize = new Blob([requestBody ?? '']).size;
+      const requestSize = new TextEncoder().encode(requestBody ?? '').length;
       const bodyWithVariables = replaceVariables(
         JSON.stringify({ url, method, headers: requestHeaders, body: requestBody })
       );
@@ -52,10 +66,14 @@ export const useHttpRequest = () => {
         body: bodyWithVariables,
       });
 
+      if (!result.ok) {
+        throw new Error(`HTTP ${result.status.toString()}: ${result.statusText}`);
+      }
+
       const data: unknown = await result.json();
       const proxyResponse = parse(ProxyResponseSchema, data);
       const duration = performance.now() - startTime;
-      const responseSize = new Blob([proxyResponse.body]).size;
+      const responseSize = new TextEncoder().encode(proxyResponse.body).length;
 
       if (proxyResponse.error) {
         throw new Error(proxyResponse.error);
@@ -71,16 +89,21 @@ export const useHttpRequest = () => {
         requestSize,
         responseSize,
       });
+
+      return generateRouteUrl(method, url, locale, hasBody ? body : undefined, requestHeaders);
     } catch (error) {
       const duration = performance.now() - startTime;
+      const requestSize = new TextEncoder().encode(body).length;
 
       setResponse({
         ...responseData,
         error: error instanceof Error ? error.message : 'Unknown error',
+        requestSize,
         timestamp,
         duration,
-        requestSize: new Blob([body || '']).size,
       });
+
+      return undefined;
     }
   };
 
@@ -90,7 +113,6 @@ export const useHttpRequest = () => {
     url,
     setUrl,
     executeRequest,
-    HTTP_METHODS,
     response,
   };
 };

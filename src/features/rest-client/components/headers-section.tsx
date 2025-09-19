@@ -15,6 +15,14 @@ type HeadersSectionProps = {
 export const HeadersSection = ({ headers, onAddHeader, onUpdateHeader, onRemoveHeader }: HeadersSectionProps) => {
   const t = useTranslations('RestClient');
 
+  const handleUpdate = (id: string) => (updates: Partial<Header>) => {
+    onUpdateHeader(id, updates);
+  };
+
+  const handleRemove = (id: string) => () => {
+    onRemoveHeader(id);
+  };
+
   return (
     <>
       <FormHeading action={onAddHeader} heading={t('headers')} actionText={t('addHeader')} />
@@ -23,12 +31,8 @@ export const HeadersSection = ({ headers, onAddHeader, onUpdateHeader, onRemoveH
         <HeaderRequest
           key={header.id}
           header={header}
-          onUpdate={(updates) => {
-            onUpdateHeader(header.id, updates);
-          }}
-          onRemove={() => {
-            onRemoveHeader(header.id);
-          }}
+          onUpdate={handleUpdate(header.id)}
+          onRemove={handleRemove(header.id)}
         />
       ))}
     </>

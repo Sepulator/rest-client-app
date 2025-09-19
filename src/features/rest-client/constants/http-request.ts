@@ -1,8 +1,8 @@
-import type { HttpMethod, ResponseData } from '@/types/http-request';
-
-export const HTTP_METHODS: readonly HttpMethod[] = ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'HEAD', 'OPTIONS'];
+import type { ResponseData } from '@/types/http-request';
 
 export const DEFAULT_URL = 'https://jsonplaceholder.typicode.com/posts/1';
+
+export const HTTP_METHODS = ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'HEAD', 'OPTIONS'] as const;
 
 export const responseData: ResponseData = {
   body: '',

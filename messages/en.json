@@ -122,7 +122,11 @@
     "text": "Text",
     "json": "JSON",
     "url": "Enter Url",
-    "removeHeader": "Remove header"
+    "removeHeader": "Remove header",
+    "codeMessage": "Please configure method and URL to generate code",
+    "codeTitle": "Code Snippet",
+    "copy": "Copy",
+    "copied": "Copied"
   },
   "Variables": {
     "heading": "Variables",
