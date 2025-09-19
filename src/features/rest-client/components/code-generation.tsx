@@ -11,25 +11,14 @@ import { oneDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
 import type { Header } from '@/types/http-request';
 
+import { CODE_LANGUAGES, DELAY } from '@/features/rest-client/constants/language-list';
+
 type Props = {
   method: string;
   url: string;
   headers: Header[];
   body?: string;
 };
-
-const DELAY = 2000;
-
-const CODE_LANGUAGES = [
-  { key: 'shell:curl', label: 'cURL', syntax: 'bash' },
-  { key: 'javascript:fetch', label: 'JavaScript (Fetch)', syntax: 'javascript' },
-  { key: 'javascript:xhr', label: 'JavaScript (XHR)', syntax: 'javascript' },
-  { key: 'node:native', label: 'Node.js', syntax: 'javascript' },
-  { key: 'python:requests', label: 'Python', syntax: 'python' },
-  { key: 'java:okhttp', label: 'Java', syntax: 'java' },
-  { key: 'csharp:httpclient', label: 'C#', syntax: 'csharp' },
-  { key: 'go:native', label: 'Go', syntax: 'go' },
-];
 
 const generateCode = (language: string, method: string, headers: Header[], url = '', body?: string): string => {
   try {
@@ -83,10 +72,6 @@ export const CodeGeneration = ({ method, url, headers, body }: Props) => {
     },
     [setSelectedLanguage]
   );
-
-  if (!method || !url) {
-    return <div className="p-4 text-center text-gray-500">{t('codeMessage')}</div>;
-  }
 
   return (
     <div className="space-y-4">
