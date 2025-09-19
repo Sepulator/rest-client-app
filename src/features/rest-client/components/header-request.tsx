@@ -1,8 +1,9 @@
-import { Button, Input } from '@heroui/react';
-import { CloseIcon } from '@heroui/shared-icons';
+import { Input } from '@heroui/react';
 import { useTranslations } from 'next-intl';
 
 import type { Header } from '@/types/http-request';
+
+import { ActionRow } from '@/components/forms-ui/action-row';
 
 type HeaderRequestProps = {
   header: Header;
@@ -14,7 +15,7 @@ export const HeaderRequest = ({ header, onUpdate, onRemove }: HeaderRequestProps
   const t = useTranslations('RestClient');
 
   return (
-    <div className="mb-2 flex gap-2">
+    <ActionRow action={onRemove} ariaLabel={t('removeHeader')}>
       <Input
         variant="underlined"
         value={header.key}
@@ -22,7 +23,7 @@ export const HeaderRequest = ({ header, onUpdate, onRemove }: HeaderRequestProps
           onUpdate({ key });
         }}
         placeholder={t('header')}
-        className="border-b-1 border-gray-600"
+        className="border-default-300 border-b-1"
       />
       <Input
         variant="underlined"
@@ -31,17 +32,8 @@ export const HeaderRequest = ({ header, onUpdate, onRemove }: HeaderRequestProps
           onUpdate({ value });
         }}
         placeholder={t('value')}
-        className="border-b-1 border-gray-600"
+        className="border-default-300 border-b-1"
       />
-      <Button
-        aria-label="Remove header"
-        startContent={<CloseIcon />}
-        className="w-fit"
-        isIconOnly
-        radius="none"
-        variant="light"
-        onPress={onRemove}
-      />
-    </div>
+    </ActionRow>
   );
 };

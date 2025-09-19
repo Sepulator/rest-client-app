@@ -6,11 +6,13 @@ import type { Header, ResponseData } from '@/types/http-request';
 
 import { DEFAULT_URL, HTTP_METHODS, responseData } from '@/features/rest-client/constants/http-request';
 import { ProxyResponseSchema } from '@/features/rest-client/schemas/proxy-schema';
+import { useReplaceWithVariable } from '@/features/variables/hooks/use-replace-with-variable';
 
 export const useHttpRequest = () => {
   const [method, setMethod] = useState<string>(HTTP_METHODS[0]);
   const [url, setUrl] = useState(DEFAULT_URL);
   const [response, setResponse] = useState<ResponseData | null>(null);
+  const replaceVariables = useReplaceWithVariable();
 
   const executeRequest = async (headers: Header[], body = '') => {
     if (!url) {
@@ -34,17 +36,20 @@ export const useHttpRequest = () => {
 
       if (hasBody) {
         requestBody = body;
-        if (!requestHeaders['Content-Type'] && !requestHeaders['content-type']) {
+        if (!Object.keys(requestHeaders).some((header) => /^content-type$/i.test(header))) {
           requestHeaders['Content-Type'] = 'application/json';
         }
       }
 
       const requestSize = new Blob([requestBody ?? '']).size;
+      const bodyWithVariables = replaceVariables(
+        JSON.stringify({ url, method, headers: requestHeaders, body: requestBody })
+      );
 
       const result = await fetch('/api/proxy', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ url, method, headers: requestHeaders, body: requestBody }),
+        body: bodyWithVariables,
       });
 
       const data: unknown = await result.json();
