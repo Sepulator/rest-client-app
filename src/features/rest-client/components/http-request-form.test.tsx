@@ -1,6 +1,6 @@
 import { screen } from '@testing-library/react';
-import { describe, it, expect, vi, beforeEach } from 'vitest';
 
+import { useRestClientStore } from '@/stores/rest-client/store';
 import { renderWithProviders } from '@/testing/utils/render-with-providers';
 import { renderWithUserEvent } from '@/testing/utils/render-with-user-event';
 
@@ -8,30 +8,20 @@ import { HttpRequestForm } from './http-request-form';
 
 const mockExecuteRequest = vi.fn();
 
-vi.mock('@/features/rest-client/hooks/use-http-request', () => ({
-  useHttpRequest: () => ({
-    method: 'GET',
-    setMethod: vi.fn(),
-    url: 'https://jsonplaceholder.typicode.com/posts/1',
-    setUrl: vi.fn(),
-    executeRequest: mockExecuteRequest,
-    response: {
-      body: '',
-      headers: {},
-      status: 0,
-      statusText: '',
-      timestamp: '',
-      duration: 0,
-      requestSize: 0,
-      responseSize: 0,
-    },
-    isLoading: false,
-  }),
-}));
-
 describe('HttpRequestForm', () => {
   beforeEach(() => {
     vi.clearAllMocks();
+    useRestClientStore.setState({
+      method: 'GET',
+      url: 'https://example.com',
+      headers: [{ id: '1', key: 'Accept', value: '*/*' }],
+      response: null,
+      isJsonMode: true,
+      jsonBody: '',
+      textBody: '',
+      isLoading: false,
+      executeRequest: mockExecuteRequest,
+    });
   });
 
   it('should render form elements', () => {
