@@ -88,7 +88,7 @@ describe('getUrlFromParams', () => {
   });
 
   it('should handle decode errors gracefully', () => {
-    expect(getUrlFromParams(['GET', 'invalid-base64'])).toBe('https://jsonplaceholder.typicode.com/posts/1');
+    expect(getUrlFromParams(['GET', 'invalid-base64'])).toBe('');
   });
 });
 
