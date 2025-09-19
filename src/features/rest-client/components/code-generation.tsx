@@ -12,13 +12,7 @@ import { oneDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import type { Header } from '@/types/http-request';
 
 import { CODE_LANGUAGES, DELAY } from '@/features/rest-client/constants/language-list';
-
-type Props = {
-  method: string;
-  url: string;
-  headers: Header[];
-  body?: string;
-};
+import { useCurrentBody, useHeaders, useMethod, useUrl } from '@/stores/rest-client/selectors';
 
 const generateCode = (language: string, method: string, headers: Header[], url = '', body?: string): string => {
   try {
@@ -49,7 +43,11 @@ const generateCode = (language: string, method: string, headers: Header[], url =
   }
 };
 
-export const CodeGeneration = ({ method, url, headers, body }: Props) => {
+export const CodeGeneration = () => {
+  const method = useMethod();
+  const url = useUrl();
+  const headers = useHeaders();
+  const body = useCurrentBody();
   const [selectedLanguage, setSelectedLanguage] = useState(CODE_LANGUAGES[0].key);
   const [copied, setCopied] = useState(false);
   const t = useTranslations('RestClient');
