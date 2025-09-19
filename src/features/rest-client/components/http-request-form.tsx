@@ -4,6 +4,7 @@ import { Button, Input } from '@heroui/react';
 import { useTranslations } from 'next-intl';
 import { useCallback, useState, useTransition, type ChangeEvent, type FormEvent } from 'react';
 
+import { ModeSwitcher } from '@/components/ui/mode-switcher';
 import { CodeGeneration } from '@/features/rest-client/components/code-generation';
 import { HeadersSection } from '@/features/rest-client/components/headers-section';
 import { MethodSelector } from '@/features/rest-client/components/method-selector';
@@ -52,17 +53,18 @@ export const HttpRequestForm = ({ initialParams, initialSearchParams }: Props = 
     });
   };
 
-  const handleModeToggle = (jsonMode: boolean) => {
-    setIsJsonMode(jsonMode);
-  };
-
-  const handleTextMode = () => {
-    handleModeToggle(false);
-  };
-
-  const handleJsonMode = () => {
-    handleModeToggle(true);
-  };
+  const modeOptions = [
+    {
+      value: false,
+      label: t('text'),
+      children: <RequestBodyEditor body={textBody} mode="text" onChange={setTextBody} title={t('textContent')} />,
+    },
+    {
+      value: true,
+      label: t('json'),
+      children: <RequestBodyEditor body={jsonBody} mode="json" onChange={setJsonBody} title={t('jsonContent')} />,
+    },
+  ];
 
   return (
     <div className="@container">
@@ -96,26 +98,12 @@ export const HttpRequestForm = ({ initialParams, initialSearchParams }: Props = 
             onRemoveHeader={removeHeader}
           />
 
-          <div className="mt-6 mb-4 flex gap-1">
-            <Button size="sm" variant={isJsonMode ? 'bordered' : 'solid'} onPress={handleTextMode}>
-              {t('text')}
-            </Button>
-            <Button size="sm" variant={isJsonMode ? 'solid' : 'bordered'} onPress={handleJsonMode}>
-              {t('json')}
-            </Button>
-          </div>
-          {isJsonMode ? (
-            <RequestBodyEditor body={jsonBody} mode="json" onChange={setJsonBody} title={t('jsonContent')} />
-          ) : (
-            <RequestBodyEditor body={textBody} mode="text" onChange={setTextBody} title={t('textContent')} />
-          )}
+          <ModeSwitcher options={modeOptions} value={isJsonMode} onChange={setIsJsonMode} className="mt-6" />
         </section>
         <section>
           <ResponseSection response={response} isLoading={isLoading} />
-          <div className="mt-6">
-            <h3 className="mb-4 text-lg font-semibold">{t('codeTitle')}</h3>
-            <CodeGeneration method={method} url={url} headers={headers} body={isJsonMode ? jsonBody : textBody} />
-          </div>
+          <h3 className="mt-6 mb-4 text-lg font-semibold">{t('codeTitle')}</h3>
+          <CodeGeneration method={method} url={url} headers={headers} body={isJsonMode ? jsonBody : textBody} />
         </section>
       </div>
     </div>
