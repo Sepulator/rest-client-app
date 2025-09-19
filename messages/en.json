@@ -20,7 +20,10 @@
     "description": "A light-weight rest client application"
   },
   "NotFound": {
-    "title": "Page not found"
+    "title": "Page not found",
+    "description": "We couldn't find page you are looking for",
+    "goHome": "Go home",
+    "404": "404"
   },
   "WelcomePage": {
     "title": "Welcome, please login"
