@@ -15,7 +15,6 @@ vi.mock('@/features/rest-client/hooks/use-http-request', () => ({
     url: 'https://jsonplaceholder.typicode.com/posts/1',
     setUrl: vi.fn(),
     executeRequest: mockExecuteRequest,
-    HTTP_METHODS: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'HEAD', 'OPTIONS'],
     response: {
       body: '',
       headers: {},
@@ -39,8 +38,8 @@ describe('HttpRequestForm', () => {
     renderWithProviders(<HttpRequestForm />);
 
     expect(screen.getByRole('button', { name: 'Send' })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: 'Text' })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: 'JSON' })).toBeInTheDocument();
+    expect(screen.getByRole('tab', { name: 'Text' })).toBeInTheDocument();
+    expect(screen.getByRole('tab', { name: 'JSON' })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Prettify JSON' })).toBeInTheDocument();
   });
 
@@ -55,8 +54,8 @@ describe('HttpRequestForm', () => {
   it('should toggle between JSON and Text modes', async () => {
     const { user } = renderWithUserEvent(<HttpRequestForm />);
 
-    const textButton = screen.getByRole('button', { name: 'Text' });
-    const jsonButton = screen.getByRole('button', { name: 'JSON' });
+    const textButton = screen.getByRole('tab', { name: 'Text' });
+    const jsonButton = screen.getByRole('tab', { name: 'JSON' });
 
     await user.click(textButton);
     await user.click(jsonButton);

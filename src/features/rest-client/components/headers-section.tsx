@@ -1,8 +1,8 @@
-import { Button } from '@heroui/react';
 import { useTranslations } from 'next-intl';
 
 import type { Header } from '@/types/http-request';
 
+import { FormHeading } from '@/components/forms-ui/forms-heading';
 import { HeaderRequest } from '@/features/rest-client/components/header-request';
 
 type HeadersSectionProps = {
@@ -15,25 +15,24 @@ type HeadersSectionProps = {
 export const HeadersSection = ({ headers, onAddHeader, onUpdateHeader, onRemoveHeader }: HeadersSectionProps) => {
   const t = useTranslations('RestClient');
 
+  const handleUpdate = (id: string) => (updates: Partial<Header>) => {
+    onUpdateHeader(id, updates);
+  };
+
+  const handleRemove = (id: string) => () => {
+    onRemoveHeader(id);
+  };
+
   return (
     <>
-      <div className="mb-4 flex items-center justify-between">
-        <h3>HTTP Headers</h3>
-        <Button size="sm" variant="flat" radius="none" onPress={onAddHeader}>
-          {t('addHeader')}
-        </Button>
-      </div>
+      <FormHeading action={onAddHeader} heading={t('headers')} actionText={t('addHeader')} />
 
       {headers.map((header) => (
         <HeaderRequest
           key={header.id}
           header={header}
-          onUpdate={(updates) => {
-            onUpdateHeader(header.id, updates);
-          }}
-          onRemove={() => {
-            onRemoveHeader(header.id);
-          }}
+          onUpdate={handleUpdate(header.id)}
+          onRemove={handleRemove(header.id)}
         />
       ))}
     </>

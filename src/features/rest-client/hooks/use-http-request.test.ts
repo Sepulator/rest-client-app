@@ -1,57 +1,63 @@
 import { renderHook, act } from '@testing-library/react';
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
 
 import type { Header } from '@/types/http-request';
 
 import { DEFAULT_URL } from '@/features/rest-client/constants/http-request';
 import { useHttpRequest } from '@/features/rest-client/hooks/use-http-request';
 
+type UseHttpRequestReturn = ReturnType<typeof useHttpRequest>;
+
+vi.mock('next-intl', () => ({
+  useLocale: () => 'en',
+}));
+
+const setupHook = () => renderHook(() => useHttpRequest());
+
+const setUrlAndMethod = (result: { current: UseHttpRequestReturn }, url: string, method = 'GET') => {
+  act(() => {
+    result.current.setUrl(url);
+    result.current.setMethod(method);
+  });
+};
+
+const executeRequest = async (result: { current: UseHttpRequestReturn }, headers: Header[] = [], body = '') => {
+  await act(async () => {
+    await result.current.executeRequest(headers, body);
+  });
+};
+
 describe('useHttpRequest', () => {
   it('should execute request successfully', async () => {
-    const { result } = renderHook(() => useHttpRequest());
+    const { result } = setupHook();
 
-    act(() => {
-      result.current.setUrl(DEFAULT_URL);
-      result.current.setMethod('GET');
-    });
-
-    await act(async () => {
-      await result.current.executeRequest([]);
-    });
+    setUrlAndMethod(result, DEFAULT_URL);
+    await executeRequest(result);
 
     expect(result.current.response?.status).toBe(200);
     expect(result.current.response?.body).toContain('Mock Post');
   });
 
   it('should handle error responses', async () => {
-    const { result } = renderHook(() => useHttpRequest());
+    const { result } = setupHook();
 
-    act(() => {
-      result.current.setUrl('https://error.example.com');
-    });
-
-    await act(async () => {
-      await result.current.executeRequest([]);
-    });
+    setUrlAndMethod(result, 'https://error.example.com');
+    await executeRequest(result);
 
     expect(result.current.response?.error).toBe('Network error');
   });
 
   it('should process headers correctly', async () => {
-    const { result } = renderHook(() => useHttpRequest());
+    const { result } = setupHook();
 
-    act(() => {
-      result.current.setUrl('https://api.example.com');
-    });
+    setUrlAndMethod(result, 'https://api.example.com');
 
     const headers: Header[] = [
       { id: '1', key: 'Content-Type', value: 'application/json' },
       { id: '2', key: 'Authorization', value: 'Bearer token' },
     ];
 
-    await act(async () => {
-      await result.current.executeRequest(headers);
-    });
+    await executeRequest(result, headers);
 
     expect(result.current.response?.status).toBe(200);
     expect(result.current.response?.headers).toEqual({
@@ -61,16 +67,10 @@ describe('useHttpRequest', () => {
   });
 
   it('should add Content-Type for POST with body', async () => {
-    const { result } = renderHook(() => useHttpRequest());
+    const { result } = setupHook();
 
-    act(() => {
-      result.current.setUrl('https://api.example.com');
-      result.current.setMethod('POST');
-    });
-
-    await act(async () => {
-      await result.current.executeRequest([], '{"test": "data"}');
-    });
+    setUrlAndMethod(result, 'https://api.example.com', 'POST');
+    await executeRequest(result, [], '{"test": "data"}');
 
     expect(result.current.response?.status).toBe(200);
     expect(result.current.response?.headers).toEqual({
@@ -79,18 +79,57 @@ describe('useHttpRequest', () => {
   });
 
   it('should not add Content-Type for GET method', async () => {
-    const { result } = renderHook(() => useHttpRequest());
+    const { result } = setupHook();
 
-    act(() => {
-      result.current.setUrl('https://api.example.com');
-      result.current.setMethod('GET');
-    });
-
-    await act(async () => {
-      await result.current.executeRequest([], '{"test": "data"}');
-    });
+    setUrlAndMethod(result, 'https://api.example.com');
+    await executeRequest(result, [], '{"test": "data"}');
 
     expect(result.current.response?.status).toBe(200);
     expect(result.current.response?.headers).toEqual({});
+  });
+
+  it('should not execute request for invalid URLs', async () => {
+    const { result } = setupHook();
+
+    setUrlAndMethod(result, 'invalid-url');
+    await executeRequest(result);
+
+    expect(result.current.response).toBeNull();
+  });
+
+  it('should not execute request for non-HTTP protocols', async () => {
+    const { result } = setupHook();
+
+    setUrlAndMethod(result, 'ftp://example.com');
+    await executeRequest(result);
+
+    expect(result.current.response).toBeNull();
+  });
+
+  it('should accept valid HTTP URLs', async () => {
+    const { result } = setupHook();
+
+    setUrlAndMethod(result, 'http://api.example.com');
+    await executeRequest(result);
+
+    expect(result.current.response?.status).toBe(200);
+  });
+
+  it('should accept valid HTTPS URLs', async () => {
+    const { result } = setupHook();
+
+    setUrlAndMethod(result, 'https://api.example.com');
+    await executeRequest(result);
+
+    expect(result.current.response?.status).toBe(200);
+  });
+
+  it('should handle network errors', async () => {
+    const { result } = setupHook();
+
+    setUrlAndMethod(result, 'https://network-error.example.com');
+    await executeRequest(result);
+
+    expect(result.current.response?.error).toBe('Network error');
   });
 });

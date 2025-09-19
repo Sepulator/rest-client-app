@@ -12,7 +12,8 @@
       "logout": "Temp Logout",
       "menuOpen": "Open menu",
       "menuClose": "Close menu",
-      "menu": "Menu"
+      "menu": "Menu",
+      "loading": "Loading"
     }
   },
   "LocaleLayout": {
@@ -122,7 +123,23 @@
     "textContent": "Text Content",
     "text": "Text",
     "json": "JSON",
-    "url": "Enter Url"
+    "url": "Enter Url",
+    "removeHeader": "Remove header",
+    "codeMessage": "Please configure method and URL to generate code",
+    "codeTitle": "Code Snippet",
+    "copy": "Copy",
+    "copied": "Copied"
+  },
+  "Variables": {
+    "heading": "Variables",
+    "addButton": "Add Variable",
+    "key": "Key",
+    "value": "Value",
+    "reset": "Reset variables",
+    "duplicate": "Duplicate keys found: the last value will be applied"
+  },
+  "actionRow": {
+    "remove": "Remove row"
   },
   "FallbackUi": {
     "title": "Something went wrong!",

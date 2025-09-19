@@ -17,5 +17,3 @@ export type ResponseData = {
   responseSize: number;
   error?: string;
 };
-
-export type HttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH' | 'HEAD' | 'OPTIONS';
