@@ -22,8 +22,7 @@
   "NotFound": {
     "title": "Page not found",
     "description": "We couldn't find page you are looking for",
-    "goHome": "Go home",
-    "404": "404"
+    "button": "Go home"
   },
   "WelcomePage": {
     "title": "Welcome, please login"
@@ -124,5 +123,9 @@
     "text": "Text",
     "json": "JSON",
     "url": "Enter Url"
+  },
+  "FallbackUi": {
+    "title": "Something went wrong!",
+    "button": "Try again"
   }
 }
