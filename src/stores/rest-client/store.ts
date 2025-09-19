@@ -1,0 +1,213 @@
+import { getReasonPhrase } from 'http-status-codes';
+import { parse } from 'valibot';
+import { create } from 'zustand';
+
+import type { Header, ResponseData } from '@/types/http-request';
+
+import { responseData } from '@/features/rest-client/constants/http-request';
+import { ProxyResponseSchema } from '@/features/rest-client/schemas/proxy-schema';
+import {
+  getBodyFromParams,
+  getHeadersFromSearchParams,
+  getMethodFromParams,
+  getUrlFromParams,
+} from '@/features/rest-client/utils/get-parameters';
+import { generateRouteUrl } from '@/features/rest-client/utils/route-generator';
+
+type State = {
+  method: string;
+  url: string;
+  headers: Header[];
+  response: ResponseData | null;
+  isJsonMode: boolean;
+  jsonBody: string;
+  textBody: string;
+  isLoading: boolean;
+};
+
+type StateActions = {
+  setMethod: (method: string) => void;
+  setUrl: (url: string) => void;
+  setHeaders: (headers: Header[]) => void;
+  addHeader: () => void;
+  updateHeader: (id: string, updates: Partial<Header>) => void;
+  removeHeader: (id: string) => void;
+  setResponse: (response: ResponseData | null) => void;
+  setIsJsonMode: (isJsonMode: boolean) => void;
+  setJsonBody: (body: string) => void;
+  setTextBody: (body: string) => void;
+  setIsLoading: (isLoading: boolean) => void;
+  executeRequest: (locale: string, replaceVariables: (text: string) => string) => Promise<string | undefined>;
+  initializeFromParams: (initialParams?: string[], initialSearchParams?: Record<string, string>) => void;
+};
+
+type RestClientStore = State & StateActions;
+
+const isValidUrl = (url: string): boolean => {
+  try {
+    const parsedUrl = new URL(url);
+
+    return ['http:', 'https:'].includes(parsedUrl.protocol);
+  } catch {
+    return false;
+  }
+};
+
+export const useRestClientStore = create<RestClientStore>((set, get) => ({
+  method: 'GET',
+  url: '',
+  headers: [],
+  response: null,
+  isJsonMode: true,
+  jsonBody: '',
+  textBody: '',
+  isLoading: false,
+
+  setMethod: (method) => {
+    set({ method });
+  },
+
+  setUrl: (url) => {
+    set({ url });
+  },
+
+  setHeaders: (headers) => {
+    set({ headers });
+  },
+
+  setResponse: (response) => {
+    set({ response });
+  },
+
+  setIsJsonMode: (isJsonMode) => {
+    set({ isJsonMode });
+  },
+
+  setJsonBody: (jsonBody) => {
+    set({ jsonBody });
+  },
+
+  setTextBody: (textBody) => {
+    set({ textBody });
+  },
+
+  setIsLoading: (isLoading) => {
+    set({ isLoading });
+  },
+
+  addHeader: () => {
+    const { headers } = get();
+
+    set({ headers: [...headers, { id: crypto.randomUUID(), key: '', value: '' }] });
+  },
+
+  updateHeader: (id, updates) => {
+    const { headers } = get();
+
+    set({ headers: headers.map((header) => (header.id === id ? { ...header, ...updates } : header)) });
+  },
+
+  removeHeader: (id) => {
+    const { headers } = get();
+
+    set({ headers: headers.filter((header) => header.id !== id) });
+  },
+
+  executeRequest: async (locale, replaceVariables) => {
+    const { url, method, headers, isJsonMode, jsonBody, textBody } = get();
+
+    if (!url || !isValidUrl(url)) {
+      return;
+    }
+
+    set({ isLoading: true });
+    const body = isJsonMode ? jsonBody : textBody;
+    const timestamp = new Date().toISOString();
+    const startTime = performance.now();
+
+    try {
+      const requestHeaders = headers.reduce<Record<string, string>>((acc, header) => {
+        if (header.key && header.value) {
+          acc[header.key] = header.value;
+        }
+
+        return acc;
+      }, {});
+
+      const hasBody = !['GET', 'HEAD'].includes(method) && body.trim().length > 0;
+      let requestBody: string | undefined;
+
+      if (hasBody) {
+        requestBody = body;
+        if (!Object.keys(requestHeaders).some((header) => /^content-type$/i.test(header))) {
+          requestHeaders['Content-Type'] = 'application/json';
+        }
+      }
+
+      const requestSize = new TextEncoder().encode(requestBody ?? '').length;
+      const bodyWithVariables = replaceVariables(
+        JSON.stringify({ url, method, headers: requestHeaders, body: requestBody })
+      );
+
+      const result = await fetch('/api/proxy', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: bodyWithVariables,
+      });
+
+      if (!result.ok) {
+        throw new Error(`HTTP ${result.status.toString()}: ${result.statusText}`);
+      }
+
+      const data: unknown = await result.json();
+      const proxyResponse = parse(ProxyResponseSchema, data);
+      const duration = performance.now() - startTime;
+      const responseSize = new TextEncoder().encode(proxyResponse.body).length;
+
+      if (proxyResponse.error) {
+        throw new Error(proxyResponse.error);
+      }
+
+      set({
+        response: {
+          status: proxyResponse.status,
+          statusText: getReasonPhrase(proxyResponse.status),
+          headers: proxyResponse.headers,
+          body: proxyResponse.body,
+          timestamp,
+          duration,
+          requestSize,
+          responseSize,
+        },
+        isLoading: false,
+      });
+
+      return generateRouteUrl(method, url, locale, hasBody ? body : undefined, requestHeaders);
+    } catch (error) {
+      const duration = performance.now() - startTime;
+      const requestSize = new TextEncoder().encode(body).length;
+
+      set({
+        response: {
+          ...responseData,
+          error: error instanceof Error ? error.message : 'Unknown error',
+          requestSize,
+          timestamp,
+          duration,
+        },
+        isLoading: false,
+      });
+
+      return;
+    }
+  },
+
+  initializeFromParams: (initialParams, initialSearchParams) => {
+    set({
+      method: getMethodFromParams(initialParams),
+      url: getUrlFromParams(initialParams),
+      headers: getHeadersFromSearchParams(initialSearchParams),
+      jsonBody: getBodyFromParams(initialParams),
+    });
+  },
+}));
