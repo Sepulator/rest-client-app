@@ -1,6 +1,6 @@
 'use client';
 
-import { Button, Input } from '@heroui/react';
+import { addToast, Button, Input } from '@heroui/react';
 import { useTranslations } from 'next-intl';
 import dynamic from 'next/dynamic';
 import { useCallback, useState, useTransition, type ChangeEvent, type FormEvent } from 'react';
@@ -51,6 +51,10 @@ export const HttpRequestForm = ({ initialParams, initialSearchParams }: Props = 
 
       if (routeUrl) {
         window.history.replaceState(null, '', routeUrl);
+      }
+
+      if (response?.error) {
+        addToast({ title: response.error, color: 'danger' });
       }
     });
   };
