@@ -20,7 +20,7 @@ export const ResponseSection = () => {
       <div className="mb-4">
         <span className="text-sm text-gray-500">{t('status')}:</span>
         <span className={`ml-2 font-semibold ${statusStyle}`}>
-          {response?.status} {response?.statusText}
+          {response?.error ?? `${response?.status ?? ''} ${response?.statusText ?? ''}`}
         </span>
       </div>
 

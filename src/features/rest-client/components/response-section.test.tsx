@@ -37,7 +37,7 @@ describe('ResponseSection', () => {
     });
     renderWithProviders(<ResponseSection />);
 
-    expect(screen.getByText('Error:')).toBeInTheDocument();
+    expect(screen.getByText('Status:')).toBeInTheDocument();
     expect(screen.getByText('Network error')).toBeInTheDocument();
   });
 
