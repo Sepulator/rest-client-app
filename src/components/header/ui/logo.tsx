@@ -8,7 +8,7 @@ import { safeSource } from '@/utils/safe-source';
 export function Logo() {
   return (
     <Link href={ROUTES.MAIN} className="no-wrap text-foreground flex items-center">
-      <Image width={30} alt="logo" src={safeSource(logo)} />
+      <Image width={30} height={30} alt="logo" src={safeSource(logo)} />
       <span className="text-medium ml-2 font-bold">V-REST</span>
     </Link>
   );

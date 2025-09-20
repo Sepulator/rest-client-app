@@ -5,7 +5,7 @@ import { render } from '@testing-library/react';
 
 import type { ProvidersProps } from '@/app/[locale]/providers';
 
-import { Providers } from '@/app/[locale]/providers';
+import { TestProviders } from '@/testing/mocks/providers';
 import { mockUser } from '@/testing/mocks/user';
 import { IntlProvider } from '@/testing/utils/intl-provider';
 
@@ -23,7 +23,7 @@ export const renderWithProviders = (ui: ReactElement, options?: ExtendedOptions)
 
   const wrapper = ({ children }: PropsWithChildren) => (
     <IntlProvider>
-      <Providers {...providerProps}>{children}</Providers>
+      <TestProviders {...providerProps}>{children}</TestProviders>
     </IntlProvider>
   );
 
