@@ -23,7 +23,7 @@ export function Providers({ children, userData }: ProvidersProps) {
           placement={'top-center'}
           toastProps={{
             variant: 'flat',
-            timeout: 1000,
+            timeout: 3000,
           }}
         />
         {children}
