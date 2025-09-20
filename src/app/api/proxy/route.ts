@@ -1,14 +1,21 @@
 import type { NextRequest } from 'next/server';
 
+import { getTranslations } from 'next-intl/server';
 import { NextResponse } from 'next/server';
 import { parse } from 'valibot';
 
 import { ProxyRequestSchema } from '@/features/rest-client/schemas/proxy-schema';
 
 export async function POST(request: NextRequest) {
+  let url = '';
+  const t = await getTranslations('Errors');
+
   try {
     const data: unknown = await request.json();
-    const { url, method, headers, body } = parse(ProxyRequestSchema, data);
+    const parsed = parse(ProxyRequestSchema, data);
+
+    url = parsed.url;
+    const { method, headers, body } = parsed;
 
     const response = await fetch(url, {
       method,
@@ -23,8 +30,43 @@ export async function POST(request: NextRequest) {
       statusText: response.statusText,
       headers: Object.fromEntries(response.headers.entries()),
       body: responseBody,
+      error: response.ok ? undefined : `HTTP ${response.status}: ${response.statusText}`,
     });
   } catch (error) {
-    return NextResponse.json({ error: error instanceof Error ? error.message : 'Unknown error' }, { status: 500 });
+    let errorMessage = 'Unknown error';
+
+    if (error instanceof TypeError) {
+      if (error.message.includes('fetch') || error.message.includes('ENOTFOUND')) {
+        errorMessage = t('dnsResolution', { url });
+      } else if (error.message.includes('ByteString')) {
+        errorMessage = t('invalidHeaders');
+      } else {
+        errorMessage = error.message;
+      }
+    } else if (error instanceof Error) {
+      const message = error.message;
+
+      if (message.includes('ECONNREFUSED')) {
+        errorMessage = t('connectionRefused');
+      } else if (message.includes('ETIMEDOUT')) {
+        errorMessage = t('timeout');
+      } else if (message.includes('ECONNRESET')) {
+        errorMessage = t('connectionReset');
+      } else if (message.includes('CERT_HAS_EXPIRED')) {
+        errorMessage = t('sslExpired');
+      } else if (message.includes('Invalid URL')) {
+        errorMessage = t('invalidUrl');
+      } else {
+        errorMessage = message;
+      }
+    }
+
+    return NextResponse.json({
+      status: 500,
+      statusText: 'Internal Server Error',
+      headers: {},
+      body: '',
+      error: errorMessage,
+    });
   }
 }

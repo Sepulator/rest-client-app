@@ -38,7 +38,7 @@ export const RequestBodyEditor = ({ body, onChange, readOnly = false, mode = 'js
   }, [body, mode]);
 
   const prettifyJSON = useCallback(() => {
-    if (!onChange) {
+    if (!onChange || !parsedJson) {
       return;
     }
 

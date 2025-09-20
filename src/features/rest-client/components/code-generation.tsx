@@ -14,6 +14,8 @@ import type { Header } from '@/types/http-request';
 import { CODE_LANGUAGES, DELAY } from '@/features/rest-client/constants/language-list';
 import { useCurrentBody, useHeaders, useMethod, useUrl } from '@/stores/rest-client/selectors';
 
+const LIMIT = 2;
+
 const generateCode = (language: string, method: string, headers: Header[], url = '', body?: string): string => {
   try {
     const validHeaders = headers.filter((h) => h.key && h.value);
@@ -31,15 +33,15 @@ const generateCode = (language: string, method: string, headers: Header[], url =
       postData: body ? { mimeType: 'application/json', text: body } : undefined,
       httpVersion: 'HTTP/1.1',
       headersSize: -1,
-      bodySize: body ? body.length : 0,
+      bodySize: body ? new TextEncoder().encode(body).length : 0,
     };
 
     const snippet = new HTTPSnippet(har);
-    const [target, client] = language.split(':');
+    const [target, client] = language.split(':', LIMIT);
 
     return snippet.convert(target, client) || '';
-  } catch {
-    return 'Error generating code snippet';
+  } catch (error) {
+    return `Error generating code snippet: ${error instanceof Error ? error.message : String(error)}`;
   }
 };
 
@@ -56,12 +58,17 @@ export const CodeGeneration = () => {
   const currentLanguage = CODE_LANGUAGES.find((lang) => lang.key === selectedLanguage);
 
   const handleCopy = useCallback(() => {
-    void navigator.clipboard.writeText(code).then(() => {
-      setCopied(true);
-      setTimeout(() => {
-        setCopied(false);
-      }, DELAY);
-    });
+    navigator.clipboard
+      .writeText(code)
+      .then(() => {
+        setCopied(true);
+        setTimeout(() => {
+          setCopied(false);
+        }, DELAY);
+      })
+      .catch((error: unknown) => {
+        console.error('Failed to copy text:', error);
+      });
   }, [code]);
 
   const handleSelectionChange = useCallback(

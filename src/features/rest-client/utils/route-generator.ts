@@ -5,13 +5,13 @@ export const generateRouteUrl = (
   body?: string,
   headers: Record<string, string> = {}
 ): string => {
-  const encodedUrl = btoa(requestUrl);
+  const encodedUrl = Buffer.from(requestUrl).toString('base64');
   const encodedBody = body
     ? (() => {
         try {
-          return btoa(JSON.stringify(JSON.parse(body)));
+          return Buffer.from(JSON.stringify(JSON.parse(body))).toString('base64');
         } catch {
-          return btoa(body.trim());
+          return Buffer.from(body.trim()).toString('base64');
         }
       })()
     : undefined;
