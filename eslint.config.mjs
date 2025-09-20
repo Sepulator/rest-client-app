@@ -228,6 +228,12 @@ export default tseslint.config(
     },
   },
   {
+    files: ['**/not-found.tsx'],
+    rules: {
+      'no-restricted-imports': 'off',
+    },
+  },
+  {
     files: ['**/*.test.{js,ts,jsx,tsx}'],
     plugins: {
       'testing-library': testingLibrary,

@@ -1,15 +1,13 @@
-'use client';
+import './[locale]/globals.css';
+import { RootPagesLayout } from '@/app/[locale]/_components/root-pages-layout';
+import { NotFoundComponent } from '@/components/not-found/not-found';
 
-import Error from 'next/error';
-
-const NOT_FOUND_CODE = 404;
-
-export default function NotFound() {
+export default function GlobalNotFound() {
   return (
     <html lang="en">
-      <body>
-        <Error statusCode={NOT_FOUND_CODE} />
-      </body>
+      <RootPagesLayout>
+        <NotFoundComponent buttonText="Go Home" title="Page Not Found" description="global non localized" />
+      </RootPagesLayout>
     </html>
   );
 }

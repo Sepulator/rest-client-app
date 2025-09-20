@@ -19,14 +19,6 @@ export const ResponseSection = ({ response, isLoading }: Props) => {
     return <Spinner color="warning" label="Loading..." />;
   }
 
-  if (response?.error) {
-    return (
-      <section className="mb-4 rounded bg-red-100 p-3 text-red-800">
-        <strong>Error:</strong> {response.error}
-      </section>
-    );
-  }
-
   return (
     <div>
       <div className="mb-4">
