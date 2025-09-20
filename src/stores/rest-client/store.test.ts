@@ -14,7 +14,7 @@ vi.mock('@/features/variables/hooks/use-replace-with-variable', () => ({
 const executeRequest = async () => {
   const { executeRequest } = useRestClientStore.getState();
 
-  return await executeRequest('en', mockReplaceVariables);
+  return await executeRequest('en', mockReplaceVariables, 'Invalid URL. Please enter a valid HTTP or HTTPS URL.');
 };
 
 describe('RestClientStore', () => {

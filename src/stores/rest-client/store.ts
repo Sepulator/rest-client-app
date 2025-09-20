@@ -37,7 +37,11 @@ type StateActions = {
   setJsonBody: (body: string) => void;
   setTextBody: (body: string) => void;
   setIsLoading: (isLoading: boolean) => void;
-  executeRequest: (locale: string, replaceVariables: (text: string) => string) => Promise<string | undefined>;
+  executeRequest: (
+    locale: string,
+    replaceVariables: (text: string) => string,
+    invalidUrlMessage: string
+  ) => Promise<string | undefined>;
   initializeFromParams: (initialParams?: string[], initialSearchParams?: Record<string, string>) => void;
 };
 
@@ -122,14 +126,14 @@ export const useRestClientStore = create<RestClientStore>((set, get) => ({
     set({ headers: headers.filter((header) => header.id !== id) });
   },
 
-  executeRequest: async (locale, replaceVariables) => {
+  executeRequest: async (locale, replaceVariables, invalidUrlMessage) => {
     const { url, method, headers, isJsonMode, jsonBody, textBody } = get();
 
     if (!isValidUrl(url)) {
       set({
         response: {
           ...responseData,
-          error: 'Invalid URL. Please enter a valid HTTP or HTTPS URL.',
+          error: invalidUrlMessage,
         },
       });
 

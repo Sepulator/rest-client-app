@@ -126,7 +126,8 @@
     "codeMessage": "Please configure method and URL to generate code",
     "codeTitle": "Code Snippet",
     "copy": "Copy",
-    "copied": "Copied"
+    "copied": "Copied",
+    "invalidUrl": "Invalid URL. Please enter a valid HTTP or HTTPS URL."
   },
   "Variables": {
     "heading": "Variables",

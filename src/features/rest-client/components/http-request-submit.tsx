@@ -24,7 +24,7 @@ export const HttpRequestSubmit = () => {
     event.preventDefault();
 
     startTransition(async () => {
-      const routeUrl = await executeRequest(locale, replaceVariables);
+      const routeUrl = await executeRequest(locale, replaceVariables, t('invalidUrl'));
 
       if (routeUrl) {
         window.history.replaceState(null, '', routeUrl);
