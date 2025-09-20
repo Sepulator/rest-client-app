@@ -1,17 +1,18 @@
 'use client';
 
-import { Button, Input } from '@heroui/react';
+import { addToast, Button, Input } from '@heroui/react';
 import { useLocale, useTranslations } from 'next-intl';
 import { useTransition, type FormEvent } from 'react';
 
 import { MethodSelector } from '@/features/rest-client/components/method-selector';
 import { useReplaceWithVariable } from '@/features/variables/hooks/use-replace-with-variable';
-import { useExecuteRequest, useIsLoading, useSetUrl, useUrl } from '@/stores/rest-client/selectors';
+import { useExecuteRequest, useIsLoading, useResponse, useSetUrl, useUrl } from '@/stores/rest-client/selectors';
 
 export const HttpRequestSubmit = () => {
   const [, startTransition] = useTransition();
   const locale = useLocale();
   const replaceVariables = useReplaceWithVariable();
+  const response = useResponse();
 
   const url = useUrl();
   const isLoading = useIsLoading();
@@ -28,6 +29,10 @@ export const HttpRequestSubmit = () => {
 
       if (routeUrl) {
         window.history.replaceState(null, '', routeUrl);
+      }
+
+      if (response?.error) {
+        addToast({ title: response.error, color: 'danger' });
       }
     });
   };

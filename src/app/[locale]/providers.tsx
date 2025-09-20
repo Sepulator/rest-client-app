@@ -3,6 +3,7 @@
 import type { ReactNode } from 'react';
 
 import { HeroUIProvider } from '@heroui/react';
+import { ToastProvider } from '@heroui/toast';
 
 import type { UserData } from '@/stores/auth-context/types';
 
@@ -16,7 +17,17 @@ export type ProvidersProps = {
 export function Providers({ children, userData }: ProvidersProps) {
   return (
     <HeroUIProvider>
-      <AuthProvider userData={userData}>{children}</AuthProvider>
+      <AuthProvider userData={userData}>
+        <ToastProvider
+          toastOffset={20}
+          placement={'top-center'}
+          toastProps={{
+            variant: 'flat',
+            timeout: 3000,
+          }}
+        />
+        {children}
+      </AuthProvider>
     </HeroUIProvider>
   );
 }

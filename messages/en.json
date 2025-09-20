@@ -21,7 +21,9 @@
     "description": "A light-weight rest client application"
   },
   "NotFound": {
-    "title": "Page not found"
+    "title": "Page not found",
+    "description": "We couldn't find page you are looking for",
+    "button": "Go home"
   },
   "WelcomePage": {
     "title": "Welcome, please login"
@@ -151,5 +153,9 @@
     "unknown": "Unknown error",
     "decodeBody": "Failed to decode body from params: {error}",
     "decodeUrl": "Failed to decode URL from params: {error}"
+  },
+  "FallbackUi": {
+    "title": "Something went wrong!",
+    "button": "Try again"
   }
 }
