@@ -21,7 +21,7 @@ export function FallbackUi({ error, resetError, buttonMessage, title }: Fallback
       <div className="border-default-400 rounded-medium border-1 p-10 text-center">
         <h1 className="mb-4">{title}</h1>
         {error && <p className="mb-6">{error.message}</p>}
-        <Button className="bg-primary-300 w-full" onPress={handleReset}>
+        <Button color="primary" className="w-full" onPress={handleReset}>
           {buttonMessage}
         </Button>
       </div>
