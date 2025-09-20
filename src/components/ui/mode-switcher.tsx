@@ -16,7 +16,13 @@ type Props<T> = {
   className?: string;
 };
 
-export const ModeSwitcher = <T,>({ options, value, onChange, size = 'sm', className }: Props<T>) => {
+export const ModeSwitcher = <T extends string | number | boolean>({
+  options,
+  value,
+  onChange,
+  size = 'sm',
+  className,
+}: Props<T>) => {
   return (
     <Tabs
       selectedKey={String(value)}

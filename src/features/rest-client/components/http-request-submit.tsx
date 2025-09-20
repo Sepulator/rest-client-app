@@ -1,0 +1,62 @@
+'use client';
+
+import { addToast, Button, Input } from '@heroui/react';
+import { useLocale, useTranslations } from 'next-intl';
+import { type FormEvent } from 'react';
+
+import { MethodSelector } from '@/features/rest-client/components/method-selector';
+import { useReplaceWithVariable } from '@/features/variables/hooks/use-replace-with-variable';
+import { useExecuteRequest, useIsLoading, useSetUrl, useUrl } from '@/stores/rest-client/selectors';
+import { useRestClientStore } from '@/stores/rest-client/store';
+
+export const HttpRequestSubmit = () => {
+  const locale = useLocale();
+  const replaceVariables = useReplaceWithVariable();
+
+  const url = useUrl();
+  const isLoading = useIsLoading();
+
+  const setUrl = useSetUrl();
+  const executeRequest = useExecuteRequest();
+
+  const t = useTranslations('RestClient');
+
+  const handleSubmit = async (event: FormEvent) => {
+    event.preventDefault();
+
+    const routeUrl = await executeRequest(locale, replaceVariables, t('invalidUrl'));
+
+    if (routeUrl) {
+      window.history.replaceState(null, '', routeUrl);
+    }
+
+    const latestResponse = useRestClientStore.getState().response;
+
+    if (latestResponse?.error) {
+      addToast({ title: latestResponse.error, color: 'danger' });
+    }
+  };
+
+  return (
+    <form onSubmit={(event) => void handleSubmit(event)} className="mb-6 flex flex-row">
+      <MethodSelector />
+      <Input
+        value={url}
+        placeholder={t('url')}
+        onValueChange={setUrl}
+        radius="none"
+        className="border-1 border-l-0 border-gray-600"
+      />
+      <Button
+        type="submit"
+        color="primary"
+        radius="none"
+        className="h-auto"
+        isDisabled={isLoading}
+        isLoading={isLoading}
+      >
+        {t('send')}
+      </Button>
+    </form>
+  );
+};

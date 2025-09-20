@@ -4,8 +4,10 @@ import CodeMirror from '@uiw/react-codemirror';
 import { useTranslations } from 'next-intl';
 import { useCallback, useMemo } from 'react';
 
+import { useJsonBody, useSetJsonBody, useSetTextBody, useTextBody } from '@/stores/rest-client/selectors';
+
 type Props = {
-  body: string;
+  body?: string;
   onChange?: (value: string) => void;
   readOnly?: boolean;
   mode?: 'json' | 'text';
@@ -19,13 +21,14 @@ export const RequestBodyEditor = ({ body, onChange, readOnly = false, mode = 'js
   const isPrettifyEnabled = mode === 'json' && !readOnly;
 
   const { jsonError, parsedJson, displayBody } = useMemo(() => {
-    if (mode !== 'json' || !body.trim()) {
-      return { jsonError: null, parsedJson: null, displayBody: body };
+    if (mode !== 'json' || !body?.trim()) {
+      return { jsonError: null, parsedJson: null, displayBody: body ?? '' };
     }
     try {
       const parsed: unknown = JSON.parse(body);
+      const prettyBody = readOnly ? JSON.stringify(parsed, null, SPACE_SIZE) : body;
 
-      return { jsonError: null, parsedJson: parsed, displayBody: body };
+      return { jsonError: null, parsedJson: parsed, displayBody: prettyBody };
     } catch (error) {
       return {
         jsonError: error instanceof Error ? error.message : 'Invalid JSON',
@@ -33,10 +36,10 @@ export const RequestBodyEditor = ({ body, onChange, readOnly = false, mode = 'js
         displayBody: body,
       };
     }
-  }, [body, mode]);
+  }, [body, mode, readOnly]);
 
   const prettifyJSON = useCallback(() => {
-    if (!onChange) {
+    if (!onChange || !parsedJson) {
       return;
     }
 
@@ -54,7 +57,7 @@ export const RequestBodyEditor = ({ body, onChange, readOnly = false, mode = 'js
         )}
       </div>
       <CodeMirror
-        value={displayBody}
+        value={displayBody || ''}
         onChange={onChange}
         editable={!readOnly}
         extensions={mode === 'json' ? [json()] : []}
@@ -68,4 +71,18 @@ export const RequestBodyEditor = ({ body, onChange, readOnly = false, mode = 'js
       {jsonError && <div className="mt-1 text-sm text-red-400">{jsonError}</div>}
     </>
   );
+};
+
+export const JsonBodyEditor = ({ title }: { title?: string }) => {
+  const body = useJsonBody();
+  const setBody = useSetJsonBody();
+
+  return <RequestBodyEditor body={body} onChange={setBody} mode="json" title={title} />;
+};
+
+export const TextBodyEditor = ({ title }: { title?: string }) => {
+  const body = useTextBody();
+  const setBody = useSetTextBody();
+
+  return <RequestBodyEditor body={body} onChange={setBody} mode="text" title={title} />;
 };

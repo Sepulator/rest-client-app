@@ -26,6 +26,15 @@ export const handlers = [
         body: '',
       });
     }
+    if (url.includes('ftp://example.com') || url.includes('invalid-url')) {
+      return HttpResponse.json({
+        error: 'Invalid URL. Please enter a valid HTTP or HTTPS URL.',
+        headers: {},
+        status: 500,
+        statusText: 'Internal Server Error',
+        body: '',
+      });
+    }
 
     return HttpResponse.json({
       status: 200,

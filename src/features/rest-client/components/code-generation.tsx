@@ -12,13 +12,9 @@ import { oneDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import type { Header } from '@/types/http-request';
 
 import { CODE_LANGUAGES, DELAY } from '@/features/rest-client/constants/language-list';
+import { useCurrentBody, useHeaders, useMethod, useUrl } from '@/stores/rest-client/selectors';
 
-type Props = {
-  method: string;
-  url: string;
-  headers: Header[];
-  body?: string;
-};
+const LIMIT = 2;
 
 const generateCode = (language: string, method: string, headers: Header[], url = '', body?: string): string => {
   try {
@@ -37,19 +33,23 @@ const generateCode = (language: string, method: string, headers: Header[], url =
       postData: body ? { mimeType: 'application/json', text: body } : undefined,
       httpVersion: 'HTTP/1.1',
       headersSize: -1,
-      bodySize: body ? body.length : 0,
+      bodySize: body ? new TextEncoder().encode(body).length : 0,
     };
 
     const snippet = new HTTPSnippet(har);
-    const [target, client] = language.split(':');
+    const [target, client] = language.split(':', LIMIT);
 
     return snippet.convert(target, client) || '';
-  } catch {
-    return 'Error generating code snippet';
+  } catch (error) {
+    return `Error generating code snippet: ${error instanceof Error ? error.message : String(error)}`;
   }
 };
 
-export const CodeGeneration = ({ method, url, headers, body }: Props) => {
+export const CodeGeneration = () => {
+  const method = useMethod();
+  const url = useUrl();
+  const headers = useHeaders();
+  const body = useCurrentBody();
   const [selectedLanguage, setSelectedLanguage] = useState(CODE_LANGUAGES[0].key);
   const [copied, setCopied] = useState(false);
   const t = useTranslations('RestClient');
@@ -58,12 +58,17 @@ export const CodeGeneration = ({ method, url, headers, body }: Props) => {
   const currentLanguage = CODE_LANGUAGES.find((lang) => lang.key === selectedLanguage);
 
   const handleCopy = useCallback(() => {
-    void navigator.clipboard.writeText(code).then(() => {
-      setCopied(true);
-      setTimeout(() => {
-        setCopied(false);
-      }, DELAY);
-    });
+    navigator.clipboard
+      .writeText(code)
+      .then(() => {
+        setCopied(true);
+        setTimeout(() => {
+          setCopied(false);
+        }, DELAY);
+      })
+      .catch((error: unknown) => {
+        console.error('Failed to copy text:', error);
+      });
   }, [code]);
 
   const handleSelectionChange = useCallback(
