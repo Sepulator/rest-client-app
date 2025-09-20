@@ -107,7 +107,7 @@ describe('RestClientStore', () => {
 
     const { response } = useRestClientStore.getState();
 
-    expect(response).toBeNull();
+    expect(response?.error).toBe('Invalid URL. Please enter a valid HTTP or HTTPS URL.');
   });
 
   it('should accept valid HTTP URLs', async () => {
@@ -125,7 +125,7 @@ describe('RestClientStore', () => {
 
     const { response } = useRestClientStore.getState();
 
-    expect(response).toBeNull();
+    expect(response?.error).toBe('Invalid URL. Please enter a valid HTTP or HTTPS URL.');
   });
 
   it('should accept valid HTTPS URLs', async () => {

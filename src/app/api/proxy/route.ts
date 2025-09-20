@@ -36,7 +36,9 @@ export async function POST(request: NextRequest) {
     let errorMessage = 'Unknown error';
 
     if (error instanceof TypeError) {
-      if (error.message.includes('fetch') || error.message.includes('ENOTFOUND')) {
+      if (error.message.includes('Invalid URL')) {
+        errorMessage = t('invalidUrl');
+      } else if (error.message.includes('fetch') || error.message.includes('ENOTFOUND')) {
         errorMessage = t('dnsResolution', { url });
       } else if (error.message.includes('ByteString')) {
         errorMessage = t('invalidHeaders');
@@ -54,8 +56,6 @@ export async function POST(request: NextRequest) {
         errorMessage = t('connectionReset');
       } else if (message.includes('CERT_HAS_EXPIRED')) {
         errorMessage = t('sslExpired');
-      } else if (message.includes('Invalid URL')) {
-        errorMessage = t('invalidUrl');
       } else {
         errorMessage = message;
       }

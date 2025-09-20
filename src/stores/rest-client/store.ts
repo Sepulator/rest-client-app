@@ -43,9 +43,18 @@ type StateActions = {
 
 type RestClientStore = State & StateActions;
 
+const normalizeUrl = (url: string): string => {
+  if (!url.startsWith('http://') && !url.startsWith('https://')) {
+    return `https://${url}`;
+  }
+
+  return url;
+};
+
 const isValidUrl = (url: string): boolean => {
   try {
-    const parsedUrl = new URL(url);
+    const normalizedUrl = normalizeUrl(url);
+    const parsedUrl = new URL(normalizedUrl);
 
     return ['http:', 'https:'].includes(parsedUrl.protocol);
   } catch {
@@ -116,7 +125,14 @@ export const useRestClientStore = create<RestClientStore>((set, get) => ({
   executeRequest: async (locale, replaceVariables) => {
     const { url, method, headers, isJsonMode, jsonBody, textBody } = get();
 
-    if (!url || !isValidUrl(url)) {
+    if (!isValidUrl(url)) {
+      set({
+        response: {
+          ...responseData,
+          error: 'Invalid URL. Please enter a valid HTTP or HTTPS URL.',
+        },
+      });
+
       return;
     }
 
@@ -140,13 +156,14 @@ export const useRestClientStore = create<RestClientStore>((set, get) => ({
       if (hasBody) {
         requestBody = body;
         if (!Object.keys(requestHeaders).some((header) => /^content-type$/i.test(header))) {
-          requestHeaders['Content-Type'] = 'application/json';
+          requestHeaders['Content-Type'] = isJsonMode ? 'application/json' : 'text/plain';
         }
       }
 
       const requestSize = new TextEncoder().encode(requestBody ?? '').length;
+      const normalizedUrl = normalizeUrl(url);
       const bodyWithVariables = replaceVariables(
-        JSON.stringify({ url, method, headers: requestHeaders, body: requestBody })
+        JSON.stringify({ url: normalizedUrl, method, headers: requestHeaders, body: requestBody })
       );
 
       const result = await fetch('/api/proxy', {

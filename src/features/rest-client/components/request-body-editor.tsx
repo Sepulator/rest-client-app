@@ -26,8 +26,9 @@ export const RequestBodyEditor = ({ body, onChange, readOnly = false, mode = 'js
     }
     try {
       const parsed: unknown = JSON.parse(body);
+      const prettyBody = readOnly ? JSON.stringify(parsed, null, SPACE_SIZE) : body;
 
-      return { jsonError: null, parsedJson: parsed, displayBody: body };
+      return { jsonError: null, parsedJson: parsed, displayBody: prettyBody };
     } catch (error) {
       return {
         jsonError: error instanceof Error ? error.message : 'Invalid JSON',
@@ -35,7 +36,7 @@ export const RequestBodyEditor = ({ body, onChange, readOnly = false, mode = 'js
         displayBody: body,
       };
     }
-  }, [body, mode]);
+  }, [body, mode, readOnly]);
 
   const prettifyJSON = useCallback(() => {
     if (!onChange || !parsedJson) {

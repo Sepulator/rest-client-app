@@ -22,9 +22,6 @@ export const HttpRequestSubmit = () => {
 
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
-    if (!url) {
-      return;
-    }
 
     startTransition(async () => {
       const routeUrl = await executeRequest(locale, replaceVariables);
