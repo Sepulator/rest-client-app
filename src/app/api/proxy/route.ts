@@ -40,7 +40,7 @@ export async function POST(request: NextRequest) {
       if (message.includes('Invalid URL')) {
         errorMessage = t('invalidUrl');
       } else if (message.includes('fetch') || message.includes('ENOTFOUND')) {
-        errorMessage = t('dnsResolution', { url });
+        errorMessage = t('dnsResolution');
       } else if (message.includes('ByteString')) {
         errorMessage = t('invalidHeaders');
       } else if (message.includes('ECONNREFUSED')) {

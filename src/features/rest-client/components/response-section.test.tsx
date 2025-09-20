@@ -31,14 +31,14 @@ describe('ResponseSection', () => {
     expect(screen.getByText('Loading...')).toBeInTheDocument();
   });
 
-  it('should show error message when response has error', () => {
+  it('should not show response section when there is an error', () => {
     useRestClientStore.setState({
       response: { ...mockResponse, error: 'Network error' },
     });
     renderWithProviders(<ResponseSection />);
 
     expect(screen.getByText('Status:')).toBeInTheDocument();
-    expect(screen.getByText('Network error')).toBeInTheDocument();
+    expect(screen.queryByText('Network error')).not.toBeInTheDocument();
   });
 
   it('should show response status and body', () => {

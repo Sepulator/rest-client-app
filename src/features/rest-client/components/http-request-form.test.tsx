@@ -41,19 +41,6 @@ describe('HttpRequestForm', () => {
     expect(mockExecuteRequest).toHaveBeenCalled();
   });
 
-  it('should toggle between JSON and Text modes', async () => {
-    const { user } = renderWithUserEvent(<HttpRequestForm />);
-
-    const textButton = screen.getByRole('tab', { name: 'Text' });
-    const jsonButton = screen.getByRole('tab', { name: 'JSON' });
-
-    await user.click(textButton);
-    await user.click(jsonButton);
-
-    expect(textButton).toBeInTheDocument();
-    expect(jsonButton).toBeInTheDocument();
-  });
-
   it('should add new header when Add Header button is clicked', async () => {
     const { user } = renderWithUserEvent(<HttpRequestForm />);
 
@@ -102,5 +89,86 @@ describe('HttpRequestForm', () => {
     const updatedHeaders = screen.getAllByPlaceholderText('header');
 
     expect(updatedHeaders).toHaveLength(initialHeaders.length - 1);
+  });
+
+  describe('Initialization', () => {
+    it('should initialize from URL parameters', () => {
+      const mockInitialize = vi.fn();
+
+      useRestClientStore.setState({ initializeFromParams: mockInitialize });
+
+      const initialParams = ['POST', 'https://api.test.com'];
+      const initialSearchParams = { 'Content-Type': 'application/json' };
+
+      renderWithProviders(<HttpRequestForm initialParams={initialParams} initialSearchParams={initialSearchParams} />);
+
+      expect(mockInitialize).toHaveBeenCalledWith(initialParams, initialSearchParams);
+    });
+
+    it('should initialize without parameters', () => {
+      const mockInitialize = vi.fn();
+
+      useRestClientStore.setState({ initializeFromParams: mockInitialize });
+
+      renderWithProviders(<HttpRequestForm />);
+
+      expect(mockInitialize).toHaveBeenCalledWith(undefined, undefined);
+    });
+  });
+
+  describe('Loading States', () => {
+    it('should disable send button when loading', () => {
+      useRestClientStore.setState({ isLoading: true });
+
+      renderWithProviders(<HttpRequestForm />);
+
+      expect(screen.getByRole('button', { name: 'Loading Send' })).toBeDisabled();
+    });
+
+    it('should show loading state on send button', () => {
+      useRestClientStore.setState({ isLoading: true });
+
+      renderWithProviders(<HttpRequestForm />);
+
+      const sendButton = screen.getByRole('button', { name: 'Loading Send' });
+
+      expect(sendButton).toHaveAttribute('data-loading', 'true');
+    });
+  });
+
+  describe('Body Editor', () => {
+    it('should show JSON editor when in JSON mode', () => {
+      useRestClientStore.setState({ isJsonMode: true });
+
+      renderWithProviders(<HttpRequestForm />);
+
+      expect(screen.getByRole('tab', { name: 'JSON' })).toHaveAttribute('aria-selected', 'true');
+    });
+
+    it('should show text editor when in text mode', () => {
+      useRestClientStore.setState({ isJsonMode: false });
+
+      renderWithProviders(<HttpRequestForm />);
+
+      expect(screen.getByRole('tab', { name: 'Text' })).toHaveAttribute('aria-selected', 'true');
+    });
+
+    it('should switch to JSON mode when JSON tab is clicked', async () => {
+      useRestClientStore.setState({ isJsonMode: false });
+      const { user } = renderWithUserEvent(<HttpRequestForm />);
+
+      await user.click(screen.getByRole('tab', { name: 'JSON' }));
+
+      expect(useRestClientStore.getState().isJsonMode).toBe(true);
+    });
+
+    it('should switch to text mode when Text tab is clicked', async () => {
+      useRestClientStore.setState({ isJsonMode: true });
+      const { user } = renderWithUserEvent(<HttpRequestForm />);
+
+      await user.click(screen.getByRole('tab', { name: 'Text' }));
+
+      expect(useRestClientStore.getState().isJsonMode).toBe(false);
+    });
   });
 });

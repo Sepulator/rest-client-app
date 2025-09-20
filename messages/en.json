@@ -143,7 +143,7 @@
     "remove": "Remove row"
   },
   "Errors": {
-    "dnsResolution": "Couldn't resolve the hostname to an IP address, Verify Url: {url}",
+    "dnsResolution": "Couldn't resolve the hostname to an IP address, Verify Url",
     "invalidHeaders": "Invalid header value: Headers must contain only ASCII characters. Remove non-ASCII characters from header names and values.",
     "connectionRefused": "Connection refused: Server is not accepting connections. Check if the server is running.",
     "timeout": "Request timeout: Server took too long to respond. Try again or check server status.",
