@@ -30,7 +30,6 @@ export async function POST(request: NextRequest) {
       statusText: response.statusText,
       headers: Object.fromEntries(response.headers.entries()),
       body: responseBody,
-      error: response.ok ? undefined : `HTTP ${response.status}: ${response.statusText}`,
     });
   } catch (error) {
     let errorMessage = 'Unknown error';
@@ -38,45 +37,22 @@ export async function POST(request: NextRequest) {
     if (error instanceof Error) {
       const { message } = error;
 
-      switch (true) {
-        case message.includes('Invalid URL'): {
-          errorMessage = t('invalidUrl');
-          break;
-        }
-
-        case message.includes('fetch') || message.includes('ENOTFOUND'): {
-          errorMessage = t('dnsResolution', { url });
-          break;
-        }
-
-        case message.includes('ByteString'): {
-          errorMessage = t('invalidHeaders');
-          break;
-        }
-
-        case message.includes('ECONNREFUSED'): {
-          errorMessage = t('connectionRefused');
-          break;
-        }
-
-        case message.includes('ETIMEDOUT'): {
-          errorMessage = t('timeout');
-          break;
-        }
-
-        case message.includes('ECONNRESET'): {
-          errorMessage = t('connectionReset');
-          break;
-        }
-
-        case message.includes('CERT_HAS_EXPIRED'): {
-          errorMessage = t('sslExpired');
-          break;
-        }
-
-        default: {
-          errorMessage = message;
-        }
+      if (message.includes('Invalid URL')) {
+        errorMessage = t('invalidUrl');
+      } else if (message.includes('fetch') || message.includes('ENOTFOUND')) {
+        errorMessage = t('dnsResolution', { url });
+      } else if (message.includes('ByteString')) {
+        errorMessage = t('invalidHeaders');
+      } else if (message.includes('ECONNREFUSED')) {
+        errorMessage = t('connectionRefused');
+      } else if (message.includes('ETIMEDOUT')) {
+        errorMessage = t('timeout');
+      } else if (message.includes('ECONNRESET')) {
+        errorMessage = t('connectionReset');
+      } else if (message.includes('CERT_HAS_EXPIRED')) {
+        errorMessage = t('sslExpired');
+      } else {
+        errorMessage = t('unknown');
       }
     }
 

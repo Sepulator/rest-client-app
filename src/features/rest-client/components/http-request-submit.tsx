@@ -6,16 +6,16 @@ import { useTransition, type FormEvent } from 'react';
 
 import { MethodSelector } from '@/features/rest-client/components/method-selector';
 import { useReplaceWithVariable } from '@/features/variables/hooks/use-replace-with-variable';
-import { useExecuteRequest, useIsLoading, useResponse, useSetUrl, useUrl } from '@/stores/rest-client/selectors';
+import { useExecuteRequest, useSetUrl, useUrl } from '@/stores/rest-client/selectors';
+import { useRestClientStore } from '@/stores/rest-client/store';
 
 export const HttpRequestSubmit = () => {
-  const [, startTransition] = useTransition();
+  const [isLoading, startTransition] = useTransition();
   const locale = useLocale();
   const replaceVariables = useReplaceWithVariable();
-  const response = useResponse();
 
   const url = useUrl();
-  const isLoading = useIsLoading();
+
   const setUrl = useSetUrl();
   const executeRequest = useExecuteRequest();
 
@@ -31,8 +31,10 @@ export const HttpRequestSubmit = () => {
         window.history.replaceState(null, '', routeUrl);
       }
 
-      if (response?.error) {
-        addToast({ title: response.error, color: 'danger' });
+      const latestResponse = useRestClientStore.getState().response;
+
+      if (latestResponse?.error) {
+        addToast({ title: latestResponse.error, color: 'danger' });
       }
     });
   };
