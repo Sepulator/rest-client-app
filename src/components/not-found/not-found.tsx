@@ -16,18 +16,14 @@ export function NotFoundComponent({ buttonText, title, description }: NotFoundPr
   return (
     <section className="relative flex min-h-full flex-1 flex-col items-center justify-center gap-10 px-6 text-center">
       <div className="relative h-1/7 w-1/2 md:h-1/6">
-        <Image fill alt="404" aria-hidden="true" src={safeSource(notFound)} priority className="z-10" />
+        <Image fill alt="" aria-hidden="true" src={safeSource(notFound)} priority className="z-10" />
       </div>
       <div>
         <h2 className="mb-3 text-5xl">{title}</h2>
         <p>{description}</p>
       </div>
 
-      <Button
-        as={Link}
-        className="bg-primary-300 hover:bg-primary/90 rounded-medium w-50 px-5 py-2 text-sm font-medium transition-colors"
-        href={ROUTES.MAIN}
-      >
+      <Button as={Link} color="primary" className="w-50" href={ROUTES.MAIN}>
         {buttonText}
       </Button>
     </section>
