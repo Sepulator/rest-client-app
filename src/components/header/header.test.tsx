@@ -108,11 +108,15 @@ describe('Header', () => {
       await user.click(screen.getByRole('button', { name: /language/i }));
       const menu = screen.getByRole('menu');
 
-      routing.locales.forEach((locale) => {
-        const item = within(menu).getByRole('menuitem');
+      const menuItems = within(menu).getAllByRole('menuitem');
 
-        expect(item).toHaveAttribute('data-key', locale);
-        expect(item).toHaveTextContent(new RegExp(locale, 'i'));
+      expect(menuItems).toHaveLength(routing.locales.length);
+
+      menuItems.forEach((menuItem, index) => {
+        const locale = routing.locales[index];
+
+        expect(menuItem).toHaveAttribute('data-key', locale);
+        expect(menuItem).toHaveTextContent(new RegExp(locale, 'i'));
       });
     });
   });
