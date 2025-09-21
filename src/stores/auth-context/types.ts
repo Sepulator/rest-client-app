@@ -1,10 +1,9 @@
 export type UserData = {
-  name: string;
+  id: string;
   email: string;
 };
 
 export type AuthContextType = {
   user?: UserData;
-  login: (userData: UserData) => void;
-  logout: () => void;
+  loading: boolean;
 };

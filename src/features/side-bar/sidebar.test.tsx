@@ -25,8 +25,7 @@ vi.mock('@/i18n/navigation', () => {
 
 const { menu, menuOpen, menuClose } = en.userActions.actions;
 
-const mockLogout = vi.fn();
-const setupSidebar = () => ({ ...renderWithUserEvent(<Sidebar tempLogout={mockLogout} />) });
+const setupSidebar = () => ({ ...renderWithUserEvent(<Sidebar />) });
 
 describe('Sidebar', () => {
   describe('Render', () => {

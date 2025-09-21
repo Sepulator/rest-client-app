@@ -4,17 +4,14 @@ import { Button, cn } from '@heroui/react';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 
+import { signOut } from '@/app/actions/auth';
 import { links } from '@/features/side-bar/ui/links-list';
 import { SidebarHeader } from '@/features/side-bar/ui/sidebar-header';
 import { SidebarLink } from '@/features/side-bar/ui/sidebar-link';
 import { SidebarList } from '@/features/side-bar/ui/sidebar-list';
 import { SidebarTrigger } from '@/features/side-bar/ui/sidebar-trigger';
 
-type SideNavBarProps = {
-  tempLogout: () => void;
-};
-
-export function Sidebar({ tempLogout }: SideNavBarProps) {
+export function Sidebar() {
   const [isOpen, setIsOpen] = useState(false);
   const t = useTranslations('userActions');
 
@@ -47,13 +44,14 @@ export function Sidebar({ tempLogout }: SideNavBarProps) {
         itemData={[...links]}
         renderItem={({ href, Icon, key }) => <SidebarLink href={href} Icon={Icon} title={t(`navigation.${key}`)} />}
         appendItems={[
-          <Button
-            key="tempButton"
-            className="w-full group-data-[closed=true]:invisible group-data-[closed=true]:opacity-0"
-            onPress={tempLogout}
-          >
-            {t('actions.logout')}
-          </Button>,
+          <form action={signOut} key="logoutForm">
+            <Button
+              type="submit"
+              className="w-full group-data-[closed=true]:invisible group-data-[closed=true]:opacity-0"
+            >
+              {t('actions.logout')}
+            </Button>
+          </form>,
         ]}
       />
     </aside>

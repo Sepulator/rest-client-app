@@ -1,17 +1,16 @@
 'use client';
 
 import type { FieldErrors } from 'react-hook-form';
-import type { SubmitHandler } from 'react-hook-form';
 
-import { Form, Input, Button, Card, CardHeader, CardBody, CardFooter, Divider, Link as HeroLink } from '@heroui/react';
+import { Input, Button, Card, CardHeader, CardBody, CardFooter, Divider, Link as HeroLink } from '@heroui/react';
 import { valibotResolver } from '@hookform/resolvers/valibot';
 import { useTranslations } from 'next-intl';
+import { useSearchParams } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 
+import { signIn, signUp } from '@/app/actions/auth';
 import { MailIcon } from '@/components/icons/mail-icon';
-import { ROUTES } from '@/config/routes';
 import { type AuthFormType } from '@/features/auth-form/types/types';
-import { useRouter } from '@/i18n/navigation';
 import { Link as IntlLink } from '@/i18n/navigation';
 import { type SecondaryAction } from '@/types/types';
 
@@ -34,11 +33,11 @@ type Props = {
 
 export const AuthForm = ({ heading, secondaryAction }: Props) => {
   const { authSchema } = useSchemas();
-  const router = useRouter();
+  const searchParams = useSearchParams();
+  const error = searchParams.get('error');
   const {
     register,
     watch,
-    handleSubmit,
     formState: { errors },
   } = useForm<AuthFormType>({
     mode: 'onChange',
@@ -48,12 +47,10 @@ export const AuthForm = ({ heading, secondaryAction }: Props) => {
   });
   const t = useTranslations('AuthForm');
 
-  const onSubmit: SubmitHandler<AuthFormType> = (_) => {
-    router.push(ROUTES.MAIN);
-  };
+  const isSignUp = heading === 'Sign up';
+  const action = isSignUp ? signUp : signIn;
 
   const passwordValue = watch(PASSWORD_NAME);
-
   const passwordErrorsArray = createErrorsArray(errors);
 
   return (
@@ -63,10 +60,7 @@ export const AuthForm = ({ heading, secondaryAction }: Props) => {
       </CardHeader>
       <Divider />
       <CardBody>
-        <Form
-          className="mt-2 flex w-full flex-col items-stretch gap-4"
-          onSubmit={(event) => void handleSubmit(onSubmit)(event)}
-        >
+        <form action={action} className="mt-2 flex w-full flex-col items-stretch gap-4">
           <Input
             endContent={<MailIcon className="text-default-400 pointer-events-none shrink-0 text-2xl" />}
             className="w-full"
@@ -85,10 +79,11 @@ export const AuthForm = ({ heading, secondaryAction }: Props) => {
             name={PASSWORD_NAME}
             passwordValue={passwordValue}
           />
+          {error && <div className="text-danger text-small">{error}</div>}
           <Button color="primary" type="submit" className="w-full">
             {heading}
           </Button>
-        </Form>
+        </form>
       </CardBody>
       <CardFooter className="flex-col gap-2">
         <Divider />

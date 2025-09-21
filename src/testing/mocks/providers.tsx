@@ -1,13 +1,20 @@
+import type { ReactNode } from 'react';
+
 import { HeroUIProvider } from '@heroui/react';
 
-import type { ProvidersProps } from '@/app/[locale]/providers';
+import type { AuthContextType } from '@/stores/auth-context/types';
 
-import { AuthProvider } from '@/stores/auth-context/auth-provider';
+import { AuthContext } from '@/stores/auth-context/context';
 
-export const TestProviders = ({ children, userData }: ProvidersProps) => {
+type MockAuthProviderProps = {
+  children: ReactNode;
+  value: AuthContextType;
+};
+
+export const TestProviders = ({ children, value }: MockAuthProviderProps) => {
   return (
     <HeroUIProvider>
-      <AuthProvider userData={userData}>{children}</AuthProvider>
+      <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
     </HeroUIProvider>
   );
 };

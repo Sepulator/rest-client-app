@@ -8,7 +8,7 @@ export const responseData: ResponseData = {
   body: '',
   headers: {},
   status: 500,
-  statusText: '',
+  statusText: 'Internal Server Error',
   timestamp: '',
   duration: 0,
   requestSize: 0,

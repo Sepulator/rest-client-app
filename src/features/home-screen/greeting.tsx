@@ -28,7 +28,7 @@ export function Greeting({ dayOfWeek }: GreetingProps) {
     <div className="mb-30 flex w-full flex-col-reverse justify-between md:flex-row">
       {user ? (
         <div>
-          <h1>{renderRichText('user', { name: user.name })}</h1>
+          <h1>{renderRichText('user', { name: '' })}</h1>
           <p className="text-medium">{user.email}</p>
         </div>
       ) : (
