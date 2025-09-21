@@ -46,10 +46,9 @@ The application is developed in teams of three 👩‍💻👩‍💻👨‍💻
 - Rename `.env.example` to `.env` and copy `Project URL` with `API Key`.
 - Turn off `Confirm email` in Supabase Dashboard -> Authentication -> Sign In / Providers.
 
-```bash copy
+```dotenv copy
 NEXT_PUBLIC_SUPABASE_URL=https://your-project-id.supabase.co
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your-legacy-api-key-here
-
 ```
 
 #### 1. Clone [repository](https://github.com/Sepulator/rest-client-app)
