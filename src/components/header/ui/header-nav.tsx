@@ -2,6 +2,7 @@ import { NavbarContent, NavbarItem, NavbarMenu, NavbarMenuItem, NavbarMenuToggle
 import { Button, cn } from '@heroui/react';
 import { useTranslations } from 'next-intl';
 
+import { signOut } from '@/app/actions/auth';
 import { HeaderLink } from '@/components/header/ui/header-link';
 import { LangToggle } from '@/components/header/ui/lang-toggle';
 import { ROUTES } from '@/config/routes';
@@ -21,7 +22,7 @@ type HeaderNavProps = {
 };
 
 export function HeaderNav({ isMenuOpen, checkIsActive }: HeaderNavProps) {
-  const { user, logout } = useAuth();
+  const { user } = useAuth();
   const links = user ? navLinks.base : [...navLinks.base, ...navLinks.auth];
   const t = useTranslations('userActions');
 
@@ -44,8 +45,10 @@ export function HeaderNav({ isMenuOpen, checkIsActive }: HeaderNavProps) {
 
         {user && (
           <Button
+            onPress={() => {
+              void signOut();
+            }}
             variant="flat"
-            onPress={logout}
             className={cn('text-foreground-700 hidden sm:flex', isMobile && 'flex p-6')}
           >
             {t('actions.logout')}

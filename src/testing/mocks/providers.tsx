@@ -4,10 +4,10 @@ import type { ProvidersProps } from '@/app/[locale]/providers';
 
 import { AuthProvider } from '@/stores/auth-context/auth-provider';
 
-export const TestProviders = ({ children, userData }: ProvidersProps) => {
+export const TestProviders = ({ children }: ProvidersProps) => {
   return (
     <HeroUIProvider>
-      <AuthProvider userData={userData}>{children}</AuthProvider>
+      <AuthProvider>{children}</AuthProvider>
     </HeroUIProvider>
   );
 };

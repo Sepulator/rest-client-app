@@ -1,11 +1,12 @@
+import type { AuthChangeEvent, Session } from '@supabase/supabase-js';
 import type { ReactNode } from 'react';
 
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import type { UserData } from '@/stores/auth-context/types';
 
-import { supabase } from '@/lib/supabase';
 import { AuthContext } from '@/stores/auth-context/context';
+import { createClient } from '@/utils/supabase/client';
 
 type AuthProviderProps = {
   children: ReactNode;
@@ -16,7 +17,9 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    void supabase.auth.getSession().then(({ data: { session } }) => {
+    const supabase = createClient();
+
+    void supabase.auth.getSession().then(({ data: { session } }: { data: { session: Session | null } }) => {
       if (session?.user.email) {
         setUser({
           id: session.user.id,
@@ -28,7 +31,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
     const {
       data: { subscription },
-    } = supabase.auth.onAuthStateChange((_event, session) => {
+    } = supabase.auth.onAuthStateChange((_event: AuthChangeEvent, session: Session | null) => {
       if (session?.user.email) {
         setUser({
           id: session.user.id,
@@ -45,35 +48,5 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     };
   }, []);
 
-  const login = useCallback(async (email: string, password: string) => {
-    const { error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
-
-    if (error) {
-      throw error;
-    }
-  }, []);
-
-  const signUp = useCallback(async (email: string, password: string) => {
-    const { error } = await supabase.auth.signUp({
-      email,
-      password,
-    });
-
-    if (error) {
-      throw error;
-    }
-  }, []);
-
-  const logout = useCallback(async () => {
-    const { error } = await supabase.auth.signOut();
-
-    if (error) {
-      throw error;
-    }
-  }, []);
-
-  return <AuthContext value={{ user, loading, login, signUp, logout }}>{children}</AuthContext>;
+  return <AuthContext value={{ user, loading }}>{children}</AuthContext>;
 };
