@@ -1,11 +1,13 @@
 import { cn } from '@heroui/react';
 import { StatusCodes } from 'http-status-codes';
-import { useLocale, useTranslations } from 'next-intl';
+import { useTranslations } from 'next-intl';
+import { parse } from 'valibot';
 
 import type { HistoryData } from '@/features/history/types/history-data';
 
 import { ChevronIcon } from '@/components/icons/chevron';
 import { ANALYTIC_KEYS } from '@/features/history/constants/analitic-keys';
+import { HeadersSchema } from '@/features/rest-client/schemas/proxy-schema';
 import { Link } from '@/i18n/navigation';
 import { generateRouteUrl } from '@/utils/route-generator';
 
@@ -15,14 +17,15 @@ type HistoryItemProps = {
   method: string;
   url: string;
   body?: string;
-  headers: Record<string, string>;
+  headers: string;
   analytics: Partial<{ [K in AnalyticKeys]?: HistoryData[K] }>;
 };
 
 export function HistoryItem({ method, url, body, headers, analytics }: HistoryItemProps) {
   const t = useTranslations('History');
-  const locale = useLocale();
-  const routeUrl = generateRouteUrl(method, url, locale, body, headers);
+  const parsedHeaders = parse(HeadersSchema, JSON.parse(headers));
+
+  const routeUrl = generateRouteUrl(method, url, '', body, parsedHeaders);
   const isSuccess =
     analytics.status && analytics.status >= StatusCodes.OK && analytics.status < StatusCodes.MULTIPLE_CHOICES;
 

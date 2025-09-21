@@ -194,7 +194,7 @@ export const useRestClientStore = create<RestClientStore>((set, get) => ({
 
       const { error } = await insertHistory({
         ...dataForSave,
-        headers: JSON.stringify(proxyResponse.headers),
+        headers: JSON.stringify(requestHeaders),
         id: crypto.randomUUID(),
         error: proxyResponse.error,
         method,
