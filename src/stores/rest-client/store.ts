@@ -148,7 +148,7 @@ export const useRestClientStore = create<RestClientStore>((set, get) => ({
     try {
       const requestHeaders = headers.reduce<Record<string, string>>((acc, header) => {
         if (header.key && header.value) {
-          acc[header.key] = header.value;
+          acc[header.key.trim()] = header.value.trim();
         }
 
         return acc;
