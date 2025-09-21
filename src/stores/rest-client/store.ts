@@ -38,6 +38,7 @@ type StateActions = {
   setJsonBody: (body: string) => void;
   setTextBody: (body: string) => void;
   setIsLoading: (isLoading: boolean) => void;
+  resetResponse: () => void;
   executeRequest: (
     locale: string,
     replaceVariables: (text: string) => string,
@@ -107,6 +108,10 @@ export const useRestClientStore = create<RestClientStore>((set, get) => ({
 
   setIsLoading: (isLoading) => {
     set({ isLoading });
+  },
+
+  resetResponse: () => {
+    set({ response: null });
   },
 
   addHeader: () => {
@@ -241,7 +246,6 @@ export const useRestClientStore = create<RestClientStore>((set, get) => ({
       url: getUrlFromParams(initialParams),
       headers: getHeadersFromSearchParams(initialSearchParams),
       jsonBody: getBodyFromParams(initialParams),
-      response: null,
     });
   },
 }));
