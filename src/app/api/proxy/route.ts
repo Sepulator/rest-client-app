@@ -5,10 +5,15 @@ import { NextResponse } from 'next/server';
 import { parse } from 'valibot';
 
 import { ProxyRequestSchema } from '@/features/rest-client/schemas/proxy-schema';
+import { isLocale } from '@/utils/type-guards';
 
 export async function POST(request: NextRequest) {
   let url = '';
-  const t = await getTranslations('Errors');
+
+  const currentLocale = request.cookies.get('NEXT_LOCALE')?.value ?? '';
+  const locale = isLocale(currentLocale) ? currentLocale : 'en';
+
+  const t = await getTranslations({ locale, namespace: 'Errors' });
 
   try {
     const data: unknown = await request.json();
