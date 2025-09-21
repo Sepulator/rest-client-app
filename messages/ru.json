@@ -6,7 +6,9 @@
       "history": "История",
       "variables": "Переменные",
       "login": "Войти",
-      "signUp": "Регистрация"
+      "signUp": "Регистрация",
+      "haveAccount": "Нет аккаунта? ",
+      "alreadyHaveAccount": "Уже есть аккаунт? "
     },
     "actions": {
       "logout": "Выйти",

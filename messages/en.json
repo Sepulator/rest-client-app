@@ -6,7 +6,9 @@
       "history": "History",
       "variables": "Variables",
       "login": "Sign In",
-      "signUp": "Sign Up"
+      "signUp": "Sign Up",
+      "haveAccount": "Don't have an account? ",
+      "alreadyHaveAccount": "Already have an account? "
     },
     "actions": {
       "logout": "Temp Logout",
