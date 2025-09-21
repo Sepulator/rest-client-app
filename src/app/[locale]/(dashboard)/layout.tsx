@@ -1,22 +1,12 @@
 'use client';
 
 import { Spinner } from '@heroui/react';
-import { useEffect } from 'react';
 
-import { ROUTES } from '@/config/routes';
 import { Sidebar } from '@/features/side-bar/sidebar';
-import { useRouter } from '@/i18n/navigation';
 import { useAuth } from '@/stores/auth-context/use-auth';
 
 export default function DashboardLayout({ children, welcome }: LayoutProps<'/[locale]'>) {
   const { user, loading } = useAuth();
-  const router = useRouter();
-
-  useEffect(() => {
-    if (!loading && !user) {
-      router.push(ROUTES.LOGIN);
-    }
-  }, [user, loading, router]);
 
   if (loading) {
     return (

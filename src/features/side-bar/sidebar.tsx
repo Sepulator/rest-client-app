@@ -4,12 +4,12 @@ import { Button, cn } from '@heroui/react';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 
-import { signOut } from '@/app/actions/auth';
 import { links } from '@/features/side-bar/ui/links-list';
 import { SidebarHeader } from '@/features/side-bar/ui/sidebar-header';
 import { SidebarLink } from '@/features/side-bar/ui/sidebar-link';
 import { SidebarList } from '@/features/side-bar/ui/sidebar-list';
 import { SidebarTrigger } from '@/features/side-bar/ui/sidebar-trigger';
+import { clientLogout } from '@/utils/auth/client-logout';
 
 export function Sidebar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -44,7 +44,7 @@ export function Sidebar() {
         itemData={[...links]}
         renderItem={({ href, Icon, key }) => <SidebarLink href={href} Icon={Icon} title={t(`navigation.${key}`)} />}
         appendItems={[
-          <form action={signOut} key="logoutForm">
+          <form action={clientLogout} key="logoutForm">
             <Button
               type="submit"
               className="w-full group-data-[closed=true]:invisible group-data-[closed=true]:opacity-0"
