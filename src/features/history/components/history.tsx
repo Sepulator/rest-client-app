@@ -9,7 +9,7 @@ import { HistoryItem } from '@/features/history/components/history-item';
 import { Link } from '@/i18n/navigation';
 
 export type HistoryProps = {
-  historyData?: HistoryInsertData[];
+  historyData: HistoryInsertData[] | null;
 };
 
 export function HistoryData({ historyData }: HistoryProps) {
