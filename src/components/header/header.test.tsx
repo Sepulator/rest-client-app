@@ -31,7 +31,7 @@ vi.mock('@/i18n/navigation', () => {
 describe('Header', () => {
   describe('Render', () => {
     it('should render links when user not logged in', () => {
-      renderWithProviders(<Header />, { providerOptions: { userData: undefined } });
+      renderWithProviders(<Header />, { providerOptions: { value: { user: undefined } } });
 
       const homeLink = screen.getByRole('link', { name: /home/i });
       const loginLink = screen.getByRole('link', { name: /login/i });

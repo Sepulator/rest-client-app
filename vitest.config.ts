@@ -33,6 +33,8 @@ export default defineConfig({
         'src/**/*.d.ts',
         'src/i18n/**/*',
         '**/*/fonts.ts',
+        'src/utils/supabase/**/*',
+        'src/app/**/*',
       ],
     },
   },

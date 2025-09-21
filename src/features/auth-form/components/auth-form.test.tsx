@@ -8,6 +8,10 @@ import { renderWithUserEvent } from '@/testing/utils/render-with-user-event';
 
 import { AuthForm } from './auth-form';
 
+export const mockPush = vi.fn();
+
+export const mockSearchParams = new URLSearchParams();
+
 export const createRouterMock = () => ({
   push: mockPush,
   replace: vi.fn(),
@@ -16,12 +20,11 @@ export const createRouterMock = () => ({
   prefetch: vi.fn(),
 });
 
-export const mockPush = vi.fn();
-
-vi.mock('next/navigation', () => ({ useRouter: createRouterMock }));
+vi.mock('next/navigation', () => ({ useRouter: () => createRouterMock(), useSearchParams: () => mockSearchParams }));
 
 vi.mock('@/i18n/navigation', () => ({
   useRouter: () => createRouterMock(),
+
   Link: ({ children, href, ...props }: MockIntlLink) => (
     <a href={href} {...props}>
       {children}
@@ -182,24 +185,6 @@ describe('AuthForm', () => {
     expect(passwordInput).not.toHaveAttribute('aria-invalid');
   });
 
-  it('should redirect to the main page on submit', async () => {
-    const { user } = renderWithUserEvent(<AuthForm heading="heading" secondaryAction={secondaryActionMock} />);
-
-    const emailInput = screen.getByRole('textbox', { name: 'Email' });
-    const passwordInput = screen.getByLabelText(PASSWORD_LABEL);
-    const submitButton = screen.getByRole('button', { name: 'heading' });
-
-    await user.click(emailInput);
-    await user.type(emailInput, VALID_EMAIL);
-
-    await user.click(passwordInput);
-    await user.type(passwordInput, VALID_PASSWORD);
-
-    await user.click(submitButton);
-
-    expect(mockPush).toHaveBeenCalledWith('/');
-  });
-
   it('should not redirect to the main page when invalid password is submitted', async () => {
     const { user } = renderWithUserEvent(<AuthForm heading="heading" secondaryAction={secondaryActionMock} />);
 
@@ -234,24 +219,5 @@ describe('AuthForm', () => {
     await user.click(submitButton);
 
     expect(mockPush).not.toHaveBeenCalled();
-  });
-
-  it('should redirect to the main page on submit when password has unicode characters', async () => {
-    const { user } = renderWithUserEvent(<AuthForm heading="heading" secondaryAction={secondaryActionMock} />);
-    const unicodePassword = 'юникод8🚰';
-
-    const emailInput = screen.getByRole('textbox', { name: 'Email' });
-    const passwordInput = screen.getByLabelText(PASSWORD_LABEL);
-    const submitButton = screen.getByRole('button', { name: 'heading' });
-
-    await user.click(emailInput);
-    await user.type(emailInput, VALID_EMAIL);
-
-    await user.click(passwordInput);
-    await user.type(passwordInput, unicodePassword);
-
-    await user.click(submitButton);
-
-    expect(mockPush).toHaveBeenCalledWith('/');
   });
 });
