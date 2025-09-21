@@ -149,7 +149,7 @@ export const useRestClientStore = create<RestClientStore>((set, get) => ({
     try {
       const requestHeaders = headers.reduce<Record<string, string>>((acc, header) => {
         if (header.key && header.value) {
-          acc[header.key.trim()] = header.value.trim();
+          acc[replaceVariables(header.key.trim())] = replaceVariables(header.value.trim());
         }
 
         return acc;
@@ -159,22 +159,24 @@ export const useRestClientStore = create<RestClientStore>((set, get) => ({
       let requestBody: string | undefined;
 
       if (hasBody) {
-        requestBody = body;
+        requestBody = replaceVariables(body);
         if (!Object.keys(requestHeaders).some((header) => /^content-type$/i.test(header))) {
           requestHeaders['Content-Type'] = isJsonMode ? 'application/json' : 'text/plain';
         }
       }
 
       const requestSize = new TextEncoder().encode(requestBody ?? '').length;
-      const normalizedUrl = normalizeUrl(url);
-      const bodyWithVariables = replaceVariables(
-        JSON.stringify({ url: normalizedUrl, method, headers: requestHeaders, body: requestBody })
-      );
+      const normalizedUrl = normalizeUrl(replaceVariables(url));
 
       const result = await fetch('/api/proxy', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: bodyWithVariables,
+        body: JSON.stringify({
+          url: normalizedUrl,
+          method: replaceVariables(method),
+          headers: requestHeaders,
+          body: requestBody,
+        }),
       });
 
       const data: unknown = await result.json();
@@ -185,7 +187,7 @@ export const useRestClientStore = create<RestClientStore>((set, get) => ({
       const dataForSave = {
         status: proxyResponse.status,
         headers: proxyResponse.headers,
-        body: proxyResponse.body,
+        body: requestBody,
         timestamp,
         duration,
         requestSize,
@@ -198,7 +200,7 @@ export const useRestClientStore = create<RestClientStore>((set, get) => ({
         id: crypto.randomUUID(),
         error: proxyResponse.error,
         method,
-        url,
+        url: normalizedUrl,
       });
 
       if (proxyResponse.error) {
@@ -210,7 +212,12 @@ export const useRestClientStore = create<RestClientStore>((set, get) => ({
       }
 
       set({
-        response: { ...dataForSave, statusText: getReasonPhrase(proxyResponse.status), error: error?.message },
+        response: {
+          ...dataForSave,
+          body: proxyResponse.body,
+          statusText: getReasonPhrase(proxyResponse.status),
+          error: error?.message,
+        },
         isLoading: false,
       });
 
