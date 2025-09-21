@@ -26,7 +26,13 @@ export function HistoryItem({ method, url, body, headers, analytics }: HistoryIt
   const t = useTranslations('History');
   const locale = useLocale();
 
-  const parsedHeaders = parse(HeadersSchema, JSON.parse(headers));
+  let parsedHeaders: Record<string, string> = {};
+
+  try {
+    parsedHeaders = parse(HeadersSchema, JSON.parse(headers));
+  } catch {
+    parsedHeaders = {};
+  }
 
   const routeUrl = generateRouteUrl(method, url, '', body, parsedHeaders);
   const isSuccess =
