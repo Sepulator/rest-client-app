@@ -1,6 +1,7 @@
 import type { StatusCodes } from 'http-status-codes';
 
 export type HistoryData = {
+  id: string;
   duration: number;
   status: StatusCodes;
   timestamp: string;

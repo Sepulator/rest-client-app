@@ -1,5 +1,6 @@
 export const mockHistoryData = [
   {
+    id: '1',
     duration: 200,
     status: 500,
     timestamp: 'timestampMock',
@@ -12,6 +13,7 @@ export const mockHistoryData = [
     headers: { 'content-type': 'application/json; charset=utf-8' },
   },
   {
+    id: '2',
     duration: 200,
     status: 200,
     timestamp: 'timestampMock',

@@ -33,15 +33,8 @@ export function HistoryData({ historyData }: HistoryProps) {
 
     return (
       <ul>
-        {historyData.map(({ method, url, body, headers, ...rest }, index) => (
-          <HistoryItem
-            key={`${rest.timestamp}-${index}`}
-            url={url}
-            body={body}
-            headers={headers}
-            method={method}
-            analytics={rest}
-          />
+        {historyData.map(({ method, url, body, headers, ...rest }) => (
+          <HistoryItem key={rest.id} url={url} body={body} headers={headers} method={method} analytics={rest} />
         ))}
       </ul>
     );
