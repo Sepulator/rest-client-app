@@ -5,7 +5,7 @@
       "client": "REST Client",
       "history": "History",
       "variables": "Variables",
-      "login": "Login",
+      "login": "Sign In",
       "signUp": "Sign Up"
     },
     "actions": {
