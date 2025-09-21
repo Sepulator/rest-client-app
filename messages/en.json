@@ -5,8 +5,10 @@
       "client": "REST Client",
       "history": "History",
       "variables": "Variables",
-      "login": "Login",
-      "signUp": "Sign Up"
+      "login": "Sign In",
+      "signUp": "Sign Up",
+      "haveAccount": "Don't have an account? ",
+      "alreadyHaveAccount": "Already have an account? "
     },
     "actions": {
       "logout": "Temp Logout",
@@ -36,7 +38,8 @@
   },
   "Header": {
     "locales": {
-      "en": "English"
+      "en": "English",
+      "ru": "Russian"
     },
     "chooseLanguage": "Choose language"
   },
@@ -127,9 +130,11 @@
     "removeHeader": "Remove header",
     "codeMessage": "Please configure method and URL to generate code",
     "codeTitle": "Code Snippet",
+    "codeError": "Error generating code snippet:",
     "copy": "Copy",
     "copied": "Copied",
-    "invalidUrl": "Invalid URL. Please enter a valid HTTP or HTTPS URL."
+    "invalidUrl": "Invalid URL. Please enter a valid HTTP or HTTPS URL.",
+    "loading": "Loading..."
   },
   "Variables": {
     "heading": "Variables",
@@ -157,5 +162,18 @@
   "FallbackUi": {
     "title": "Something went wrong!",
     "button": "Try again"
+  },
+  "History": {
+    "pageTitle": "History",
+    "title": "You haven't executed any requests",
+    "description": "It's empty here. Try:",
+    "link": "RESTful client:",
+    "analytics": "Analytics",
+    "duration": "Request duration: ",
+    "status": "Status code: ",
+    "timestamp": "Request timestamp: ",
+    "requestSize": "Request size: ",
+    "responseSize": "Response size: ",
+    "error": "Error details: "
   }
 }

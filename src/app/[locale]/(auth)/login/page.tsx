@@ -1,18 +1,16 @@
+import { useTranslations } from 'next-intl';
+
 import { ROUTES } from '@/config/routes';
 import { AuthForm } from '@/features/auth-form/components/auth-form';
 
-const TEXTS = {
-  HEADING: 'Sign in',
-  SECONDARY_ACTION: "Don't have an account? ",
-  SECONDARY_ACTION_LINK: 'Sign up.',
-};
-
 export default function LoginPage() {
+  const t = useTranslations('userActions.navigation');
+
   const secondaryAction = {
-    intro: TEXTS.SECONDARY_ACTION,
+    intro: t('haveAccount'),
     link: ROUTES.SIGN_UP,
-    linkText: TEXTS.SECONDARY_ACTION_LINK,
+    linkText: t('signUp'),
   };
 
-  return <AuthForm heading={TEXTS.HEADING} secondaryAction={secondaryAction} />;
+  return <AuthForm heading={t('login')} secondaryAction={secondaryAction} />;
 }

@@ -16,7 +16,14 @@ import { useCurrentBody, useHeaders, useMethod, useUrl } from '@/stores/rest-cli
 
 const LIMIT = 2;
 
-const generateCode = (language: string, method: string, headers: Header[], url = '', body?: string): string => {
+const generateCode = (
+  language: string,
+  method: string,
+  headers: Header[],
+  url = '',
+  defaultError: string,
+  body?: string
+): string => {
   try {
     const validHeaders = headers.filter((h) => h.key && h.value);
     const headersArray = validHeaders.map((h) => ({
@@ -41,7 +48,7 @@ const generateCode = (language: string, method: string, headers: Header[], url =
 
     return snippet.convert(target, client) || '';
   } catch (error) {
-    return `Error generating code snippet: ${error instanceof Error ? error.message : String(error)}`;
+    return `${defaultError} ${error instanceof Error ? error.message : String(error)}`;
   }
 };
 
@@ -54,7 +61,7 @@ export const CodeGeneration = () => {
   const [copied, setCopied] = useState(false);
   const t = useTranslations('RestClient');
 
-  const code = generateCode(selectedLanguage, method, headers, url, body);
+  const code = generateCode(selectedLanguage, method, headers, url, t('codeError'), body);
   const currentLanguage = CODE_LANGUAGES.find((lang) => lang.key === selectedLanguage);
 
   const handleCopy = useCallback(() => {
