@@ -24,7 +24,7 @@ export const generateRouteUrl = (
     }
   });
 
-  let route = `/${locale}/client/${method}/${encodedUrl}`;
+  let route = `/${locale ? `${locale}/` : ''}client/${method}/${encodedUrl}`;
 
   if (encodedBody) {
     route += `/${encodedBody}`;
