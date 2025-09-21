@@ -3,7 +3,7 @@
 Welcome to our `REST Client` application! This lightweight alternative to Postman combines essential features in one app.
 Supports authorization and authentication capabilities. Access to the tool is restricted to authorized users only.
 The history section provides quick access to previously executed requests 🚀.
-Full task description [here](https://github.com/rolling-scopes-school/tasks/blob/master/react/modules/tasks/final.md)
+Full task description [rest client](https://github.com/rolling-scopes-school/tasks/blob/master/react/modules/tasks/final.md)
 
 ## Features
 
@@ -21,7 +21,7 @@ Key pages in the application include:
 - Variables 🔎
 - History 📋
 
-The application is developed in teams of three 👩‍💻👩‍💻👨‍💻 [Yuri S.](https://github.com/Sepulator), [Maria Ilina](https://github.com/IlinJoy), [Anastasiia Nikonova](https://github.com/anastanei).
+The application is developed in teams of three 👩‍💻👩‍💻👨‍💻 [Maria Ilina](https://github.com/IlinJoy), [Anastasiia Nikonova](https://github.com/anastanei), [Yuri S.](https://github.com/Sepulator).
 
 ## Tech-stack
 
@@ -32,10 +32,25 @@ The application is developed in teams of three 👩‍💻👩‍💻👨‍💻
 - 🎊 [Tailwind](https://tailwindcss.com/): Rapidly build modern websites without ever leaving your HTML.
 - ⌨️ [Testing framework](https://vitest.dev/): Vitest to test the code base. It's fast!
 - 🛍️ [Supabase](https://supabase.com/): The Postgres development platform.
+- 🐒 [React CodeMirror](https://uiwjs.github.io/react-codemirror/): CodeMirror component for React.
+- 📝 [React Hook Form](https://react-hook-form.com/): Performant, flexible and extensible forms with easy-to-use validation.
+- 🐻 [Zustand](https://zustand-demo.pmnd.rs/): small, fast, and scalable bearbones state management solution.
 
 ## Getting Started
 
 ### Steps
+
+#### 0. Supabase Configuration
+
+- Get `Project URL` and `API Key` from Supabase Dashboard -> Project Overview -> Project API.
+- Rename `.env.example` to `.env` and copy `Project URL` with `API Key`.
+- Turn off `Confirm email` in Supabase Dashboard -> Authentication -> Sign In / Providers.
+
+```bash copy
+NEXT_PUBLIC_SUPABASE_URL=https://your-project-id.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your-legacy-api-key-here
+
+```
 
 #### 1. Clone [repository](https://github.com/Sepulator/rest-client-app)
 
