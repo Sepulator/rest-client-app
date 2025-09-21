@@ -159,6 +159,7 @@
     "button": "Try again"
   },
   "History": {
+    "pageTitle": "History",
     "title": "You haven't executed any requests",
     "description": "It's empty here. Try:",
     "link": "RESTful client:",

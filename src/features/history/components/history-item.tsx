@@ -1,6 +1,6 @@
 import { cn } from '@heroui/react';
 import { StatusCodes } from 'http-status-codes';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 
 import type { HistoryData } from '@/features/history/types/history-data';
 
@@ -21,7 +21,8 @@ type HistoryItemProps = {
 
 export function HistoryItem({ method, url, body, headers, analytics }: HistoryItemProps) {
   const t = useTranslations('History');
-  const routeUrl = generateRouteUrl(method, url, '', body, headers);
+  const locale = useLocale();
+  const routeUrl = generateRouteUrl(method, url, locale, body, headers);
   const isSuccess =
     analytics.status && analytics.status >= StatusCodes.OK && analytics.status < StatusCodes.MULTIPLE_CHOICES;
 
@@ -41,7 +42,7 @@ export function HistoryItem({ method, url, body, headers, analytics }: HistoryIt
       </Link>
 
       <div className="p-3">
-        <h3 className="text-small mb-2 font-bold">Analytics</h3>
+        <h3 className="text-small mb-2 font-bold">{t('analytics')}</h3>
         {ANALYTIC_KEYS.map((key) => (
           <p key={key} data-testid={`analytic-${key}`}>
             <strong>{t(key)}</strong>

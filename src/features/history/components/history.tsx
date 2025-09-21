@@ -25,7 +25,7 @@ export function HistoryData({ historyData }: HistoryProps) {
             href={ROUTES.CLIENT}
             className="bg-primary-200 rounded-medium hover:bg-primary-100 px-6 py-3 transition"
           >
-            RESTful client
+            {t('link')}
           </Link>
         </div>
       );
@@ -49,7 +49,7 @@ export function HistoryData({ historyData }: HistoryProps) {
 
   return (
     <section>
-      <h2 className="text-large mb-5">History</h2>
+      <h2 className="text-large mb-5">{t('pageTitle')}</h2>
       {renderContent()}
     </section>
   );
