@@ -1,6 +1,7 @@
 import { screen } from '@testing-library/react';
 
 import { ResponseSection } from '@/features/rest-client/components/response-section';
+import { useRestClientStore } from '@/stores/rest-client/store';
 import { renderWithProviders } from '@/testing/utils/render-with-providers';
 
 const mockResponse = {
@@ -15,17 +16,35 @@ const mockResponse = {
 };
 
 describe('ResponseSection', () => {
-  it('should show spinner when loading', () => {
-    renderWithProviders(<ResponseSection response={mockResponse} isLoading={true} />);
-
-    expect(screen.getByLabelText('Loading...')).toBeInTheDocument();
+  beforeEach(() => {
+    vi.clearAllMocks();
+    useRestClientStore.setState({
+      response: null,
+      isLoading: false,
+    });
   });
 
-  it('should show error message when response has error', () => {
-    const errorResponse = { ...mockResponse, status: 500 };
+  it('should show spinner when loading', () => {
+    useRestClientStore.setState({ isLoading: true });
+    renderWithProviders(<ResponseSection />);
 
-    renderWithProviders(<ResponseSection response={errorResponse} isLoading={false} />);
+    expect(screen.getByText('Loading...')).toBeInTheDocument();
+  });
 
-    expect(screen.getByText(/500/i)).toBeInTheDocument();
+  it('should not show response section when there is an error', () => {
+    useRestClientStore.setState({
+      response: { ...mockResponse, error: 'Network error' },
+    });
+    renderWithProviders(<ResponseSection />);
+
+    expect(screen.getByText('Status:')).toBeInTheDocument();
+    expect(screen.queryByText('Network error')).not.toBeInTheDocument();
+  });
+
+  it('should show response status and body', () => {
+    useRestClientStore.setState({ response: mockResponse });
+    renderWithProviders(<ResponseSection />);
+
+    expect(screen.getByText('200 OK')).toBeInTheDocument();
   });
 });

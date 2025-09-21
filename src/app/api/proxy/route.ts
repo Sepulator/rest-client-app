@@ -1,14 +1,21 @@
 import type { NextRequest } from 'next/server';
 
+import { getTranslations } from 'next-intl/server';
 import { NextResponse } from 'next/server';
 import { parse } from 'valibot';
 
 import { ProxyRequestSchema } from '@/features/rest-client/schemas/proxy-schema';
 
 export async function POST(request: NextRequest) {
+  let url = '';
+  const t = await getTranslations('Errors');
+
   try {
     const data: unknown = await request.json();
-    const { url, method, headers, body } = parse(ProxyRequestSchema, data);
+    const parsed = parse(ProxyRequestSchema, data);
+
+    url = parsed.url;
+    const { method, headers, body } = parsed;
 
     const response = await fetch(url, {
       method,
@@ -25,6 +32,36 @@ export async function POST(request: NextRequest) {
       body: responseBody,
     });
   } catch (error) {
-    return NextResponse.json({ error: error instanceof Error ? error.message : 'Unknown error' }, { status: 500 });
+    let errorMessage = 'Unknown error';
+
+    if (error instanceof Error) {
+      const { message } = error;
+
+      if (message.includes('Invalid URL')) {
+        errorMessage = t('invalidUrl');
+      } else if (message.includes('fetch') || message.includes('ENOTFOUND')) {
+        errorMessage = t('dnsResolution');
+      } else if (message.includes('ByteString')) {
+        errorMessage = t('invalidHeaders');
+      } else if (message.includes('ECONNREFUSED')) {
+        errorMessage = t('connectionRefused');
+      } else if (message.includes('ETIMEDOUT')) {
+        errorMessage = t('timeout');
+      } else if (message.includes('ECONNRESET')) {
+        errorMessage = t('connectionReset');
+      } else if (message.includes('CERT_HAS_EXPIRED')) {
+        errorMessage = t('sslExpired');
+      } else {
+        errorMessage = t('unknown');
+      }
+    }
+
+    return NextResponse.json({
+      status: 500,
+      statusText: 'Internal Server Error',
+      headers: {},
+      body: '',
+      error: errorMessage,
+    });
   }
 }

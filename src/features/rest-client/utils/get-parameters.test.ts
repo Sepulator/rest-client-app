@@ -1,5 +1,3 @@
-import { describe, expect, it } from 'vitest';
-
 import { getBodyFromParams, getMethodFromParams, getUrlFromParams, getHeadersFromSearchParams } from './get-parameters';
 
 describe('getBodyFromParams', () => {
