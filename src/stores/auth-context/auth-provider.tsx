@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 
 import type { UserData } from '@/stores/auth-context/types';
 
+import { useRouter } from '@/i18n/navigation';
 import { AuthContext } from '@/stores/auth-context/context';
 import { supabase } from '@/utils/supabase/history';
 
@@ -13,6 +14,7 @@ type AuthProviderProps = {
 };
 
 export const AuthProvider = ({ children }: AuthProviderProps) => {
+  const router = useRouter();
   const [user, setUser] = useState<UserData | undefined>();
   const [loading, setLoading] = useState(true);
 
@@ -29,7 +31,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
     const {
       data: { subscription },
-    } = supabase.auth.onAuthStateChange((_event: AuthChangeEvent, session: Session | null) => {
+    } = supabase.auth.onAuthStateChange((event: AuthChangeEvent, session: Session | null) => {
       if (session?.user.email) {
         setUser({
           id: session.user.id,
@@ -37,14 +39,18 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         });
       } else {
         setUser(undefined);
+        if (event === 'SIGNED_OUT') {
+          router.push('/');
+        }
       }
       setLoading(false);
+      router.refresh();
     });
 
     return () => {
       subscription.unsubscribe();
     };
-  }, []);
+  }, [router]);
 
   return <AuthContext value={{ user, loading }}>{children}</AuthContext>;
 };
