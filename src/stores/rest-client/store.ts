@@ -12,7 +12,7 @@ import {
   getMethodFromParams,
   getUrlFromParams,
 } from '@/features/rest-client/utils/get-parameters';
-import { generateRouteUrl } from '@/features/rest-client/utils/route-generator';
+import { generateRouteUrl } from '@/utils/route-generator';
 
 type State = {
   method: string;

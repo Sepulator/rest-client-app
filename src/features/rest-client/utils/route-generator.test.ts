@@ -1,4 +1,4 @@
-import { generateRouteUrl } from './route-generator';
+import { generateRouteUrl } from '../../../utils/route-generator';
 
 describe('generateRouteUrl', () => {
   it('should generate basic route without body and headers', () => {
