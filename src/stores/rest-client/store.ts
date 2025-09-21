@@ -179,7 +179,7 @@ export const useRestClientStore = create<RestClientStore>((set, get) => ({
 
       const data: unknown = await result.json();
       const proxyResponse = parse(ProxyResponseSchema, data);
-      const duration = performance.now() - startTime;
+      const duration = +(performance.now() - startTime).toFixed(1);
       const responseSize = new TextEncoder().encode(proxyResponse.body).length;
 
       const dataForSave = {

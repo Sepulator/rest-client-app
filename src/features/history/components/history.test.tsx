@@ -7,6 +7,7 @@ import { HistoryData } from '@/features/history/components/history';
 import { ANALYTIC_KEYS } from '@/features/history/constants/analitic-keys';
 import { mockHistoryData } from '@/testing/mocks/history';
 import { renderWithProviders } from '@/testing/utils/render-with-providers';
+import { formateTimestamp } from '@/utils/format-timestamp';
 
 const useTranslationsMock = (key: string) => key;
 
@@ -48,8 +49,12 @@ describe('History', () => {
         expect(container.getByText(data.url)).toBeInTheDocument();
 
         ANALYTIC_KEYS.forEach((key) => {
-          const value = data[key] ?? '-';
+          let value = data[key] ?? '-';
           const keyElement = within(container.getByTestId(`analytic-${key}`));
+
+          if (key === 'timestamp') {
+            value = formateTimestamp('en', value.toString());
+          }
 
           expect(keyElement.getByText(value.toString())).toBeInTheDocument();
         });
