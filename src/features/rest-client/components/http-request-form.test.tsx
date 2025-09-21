@@ -8,6 +8,10 @@ import { HttpRequestForm } from './http-request-form';
 
 const mockExecuteRequest = vi.fn();
 
+vi.mock('@supabase/ssr', () => ({
+  createBrowserClient: vi.fn(),
+}));
+
 describe('HttpRequestForm', () => {
   beforeEach(() => {
     vi.clearAllMocks();

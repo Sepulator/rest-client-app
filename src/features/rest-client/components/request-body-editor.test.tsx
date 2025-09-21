@@ -5,6 +5,10 @@ import { RequestBodyEditor } from '@/features/rest-client/components/request-bod
 import { renderWithProviders } from '@/testing/utils/render-with-providers';
 import { renderWithUserEvent } from '@/testing/utils/render-with-user-event';
 
+vi.mock('@supabase/ssr', () => ({
+  createBrowserClient: vi.fn(),
+}));
+
 describe('RequestBodyEditor', () => {
   it('should render with content', () => {
     renderWithProviders(<RequestBodyEditor body="test content" mode="text" />);
