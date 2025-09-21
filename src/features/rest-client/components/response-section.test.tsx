@@ -15,6 +15,10 @@ const mockResponse = {
   responseSize: 0,
 };
 
+vi.mock('@supabase/ssr', () => ({
+  createBrowserClient: vi.fn(),
+}));
+
 describe('ResponseSection', () => {
   beforeEach(() => {
     vi.clearAllMocks();

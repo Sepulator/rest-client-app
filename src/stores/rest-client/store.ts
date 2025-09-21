@@ -13,6 +13,7 @@ import {
   getUrlFromParams,
 } from '@/features/rest-client/utils/get-parameters';
 import { generateRouteUrl } from '@/utils/route-generator';
+import { insertHistory } from '@/utils/supabase/history-insert';
 
 type State = {
   method: string;
@@ -176,30 +177,40 @@ export const useRestClientStore = create<RestClientStore>((set, get) => ({
         body: bodyWithVariables,
       });
 
-      if (!result.ok) {
-        throw new Error(`HTTP ${result.status.toString()}: ${result.statusText}`);
-      }
-
       const data: unknown = await result.json();
       const proxyResponse = parse(ProxyResponseSchema, data);
-      const duration = performance.now() - startTime;
+      const duration = +(performance.now() - startTime).toFixed(1);
       const responseSize = new TextEncoder().encode(proxyResponse.body).length;
+
+      const dataForSave = {
+        status: proxyResponse.status,
+        headers: proxyResponse.headers,
+        body: proxyResponse.body,
+        timestamp,
+        duration,
+        requestSize,
+        responseSize,
+      };
+
+      const { error } = await insertHistory({
+        ...dataForSave,
+        headers: JSON.stringify(requestHeaders),
+        id: crypto.randomUUID(),
+        error: proxyResponse.error,
+        method,
+        url,
+      });
 
       if (proxyResponse.error) {
         throw new Error(proxyResponse.error);
       }
 
+      if (!result.ok) {
+        throw new Error(`HTTP ${result.status.toString()}: ${result.statusText}`);
+      }
+
       set({
-        response: {
-          status: proxyResponse.status,
-          statusText: getReasonPhrase(proxyResponse.status),
-          headers: proxyResponse.headers,
-          body: proxyResponse.body,
-          timestamp,
-          duration,
-          requestSize,
-          responseSize,
-        },
+        response: { ...dataForSave, statusText: getReasonPhrase(proxyResponse.status), error: error?.message },
         isLoading: false,
       });
 

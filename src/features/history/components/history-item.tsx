@@ -1,12 +1,15 @@
 import { cn } from '@heroui/react';
 import { StatusCodes } from 'http-status-codes';
 import { useLocale, useTranslations } from 'next-intl';
+import { parse } from 'valibot';
 
 import type { HistoryData } from '@/features/history/types/history-data';
 
 import { ChevronIcon } from '@/components/icons/chevron';
 import { ANALYTIC_KEYS } from '@/features/history/constants/analitic-keys';
+import { HeadersSchema } from '@/features/rest-client/schemas/proxy-schema';
 import { Link } from '@/i18n/navigation';
+import { formateTimestamp } from '@/utils/format-timestamp';
 import { generateRouteUrl } from '@/utils/route-generator';
 
 type AnalyticKeys = (typeof ANALYTIC_KEYS)[number];
@@ -15,16 +18,27 @@ type HistoryItemProps = {
   method: string;
   url: string;
   body?: string;
-  headers: Record<string, string>;
+  headers: string;
   analytics: Partial<{ [K in AnalyticKeys]?: HistoryData[K] }>;
 };
 
 export function HistoryItem({ method, url, body, headers, analytics }: HistoryItemProps) {
   const t = useTranslations('History');
   const locale = useLocale();
-  const routeUrl = generateRouteUrl(method, url, locale, body, headers);
+
+  let parsedHeaders: Record<string, string> = {};
+
+  try {
+    parsedHeaders = parse(HeadersSchema, JSON.parse(headers));
+  } catch {
+    parsedHeaders = {};
+  }
+
+  const routeUrl = generateRouteUrl(method, url, '', body, parsedHeaders);
   const isSuccess =
     analytics.status && analytics.status >= StatusCodes.OK && analytics.status < StatusCodes.MULTIPLE_CHOICES;
+
+  const formattedTimestamp = analytics.timestamp && formateTimestamp(locale, analytics.timestamp);
 
   return (
     <li className="mb-3">
@@ -46,7 +60,7 @@ export function HistoryItem({ method, url, body, headers, analytics }: HistoryIt
         {ANALYTIC_KEYS.map((key) => (
           <p key={key} data-testid={`analytic-${key}`}>
             <strong>{t(key)}</strong>
-            {analytics[key] ?? '-'}
+            {key === 'timestamp' ? formattedTimestamp : (analytics[key] ?? '-')}
           </p>
         ))}
       </div>

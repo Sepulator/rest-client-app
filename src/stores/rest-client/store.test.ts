@@ -11,6 +11,8 @@ vi.mock('@/features/variables/hooks/use-replace-with-variable', () => ({
   useReplaceWithVariable: () => mockReplaceVariables,
 }));
 
+vi.mock('@/utils/supabase/history-insert', () => ({ insertHistory: vi.fn(() => ({ error: null })) }));
+
 const executeRequest = async () => {
   const { executeRequest } = useRestClientStore.getState();
 
