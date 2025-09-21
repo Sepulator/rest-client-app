@@ -13,3 +13,7 @@ export type HistoryData = {
   headers: Record<string, string>;
   body?: string;
 };
+
+export type HistoryInsertData = Omit<HistoryData, 'headers'> & {
+  headers: string;
+};

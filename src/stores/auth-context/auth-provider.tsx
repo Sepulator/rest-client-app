@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 import type { UserData } from '@/stores/auth-context/types';
 
 import { AuthContext } from '@/stores/auth-context/context';
-import { createClient } from '@/utils/supabase/client';
+import { supabase } from '@/utils/supabase/history';
 
 type AuthProviderProps = {
   children: ReactNode;
@@ -17,8 +17,6 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const supabase = createClient();
-
     void supabase.auth.getSession().then(({ data: { session } }: { data: { session: Session | null } }) => {
       if (session?.user.email) {
         setUser({

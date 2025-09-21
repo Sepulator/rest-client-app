@@ -167,7 +167,7 @@
     "pageTitle": "History",
     "title": "You haven't executed any requests",
     "description": "It's empty here. Try:",
-    "link": "RESTful client:",
+    "link": "RESTful client",
     "analytics": "Analytics",
     "duration": "Request duration: ",
     "status": "Status code: ",
