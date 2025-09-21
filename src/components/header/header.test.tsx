@@ -34,7 +34,7 @@ describe('Header', () => {
       renderWithProviders(<Header />, { providerOptions: { userData: undefined } });
 
       const homeLink = screen.getByRole('link', { name: /home/i });
-      const loginLink = screen.getByRole('link', { name: /login/i });
+      const loginLink = screen.getByRole('link', { name: /sign in/i });
       const signupLink = screen.getByRole('link', { name: /sign up/i });
 
       expect(homeLink).toBeInTheDocument();
