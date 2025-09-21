@@ -1,6 +1,6 @@
 'use client';
 
-import { Button, cn } from '@heroui/react';
+import { addToast, Button, cn } from '@heroui/react';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 
@@ -11,10 +11,22 @@ import { SidebarList } from '@/features/side-bar/ui/sidebar-list';
 import { SidebarTrigger } from '@/features/side-bar/ui/sidebar-trigger';
 
 type SideNavBarProps = {
-  tempLogout: () => void;
+  tempLogout: () => Promise<void>;
 };
 
 export function Sidebar({ tempLogout }: SideNavBarProps) {
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
+
+  const handleLogout = async () => {
+    setIsLoggingOut(true);
+    try {
+      await tempLogout();
+    } catch {
+      addToast({ title: 'Logout failed', color: 'danger' });
+    } finally {
+      setIsLoggingOut(false);
+    }
+  };
   const [isOpen, setIsOpen] = useState(false);
   const t = useTranslations('userActions');
 
@@ -50,7 +62,9 @@ export function Sidebar({ tempLogout }: SideNavBarProps) {
           <Button
             key="tempButton"
             className="w-full group-data-[closed=true]:invisible group-data-[closed=true]:opacity-0"
-            onPress={tempLogout}
+            onPress={() => void handleLogout()}
+            isLoading={isLoggingOut}
+            isDisabled={isLoggingOut}
           >
             {t('actions.logout')}
           </Button>,

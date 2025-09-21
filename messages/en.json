@@ -9,7 +9,7 @@
       "signUp": "Sign Up"
     },
     "actions": {
-      "logout": "Temp Logout",
+      "logout": "Logout",
       "menuOpen": "Open menu",
       "menuClose": "Close menu",
       "menu": "Menu",

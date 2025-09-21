@@ -6,6 +6,7 @@ import type { SubmitHandler } from 'react-hook-form';
 import { Form, Input, Button, Card, CardHeader, CardBody, CardFooter, Divider, Link as HeroLink } from '@heroui/react';
 import { valibotResolver } from '@hookform/resolvers/valibot';
 import { useTranslations } from 'next-intl';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { MailIcon } from '@/components/icons/mail-icon';
@@ -13,6 +14,7 @@ import { ROUTES } from '@/config/routes';
 import { type AuthFormType } from '@/features/auth-form/types/types';
 import { useRouter } from '@/i18n/navigation';
 import { Link as IntlLink } from '@/i18n/navigation';
+import { useAuth } from '@/stores/auth-context/use-auth';
 import { type SecondaryAction } from '@/types/types';
 
 import { useSchemas } from '../hooks/use-schemas';
@@ -35,6 +37,9 @@ type Props = {
 export const AuthForm = ({ heading, secondaryAction }: Props) => {
   const { authSchema } = useSchemas();
   const router = useRouter();
+  const { login, signUp } = useAuth();
+  const [isLoading, setIsLoading] = useState(false);
+  const [authError, setAuthError] = useState<string | null>(null);
   const {
     register,
     watch,
@@ -48,8 +53,20 @@ export const AuthForm = ({ heading, secondaryAction }: Props) => {
   });
   const t = useTranslations('AuthForm');
 
-  const onSubmit: SubmitHandler<AuthFormType> = (_) => {
-    router.push(ROUTES.MAIN);
+  const isSignUp = heading === 'Sign up';
+
+  const onSubmit: SubmitHandler<AuthFormType> = async (data) => {
+    setIsLoading(true);
+    setAuthError(null);
+
+    try {
+      await (isSignUp ? signUp(data.email, data.password) : login(data.email, data.password));
+      router.push(ROUTES.MAIN);
+    } catch (error) {
+      setAuthError(error instanceof Error ? error.message : 'Authentication failed');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const passwordValue = watch(PASSWORD_NAME);
@@ -85,7 +102,8 @@ export const AuthForm = ({ heading, secondaryAction }: Props) => {
             name={PASSWORD_NAME}
             passwordValue={passwordValue}
           />
-          <Button color="primary" type="submit" className="w-full">
+          {authError && <div className="text-danger text-small">{authError}</div>}
+          <Button color="primary" type="submit" className="w-full" isLoading={isLoading} isDisabled={isLoading}>
             {heading}
           </Button>
         </Form>
