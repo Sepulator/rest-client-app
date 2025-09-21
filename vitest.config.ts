@@ -34,7 +34,6 @@ export default defineConfig({
         'src/i18n/**/*',
         '**/*/fonts.ts',
         'src/utils/supabase/**/*',
-        'src/app/**/*',
       ],
     },
   },

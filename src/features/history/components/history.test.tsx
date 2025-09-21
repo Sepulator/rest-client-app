@@ -20,6 +20,14 @@ vi.mock('next-intl', async (importOriginal) => {
   };
 });
 
+vi.mock(import('next/navigation'), async (importOriginal) => {
+  const actual = await importOriginal();
+
+  return {
+    ...actual,
+  };
+});
+
 const setupHistory = (props?: Partial<HistoryProps>) =>
   renderWithProviders(<HistoryData historyData={mockHistoryData} {...props} />);
 
