@@ -8,7 +8,17 @@ import { ANALYTIC_KEYS } from '@/features/history/constants/analitic-keys';
 import { mockHistoryData } from '@/testing/mocks/history';
 import { renderWithProviders } from '@/testing/utils/render-with-providers';
 
-import en from '../../../../messages/en.json';
+const useTranslationsMock = (key: string) => key;
+
+vi.mock('next-intl', async (importOriginal) => {
+  const module_: object = await importOriginal();
+
+  return {
+    ...module_,
+    useTranslations: () => useTranslationsMock,
+    useLocale: () => 'en',
+  };
+});
 
 const setupHistory = (props?: Partial<HistoryProps>) =>
   renderWithProviders(<HistoryData historyData={mockHistoryData} {...props} />);
@@ -16,15 +26,13 @@ const setupHistory = (props?: Partial<HistoryProps>) =>
 describe('History', () => {
   describe('Render', () => {
     it('should render empty state', () => {
-      const homeMessages = en.History;
-
       setupHistory({ historyData: [] });
 
-      const link = screen.getByRole('link', { name: /client/i });
+      const link = screen.getByRole('link', { name: /link/i });
 
       expect(link).toHaveAttribute('href', `/en${ROUTES.CLIENT}`);
-      expect(screen.getByText(homeMessages.title)).toBeInTheDocument();
-      expect(screen.getByText(homeMessages.description)).toBeInTheDocument();
+      expect(screen.getByText('title')).toBeInTheDocument();
+      expect(screen.getByText('description')).toBeInTheDocument();
     });
 
     it('should render data', () => {

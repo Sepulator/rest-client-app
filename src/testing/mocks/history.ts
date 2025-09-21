@@ -2,7 +2,7 @@ export const mockHistoryData = [
   {
     duration: 200,
     status: 500,
-    timestamp: 'timestamp',
+    timestamp: 'timestampMock',
     method: 'POST',
     requestSize: 300,
     responseSize: 300,
@@ -14,7 +14,7 @@ export const mockHistoryData = [
   {
     duration: 200,
     status: 200,
-    timestamp: 'timestamp',
+    timestamp: 'timestampMock',
     method: 'POST',
     requestSize: 300,
     responseSize: 300,
