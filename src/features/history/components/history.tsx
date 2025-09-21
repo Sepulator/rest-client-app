@@ -8,7 +8,7 @@ import { ROUTES } from '@/config/routes';
 import { HistoryItem } from '@/features/history/components/history-item';
 import { Link } from '@/i18n/navigation';
 
-type HistoryProps = {
+export type HistoryProps = {
   historyData: HistoryData[];
 };
 
@@ -32,7 +32,7 @@ export function HistoryData({ historyData }: HistoryProps) {
     }
 
     return (
-      <div>
+      <ul>
         {historyData.map(({ method, url, body, headers, ...rest }, index) => (
           <HistoryItem
             key={`${rest.timestamp}-${index}`}
@@ -43,7 +43,7 @@ export function HistoryData({ historyData }: HistoryProps) {
             analytics={rest}
           />
         ))}
-      </div>
+      </ul>
     );
   };
 

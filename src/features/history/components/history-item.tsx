@@ -5,10 +5,9 @@ import { useTranslations } from 'next-intl';
 import type { HistoryData } from '@/features/history/types/history-data';
 
 import { ChevronIcon } from '@/components/icons/chevron';
+import { ANALYTIC_KEYS } from '@/features/history/constants/analitic-keys';
 import { Link } from '@/i18n/navigation';
 import { generateRouteUrl } from '@/utils/route-generator';
-
-const ANALYTIC_KEYS = ['duration', 'status', 'timestamp', 'requestSize', 'responseSize', 'error'] as const;
 
 type AnalyticKeys = (typeof ANALYTIC_KEYS)[number];
 
@@ -27,7 +26,7 @@ export function HistoryItem({ method, url, body, headers, analytics }: HistoryIt
     analytics.status && analytics.status >= StatusCodes.OK && analytics.status < StatusCodes.MULTIPLE_CHOICES;
 
   return (
-    <div className="mb-3">
+    <li className="mb-3">
       <Link
         href={routeUrl}
         className="hover:bg-default-50 border-default-300 flex w-full items-center justify-between border-y-1 p-3"
@@ -44,12 +43,12 @@ export function HistoryItem({ method, url, body, headers, analytics }: HistoryIt
       <div className="p-3">
         <h3 className="text-small mb-2 font-bold">Analytics</h3>
         {ANALYTIC_KEYS.map((key) => (
-          <p key={key}>
+          <p key={key} data-testid={`analytic-${key}`}>
             <strong>{t(key)}</strong>
-            {analytics[key]}
+            {analytics[key] ?? '-'}
           </p>
         ))}
       </div>
-    </div>
+    </li>
   );
 }
