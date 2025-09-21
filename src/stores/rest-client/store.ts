@@ -13,7 +13,7 @@ import {
   getUrlFromParams,
 } from '@/features/rest-client/utils/get-parameters';
 import { generateRouteUrl } from '@/utils/route-generator';
-import { insertHistory } from '@/utils/supabase/history';
+import { insertHistory } from '@/utils/supabase/history-insert';
 
 type State = {
   method: string;

@@ -7,7 +7,7 @@ import type { UserData } from '@/stores/auth-context/types';
 
 import { useRouter } from '@/i18n/navigation';
 import { AuthContext } from '@/stores/auth-context/context';
-import { supabase } from '@/utils/supabase/history';
+import { supabase } from '@/utils/supabase/history-insert';
 
 type AuthProviderProps = {
   children: ReactNode;
