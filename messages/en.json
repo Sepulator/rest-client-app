@@ -36,7 +36,8 @@
   },
   "Header": {
     "locales": {
-      "en": "English"
+      "en": "English",
+      "ru": "Russian"
     },
     "chooseLanguage": "Choose language"
   },
@@ -144,5 +145,18 @@
   "FallbackUi": {
     "title": "Something went wrong!",
     "button": "Try again"
+  },
+  "History": {
+    "pageTitle": "History",
+    "title": "You haven't executed any requests",
+    "description": "It's empty here. Try:",
+    "link": "RESTful client:",
+    "analytics": "Analytics",
+    "duration": "Request duration: ",
+    "status": "Status code: ",
+    "timestamp": "Request timestamp: ",
+    "requestSize": "Request size: ",
+    "responseSize": "Response size: ",
+    "error": "Error details: "
   }
 }
