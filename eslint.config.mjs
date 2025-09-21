@@ -86,7 +86,7 @@ export default tseslint.config(
       'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
       ...jsxA11y.configs.recommended.rules,
       'no-console': ['error', { allow: ['error'] }],
-      'no-empty': 'off',
+      'no-empty': 'warn',
       'no-warning-comments': ['error', { terms: [''], location: 'anywhere' }],
       'quote-props': ['error', 'always'],
       'prefer-const': 'error',
