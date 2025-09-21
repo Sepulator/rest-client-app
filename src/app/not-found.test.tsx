@@ -18,14 +18,10 @@ describe('GlobalNotFound', () => {
     expect(htmlElement).toHaveAttribute('lang', 'en');
   });
 
-  it('renders RootPagesLayout wrapper', () => {
+  it('renders RootPagesLayout and NotFoundComponent with correct props', () => {
     render(<GlobalNotFound />);
+
     expect(screen.getByTestId('root-pages-layout')).toBeInTheDocument();
-  });
-
-  it('renders NotFoundComponent with correct props', () => {
-    render(<GlobalNotFound />);
-
     expect(screen.getByText('Page Not Found')).toBeInTheDocument();
     expect(screen.getByText('global non localized')).toBeInTheDocument();
     expect(screen.getByText('Go Home')).toBeInTheDocument();

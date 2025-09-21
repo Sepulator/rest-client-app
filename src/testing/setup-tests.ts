@@ -17,6 +17,7 @@ vi.mock('next/navigation', () => ({
   usePathname: () => '/',
   notFound: vi.fn(),
   redirect: vi.fn(),
+  permanentRedirect: vi.fn(),
 }));
 
 vi.mock('next/headers', () => ({

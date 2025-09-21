@@ -8,7 +8,7 @@ const mockTranslations = (key: string) => {
   const translations: Record<string, string> = {
     login: 'Login',
     haveAccount: "Don't have an account?",
-    alreadyHaveAccount: 'Already have an account? ',
+    alreadyHaveAccount: 'Already have an account?',
     signUp: 'Sign Up',
   };
 
@@ -37,21 +37,18 @@ vi.mock('@/features/auth-form/components/auth-form', () => ({
   ),
 }));
 
-describe('LoginPage', () => {
+describe('SignUpPage', () => {
   it('renders AuthForm with correct heading', () => {
     render(<SignUpPage />);
-
     expect(screen.getByTestId('auth-form')).toBeInTheDocument();
-    expect(screen.getByText('Login')).toBeInTheDocument();
+    expect(screen.getByText('Sign Up')).toBeInTheDocument();
   });
-
   it('renders secondary action with correct props', () => {
     render(<SignUpPage />);
-
     const secondaryAction = screen.getByTestId('secondary-action');
 
     expect(secondaryAction).toBeInTheDocument();
     expect(screen.getByText('Already have an account?')).toBeInTheDocument();
-    expect(screen.getByText('Sign Up')).toBeInTheDocument();
+    expect(screen.getByText('Login')).toBeInTheDocument();
   });
 });
