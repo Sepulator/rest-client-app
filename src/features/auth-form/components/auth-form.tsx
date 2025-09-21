@@ -47,7 +47,7 @@ export const AuthForm = ({ heading, secondaryAction }: Props) => {
   });
   const t = useTranslations('AuthForm');
 
-  const isSignUp = heading === 'Sign up';
+  const isSignUp = secondaryAction.link.includes('login');
   const action = isSignUp ? signUp : signIn;
 
   const passwordValue = watch(PASSWORD_NAME);

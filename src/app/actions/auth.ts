@@ -24,14 +24,17 @@ export async function signUp(formData: FormData) {
 
   const data = createCredentials(formData);
 
-  const { error } = await supabase.auth.signUp(data);
+  const { data: authData, error } = await supabase.auth.signUp(data);
 
   if (error) {
     redirect({ href: '/sign-up?error=' + encodeURIComponent(error.message), locale });
   }
 
-  revalidatePath('/', 'layout');
-  redirect({ href: '/', locale });
+  if (authData.user) {
+    revalidatePath('/', 'layout');
+    revalidatePath('/', 'page');
+    redirect({ href: '/', locale });
+  }
 }
 
 export async function signIn(formData: FormData) {
@@ -40,21 +43,15 @@ export async function signIn(formData: FormData) {
 
   const data = createCredentials(formData);
 
-  const { error } = await supabase.auth.signInWithPassword(data);
+  const { data: authData, error } = await supabase.auth.signInWithPassword(data);
 
   if (error) {
     redirect({ href: '/login?error=' + encodeURIComponent(error.message), locale });
   }
 
-  revalidatePath('/', 'layout');
-  redirect({ href: '/', locale });
-}
-
-export async function signOut() {
-  const supabase = await createClient();
-  const locale = await getLocale();
-
-  await supabase.auth.signOut();
-  revalidatePath('/', 'layout');
-  redirect({ href: '/login', locale });
+  if (authData.session) {
+    revalidatePath('/', 'layout');
+    revalidatePath('/', 'page');
+    redirect({ href: '/', locale });
+  }
 }

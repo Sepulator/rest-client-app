@@ -2,11 +2,11 @@ import { NavbarContent, NavbarItem, NavbarMenu, NavbarMenuItem, NavbarMenuToggle
 import { Button, cn } from '@heroui/react';
 import { useTranslations } from 'next-intl';
 
-import { signOut } from '@/app/actions/auth';
 import { HeaderLink } from '@/components/header/ui/header-link';
 import { LangToggle } from '@/components/header/ui/lang-toggle';
 import { ROUTES } from '@/config/routes';
 import { useAuth } from '@/stores/auth-context/use-auth';
+import { clientLogout } from '@/utils/auth/client-logout';
 
 const navLinks = {
   base: [{ href: ROUTES.MAIN, key: 'home' }],
@@ -46,7 +46,7 @@ export function HeaderNav({ isMenuOpen, checkIsActive }: HeaderNavProps) {
         {user && (
           <Button
             onPress={() => {
-              void signOut();
+              void clientLogout();
             }}
             variant="flat"
             className={cn('text-foreground-700 hidden sm:flex', isMobile && 'flex p-6')}
