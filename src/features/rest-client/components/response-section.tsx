@@ -12,7 +12,7 @@ export const ResponseSection = () => {
   const statusStyle = (response?.status ?? 0) >= StatusCodes.BAD_REQUEST ? 'text-danger-500' : 'text-success-500';
 
   if (isLoading) {
-    return <Spinner color="warning" label="Loading..." />;
+    return <Spinner color="warning" label={t('loading')} />;
   }
 
   return (

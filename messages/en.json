@@ -128,9 +128,11 @@
     "removeHeader": "Remove header",
     "codeMessage": "Please configure method and URL to generate code",
     "codeTitle": "Code Snippet",
+    "codeError": "Error generating code snippet:",
     "copy": "Copy",
     "copied": "Copied",
-    "invalidUrl": "Invalid URL. Please enter a valid HTTP or HTTPS URL."
+    "invalidUrl": "Invalid URL. Please enter a valid HTTP or HTTPS URL.",
+    "loading": "Loading..."
   },
   "Variables": {
     "heading": "Variables",

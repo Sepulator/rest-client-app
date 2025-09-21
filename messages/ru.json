@@ -128,9 +128,11 @@
     "removeHeader": "Удалить заголовок",
     "codeMessage": "Настройте метод и URL для генерации кода",
     "codeTitle": "Сниппет кода",
+    "codeError": "Ошибка генерации кода:",
     "copy": "Копировать",
     "copied": "Скопировано",
-    "invalidUrl": "Неверный URL. Пожалуйста, введите корректный HTTP или HTTPS URL."
+    "invalidUrl": "Неверный URL. Пожалуйста, введите корректный HTTP или HTTPS URL.",
+    "loading": "Загрузка..."
   },
   "Variables": {
     "heading": "Переменные",
