@@ -83,7 +83,7 @@ export const useRestClientStore = create<RestClientStore>((set, get) => ({
   },
 
   setUrl: (url) => {
-    set({ url });
+    set({ url, response: null });
   },
 
   setHeaders: (headers) => {
