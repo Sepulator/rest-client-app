@@ -35,6 +35,8 @@ export async function signUp(formData: FormData) {
     revalidatePath('/', 'page');
     redirect({ href: '/', locale });
   }
+
+  redirect({ href: '/sign-up?error=' + encodeURIComponent('An unexpected error occurred. Please try again.'), locale });
 }
 
 export async function signIn(formData: FormData) {
@@ -54,4 +56,6 @@ export async function signIn(formData: FormData) {
     revalidatePath('/', 'page');
     redirect({ href: '/', locale });
   }
+
+  redirect({ href: '/login?error=' + encodeURIComponent('An unexpected error occurred. Please try again.'), locale });
 }
