@@ -24,12 +24,11 @@ export const HttpRequestForm = ({ initialParams, initialSearchParams }: Props = 
   const t = useTranslations('RestClient');
 
   useEffect(() => {
-    resetResponse();
-  }, [resetResponse]);
-
-  useEffect(() => {
+    if (!initialParams && !initialSearchParams) {
+      resetResponse();
+    }
     initializeFromParams(initialParams, initialSearchParams);
-  }, [initialParams, initialSearchParams, initializeFromParams]);
+  }, [resetResponse, initialParams, initialSearchParams, initializeFromParams]);
 
   return (
     <div className="@container">
