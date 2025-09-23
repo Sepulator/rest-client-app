@@ -30,7 +30,7 @@ export function useReplaceWithVariable() {
     (string: string) => {
       const regexp = /\{\{(.+?)\}\}/g;
 
-      return string.replaceAll(regexp, (match, key: string) => variablesObject[key] || match);
+      return string.replaceAll(regexp, (match, key: string) => variablesObject[key.trim()] || match);
     },
 
     [variablesObject]
