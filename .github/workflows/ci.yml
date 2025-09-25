@@ -1,0 +1,34 @@
+name: CI
+on:
+  pull_request:
+    branches:
+      - develop
+
+env:
+  NODE_VERSION: 22.x
+
+jobs:
+  run-ci:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get repo code
+        uses: actions/checkout@v5
+
+      - name: Use Node.js
+        uses: actions/setup-node@v4.4.0
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - uses: bahmutov/npm-install@v1
+
+      - name: Run formatter
+        run: npm run format:check
+
+      - name: Run typegen
+        run: npm run type
+
+      - name: Run linter
+        run: npm run lint
+
+      - name: Run tests
+        run: npm run test

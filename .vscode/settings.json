@@ -1,0 +1,22 @@
+{
+  // Formatting using Prettier by default for all languages
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  // Formatting using Prettier for JavaScript, overrides VSCode default.
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  // Linting using ESLint.
+  "eslint.validate": ["javascript", "javascriptreact", "typescript", "typescriptreact"],
+  // Tell VS Code to always open .css files in Tailwind CSS mode:
+  "files.associations": {
+    "*.css": "tailwindcss"
+  },
+  //Fix eslint auto-fixable problems on save a file
+  "editor.codeActionsOnSave": {
+    "source.fixAll": "explicit"
+  },
+  "eslint.useFlatConfig": true,
+  // Ensure enough terminal history is preserved when running tests.
+  "terminal.integrated.scrollback": 10000,
+  "cSpell.words": ["heroui"]
+}

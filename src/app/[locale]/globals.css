@@ -1,0 +1,61 @@
+@import 'tailwindcss';
+
+@plugin '../../../hero.ts';
+
+@source '../../../node_modules/@heroui/theme/dist/**/*.{js,ts,jsx,tsx}';
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+html {
+  scrollbar-gutter: stable;
+}
+
+body {
+  font-family: Geist, Arial, Helvetica, sans-serif;
+}
+
+@layer base {
+  h1,
+  h2,
+  h3,
+  span {
+    font-family: var(--font-geist-mono);
+  }
+
+  h1 {
+    font-size: calc(var(--heroui-font-size-large) * 1.6);
+  }
+
+  h2 {
+    font-size: calc(var(--heroui-font-size-large) * 1.2);
+  }
+
+  h3 {
+    font-size: var(--heroui-font-size-large);
+  }
+
+  p {
+    color: hsl(var(--heroui-foreground) / 80%);
+  }
+}
+
+@layer utilities {
+  .hidden-password {
+    @apply [-webkit-text-security:disc];
+  }
+}
+
+@layer components {
+  .link {
+    @apply flex items-center gap-2 opacity-70 duration-300 ease-in-out hover:opacity-100;
+  }
+
+  .header-link {
+    @apply data-[active=true]:text-primary-500 data-[active=true]:pointer-events-none data-[active=true]:opacity-100;
+  }
+}

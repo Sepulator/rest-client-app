@@ -1,0 +1,179 @@
+{
+  "userActions": {
+    "navigation": {
+      "home": "Home",
+      "client": "REST Client",
+      "history": "History",
+      "variables": "Variables",
+      "login": "Sign In",
+      "signUp": "Sign Up",
+      "haveAccount": "Don't have an account? ",
+      "alreadyHaveAccount": "Already have an account? "
+    },
+    "actions": {
+      "logout": "Logout",
+      "menuOpen": "Open menu",
+      "menuClose": "Close menu",
+      "menu": "Menu",
+      "loading": "Loading"
+    }
+  },
+  "LocaleLayout": {
+    "title": "Rest client",
+    "description": "A light-weight rest client application"
+  },
+  "NotFound": {
+    "title": "Page not found",
+    "description": "We couldn't find page you are looking for",
+    "button": "Go home"
+  },
+  "WelcomePage": {
+    "title": "Welcome, please login"
+  },
+  "Footer": {
+    "yuri": "Yuri S.",
+    "anastasiia": "Anastasiia Nikonova",
+    "maria": "Maria Ilina",
+    "courseLogoAlt": "Course logo"
+  },
+  "Header": {
+    "locales": {
+      "en": "English",
+      "ru": "Russian"
+    },
+    "chooseLanguage": "Choose language"
+  },
+  "HomePage": {
+    "intro": {
+      "title": "What is V-REST?",
+      "description": "A lightweight alternative to Postman, combining essential features in one app. Developed in teams of three during the RS School React course, it supports authorization and authentication. Access to the tool is restricted to authorized users. The history section provides quick access to previously executed requests"
+    },
+    "features": {
+      "title": "Key Features",
+      "description": "Streamline your API development workflow with our comprehensive REST client tool"
+    },
+    "greeting": {
+      "user": "Welcome back👋",
+      "guest": "Welcome, <i>please login</i>"
+    },
+    "keyFeatures": {
+      "rest": {
+        "title": "REST Client",
+        "icon": "🌐",
+        "description": "HTTP client supporting all methods, headers, and request body with real-time response preview"
+      },
+      "history": {
+        "title": "Request History",
+        "icon": "📖",
+        "description": "Automatically save and manage your API call history with analytics"
+      },
+      "codeGeneration": {
+        "title": "Code Generation",
+        "icon": "💻",
+        "description": "Generate code snippets in multiple languages (curl, JavaScript, Python, Java, C#, Go) for your API requests"
+      },
+      "variables": {
+        "title": "Variables Management",
+        "icon": "🔤",
+        "description": "Create and reuse variables across requests"
+      },
+      "auth": {
+        "title": "Authentication",
+        "icon": "🔐",
+        "description": "Secure user authentication with email/password"
+      },
+      "lang": {
+        "title": "Multi-Language Support",
+        "icon": "🌍",
+        "description": "Full internationalization support with multiple language options"
+      }
+    }
+  },
+  "AuthForm": {
+    "emailLabel": "Email"
+  },
+  "Schemas": {
+    "minLength": "Password must be at least 8 characters",
+    "letter": "Password must contain at least one letter",
+    "number": "Password must contain at least one number",
+    "specialCharacter": "Password must contain at least one special character",
+    "emailRequired": "Email is required",
+    "emailInvalid": "Email is invalid"
+  },
+  "PasswordField": {
+    "passwordStrength": "Password strength",
+    "passwordPlaceholder": "Enter your password",
+    "passwordToggleVisibility": "toggle password visibility",
+    "passwordLabel": "Password"
+  },
+  "PasswordStrength": {
+    "label0": "Empty",
+    "label1": "Weak",
+    "label2": "Medium",
+    "label3": "Strong",
+    "label4": "Excellent"
+  },
+  "RestClient": {
+    "send": "Send",
+    "headers": "HTTP Headers",
+    "addHeader": "Add Header",
+    "resBody": "Response Body",
+    "header": "header",
+    "value": "value",
+    "status": "Status",
+    "prettify": "Prettify JSON",
+    "jsonContent": "JSON Content",
+    "textContent": "Text Content",
+    "text": "Text",
+    "json": "JSON",
+    "url": "Enter Url",
+    "removeHeader": "Remove header",
+    "codeMessage": "Please configure method and URL to generate code",
+    "codeTitle": "Code Snippet",
+    "codeError": "Error generating code snippet:",
+    "copy": "Copy",
+    "copied": "Copied",
+    "invalidUrl": "Invalid URL. Please enter a valid HTTP or HTTPS URL.",
+    "loading": "Loading..."
+  },
+  "Variables": {
+    "heading": "Variables",
+    "addButton": "Add Variable",
+    "key": "Key",
+    "value": "Value",
+    "reset": "Reset variables",
+    "duplicate": "Duplicate keys found: the last value will be applied"
+  },
+  "actionRow": {
+    "remove": "Remove row"
+  },
+  "Errors": {
+    "dnsResolution": "Couldn't resolve the hostname to an IP address, Verify Url",
+    "invalidHeaders": "Invalid header value: Headers must contain only ASCII characters. Remove non-ASCII characters from header names and values.",
+    "connectionRefused": "Connection refused: Server is not accepting connections. Check if the server is running.",
+    "timeout": "Request timeout: Server took too long to respond. Try again or check server status.",
+    "connectionReset": "Connection reset: Server closed the connection unexpectedly.",
+    "sslExpired": "SSL certificate has expired. Contact the server administrator.",
+    "invalidUrl": "Invalid URL format. Please check the URL syntax.",
+    "unknown": "Unknown error",
+    "decodeBody": "Failed to decode body from params: {error}",
+    "decodeUrl": "Failed to decode URL from params: {error}"
+  },
+  "FallbackUi": {
+    "title": "Something went wrong!",
+    "button": "Try again"
+  },
+  "History": {
+    "pageTitle": "History",
+    "title": "You haven't executed any requests",
+    "description": "It's empty here. Try:",
+    "link": "RESTful client",
+    "analytics": "Analytics",
+    "duration": "Request duration: ",
+    "status": "Status code: ",
+    "timestamp": "Request timestamp: ",
+    "requestSize": "Request size: ",
+    "responseSize": "Response size: ",
+    "error": "Error details: "
+  }
+}
