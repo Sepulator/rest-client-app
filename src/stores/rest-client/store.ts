@@ -154,7 +154,7 @@ export const useRestClientStore = create<RestClientStore>((set, get) => ({
     try {
       const requestHeaders = headers.reduce<Record<string, string>>((acc, header) => {
         if (header.key && header.value) {
-          acc[header.key.trim()] = header.value.trim();
+          acc[replaceVariables(header.key.trim())] = replaceVariables(header.value.trim());
         }
 
         return acc;
@@ -200,7 +200,7 @@ export const useRestClientStore = create<RestClientStore>((set, get) => ({
       const { error } = await insertHistory({
         ...dataForSave,
         body: replaceVariables(requestBody ?? ''),
-        headers: replaceVariables(JSON.stringify(requestHeaders)),
+        headers: JSON.stringify(requestHeaders),
         id: crypto.randomUUID(),
         error: proxyResponse.error,
         method,
