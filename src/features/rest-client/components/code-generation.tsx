@@ -33,16 +33,18 @@ const generateCode = (
       value: replaceVariables(h.value),
     }));
 
+    const textBody = body ? replaceVariables(body) : undefined;
+
     const har: HTTPSnippet.Data = {
       method: method.toUpperCase(),
       url: replaceVariables(url),
       headers: headersArray,
       cookies: [],
       queryString: [],
-      postData: body ? { mimeType: 'application/json', text: replaceVariables(body) } : undefined,
+      postData: textBody ? { mimeType: 'application/json', text: textBody } : undefined,
       httpVersion: 'HTTP/1.1',
       headersSize: -1,
-      bodySize: body ? new TextEncoder().encode(body).length : 0,
+      bodySize: textBody ? new TextEncoder().encode(textBody).length : 0,
     };
 
     const snippet = new HTTPSnippet(har);
