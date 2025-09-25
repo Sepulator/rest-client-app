@@ -53,7 +53,7 @@
       "description": "Streamline your API development workflow with our comprehensive REST client tool"
     },
     "greeting": {
-      "user": "Welcome back<i>{name}</i>👋",
+      "user": "Welcome back👋",
       "guest": "Welcome, <i>please login</i>"
     },
     "keyFeatures": {

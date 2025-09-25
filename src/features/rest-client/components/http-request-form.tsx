@@ -11,6 +11,7 @@ import { HttpRequestSubmit } from '@/features/rest-client/components/http-reques
 import { RequestBodySwitcher } from '@/features/rest-client/components/request-body-swticher';
 import { ResponseSection } from '@/features/rest-client/components/response-section';
 import { useInitializeFromParams } from '@/stores/rest-client/selectors';
+import { useRestClientStore } from '@/stores/rest-client/store';
 
 type Props = {
   initialParams?: string[];
@@ -19,11 +20,15 @@ type Props = {
 
 export const HttpRequestForm = ({ initialParams, initialSearchParams }: Props = {}) => {
   const initializeFromParams = useInitializeFromParams();
+  const resetResponse = useRestClientStore((state) => state.resetResponse);
   const t = useTranslations('RestClient');
 
   useEffect(() => {
+    if (!initialParams && !initialSearchParams) {
+      resetResponse();
+    }
     initializeFromParams(initialParams, initialSearchParams);
-  }, [initialParams, initialSearchParams, initializeFromParams]);
+  }, [resetResponse, initialParams, initialSearchParams, initializeFromParams]);
 
   return (
     <div className="@container">

@@ -12,6 +12,7 @@ import { oneDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import type { Header } from '@/types/http-request';
 
 import { CODE_LANGUAGES, DELAY } from '@/features/rest-client/constants/language-list';
+import { useReplaceWithVariable } from '@/features/variables/hooks/use-replace-with-variable';
 import { useCurrentBody, useHeaders, useMethod, useUrl } from '@/stores/rest-client/selectors';
 
 const LIMIT = 2;
@@ -22,25 +23,28 @@ const generateCode = (
   headers: Header[],
   url = '',
   defaultError: string,
+  replaceVariables: (text: string) => string,
   body?: string
 ): string => {
   try {
     const validHeaders = headers.filter((h) => h.key && h.value);
     const headersArray = validHeaders.map((h) => ({
-      name: h.key,
-      value: h.value,
+      name: replaceVariables(h.key),
+      value: replaceVariables(h.value),
     }));
+
+    const textBody = body ? replaceVariables(body) : undefined;
 
     const har: HTTPSnippet.Data = {
       method: method.toUpperCase(),
-      url,
+      url: replaceVariables(url),
       headers: headersArray,
       cookies: [],
       queryString: [],
-      postData: body ? { mimeType: 'application/json', text: body } : undefined,
+      postData: textBody ? { mimeType: 'application/json', text: textBody } : undefined,
       httpVersion: 'HTTP/1.1',
       headersSize: -1,
-      bodySize: body ? new TextEncoder().encode(body).length : 0,
+      bodySize: textBody ? new TextEncoder().encode(textBody).length : 0,
     };
 
     const snippet = new HTTPSnippet(har);
@@ -60,8 +64,9 @@ export const CodeGeneration = () => {
   const [selectedLanguage, setSelectedLanguage] = useState(CODE_LANGUAGES[0].key);
   const [copied, setCopied] = useState(false);
   const t = useTranslations('RestClient');
+  const replaceVariables = useReplaceWithVariable();
 
-  const code = generateCode(selectedLanguage, method, headers, url, t('codeError'), body);
+  const code = generateCode(selectedLanguage, method, headers, url, t('codeError'), replaceVariables, body);
   const currentLanguage = CODE_LANGUAGES.find((lang) => lang.key === selectedLanguage);
 
   const handleCopy = useCallback(() => {
